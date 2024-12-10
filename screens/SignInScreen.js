@@ -14,7 +14,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, TextInput , Image} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
-
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
@@ -23,7 +22,6 @@ export default function SignIn({ navigation }) {
   const [signInPassword, setSignInPassword] = useState("");
   const [eyeStatus, setEyeStatus] = useState(false);
   let iconEyeName ='';
-
 
   const handleSignIn = () => {
     //console.log('Click is working'); //ok 
@@ -62,8 +60,6 @@ export default function SignIn({ navigation }) {
     setEyeStatus(!eyeStatus);
     console.log(eyeStatus);  
   }
-  
-
   
   return (
 <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
