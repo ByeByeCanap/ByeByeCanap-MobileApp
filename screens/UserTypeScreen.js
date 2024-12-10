@@ -6,6 +6,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 export default function UserTypeScreen( { navigation } ) {
 
   const particularToSignUp = () => navigation.navigate('SignUpScreen');
+  const goBack = () => navigation.navigate('SignScreen');
 
   return (
     <View style={styles.container}>
@@ -24,7 +25,7 @@ export default function UserTypeScreen( { navigation } ) {
       </LinearGradient>
 
       <View style={styles.arrow}>
-        <FontAwesome name="arrow-left" size={30} />
+        <FontAwesome name="arrow-left" size={30} onPress={goBack}/>
       </View>
 
       <View style={styles.btnContainer}>

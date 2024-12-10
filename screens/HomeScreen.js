@@ -19,6 +19,8 @@ export default function HomeScreen( { navigation } ) {
           resizeMode="cover"
           source={require("../assets/logoIcon.png")}
         />
+        <FontAwesome name="bell" size={30} />
+        <FontAwesome name="search" size={30} />
       </LinearGradient>
 
 

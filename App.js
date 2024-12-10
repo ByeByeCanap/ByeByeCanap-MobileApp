@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import storage from "redux-persist/lib/storage";
 import users from "./reducers/users";
 // importer les modules react-NAVIGATION
 import { NavigationContainer } from "@react-navigation/native";

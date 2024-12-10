@@ -15,7 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-
+  const goBack = () => navigation.navigate('SignScreen');
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
   const [eyeStatus, setEyeStatus] = useState(false);
@@ -74,7 +74,7 @@ export default function SignIn({ navigation }) {
 
       <View style={styles.inputContainer}>
         <View style={styles.arrow}>
-          <FontAwesome name="arrow-left" size={30} />
+          <FontAwesome name="arrow-left" size={30} onPress={goBack}/>
         </View>
         <View style={styles.input}>
           <TextInput
