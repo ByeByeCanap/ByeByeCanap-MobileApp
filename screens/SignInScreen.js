@@ -7,8 +7,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
   TextInput,
   Image,
 } from "react-native";
@@ -25,7 +23,7 @@ export default function SignIn({ navigation }) {
 
   const handleSignIn = () => {
     //console.log('Click is working'); //ok
-    fetch("http://10.127.234.79:3000/users/signin", {
+    fetch("http://10.10.200.22:3000/users/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -45,10 +43,6 @@ export default function SignIn({ navigation }) {
         }
       });
   };
-
-  if (user.token) {
-    navigation.navigate("Home");
-  }
 
   // icon Eye vs Eye slash
   if (eyeStatus) {
@@ -84,6 +78,10 @@ export default function SignIn({ navigation }) {
         </View>
         <View style={styles.input}>
           <TextInput
+            autoCapitalize="none" // https://reactnative.dev/docs/textinput#autocapitalize
+            keyboardType="email-address" // https://reactnative.dev/docs/textinput#keyboardtype
+            textContentType="emailAddress" // https://reactnative.dev/docs/textinput#textcontenttype-ios
+            autoComplete="email" // https://reactnative.dev/docs/textinput#autocomplete-android
             style={styles.textInput}
             placeholder={"Email"}
             onChangeText={(value) => setSignInEmail(value)}
