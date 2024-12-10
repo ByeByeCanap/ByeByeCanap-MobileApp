@@ -16,6 +16,7 @@ import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import MapScreen from "./screens/MapScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import UserTypeScreen from "./screens/UserTypeScreen";
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
@@ -74,6 +75,7 @@ function App() {
             <Stack.Screen name="SignScreen" component={SignScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
             <Stack.Screen name="SignInScreen" component={SignInScreen} />
+            <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>

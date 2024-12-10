@@ -2,6 +2,7 @@ import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function SignUpScreen() {
+
   return (
     <View style={styles.container}>
       <View style={styles.UpZone}>
