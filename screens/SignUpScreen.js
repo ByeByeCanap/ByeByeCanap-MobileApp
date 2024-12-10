@@ -1,21 +1,34 @@
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  TextInput,
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function SignUpScreen() {
+export default function SignUpScreen({ navigation }) {
+  const GoBack = () => navigation.navigate("SignScreen");
+
   return (
     <View style={styles.container}>
-      <View style={styles.UpZone}>
-        <TouchableOpacity style={styles.GoogleButton}>
-          <FontAwesome name="google" size={20} color="white" />
-          <Text style={styles.TextGoogleButton}>Connect with Google</Text>
-        </TouchableOpacity>
+      <View style={styles.arrow}>
+        <FontAwesome name="arrow-left" size={30} onPress={GoBack} />
       </View>
-      <Text style={styles.separator}>OR</Text>
-      <View style={styles.DownZone}>
-        <TouchableOpacity style={styles.EmailButton}>
-          <FontAwesome name="envelope" size={20} color="white" />
-          <Text style={styles.TexteEmailButton}>Connect with email</Text>
-        </TouchableOpacity>
+      <View>
+        <View style={styles.UpZone}>
+          <TouchableOpacity style={styles.GoogleButton}>
+            <FontAwesome name="google" size={20} color="white" />
+            <Text style={styles.TextGoogleButton}>Connect with Google</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.separator}>OR</Text>
+        <View style={styles.DownZone}>
+          <TouchableOpacity style={styles.EmailButton}>
+            <FontAwesome name="envelope" size={20} color="white" />
+            <Text style={styles.TexteEmailButton}>Connect with email</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -26,6 +39,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  arrow: {
+    position: "absolute",
+    top: 40,
+    left: 10,
   },
   UpZone: {
     marginBottom: 20,
@@ -46,6 +64,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     fontSize: 18,
     fontWeight: "bold",
+    alignSelf: "center",
   },
   DownZone: {
     marginTop: 20,
