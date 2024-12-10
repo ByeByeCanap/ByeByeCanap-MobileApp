@@ -2,10 +2,32 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import { useState } from "react";
 
 export default function UserTypeScreen( { navigation } ) {
-
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   const particularToSignUp = () => navigation.navigate('SignUpScreen');
+  const goBack = () => navigation.navigate('SignScreen');
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      ParkinsansMedium: require('../assets/fonts/ParkinsansMedium.ttf'),
+      NotoSansDisplayLight: require('../assets/fonts/NotoSansDisplayLight.ttf'),
+      NotoSansDisplayRegular: require('../assets/fonts/NotoSansDisplayRegular.ttf'),
+    });
+  };
+
+  if (!fontsLoaded) {
+    return (
+      <AppLoading
+        startAsync={loadFonts}
+        onFinish={() => setFontsLoaded(true)}
+        onError={(err) => console.error(err)}
+      />
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -24,7 +46,7 @@ export default function UserTypeScreen( { navigation } ) {
       </LinearGradient>
 
       <View style={styles.arrow}>
-        <FontAwesome name="arrow-left" size={30} />
+        <FontAwesome name="arrow-left" size={30} onPress={goBack}/>
       </View>
 
       <View style={styles.btnContainer}>
@@ -77,9 +99,8 @@ const styles = StyleSheet.create({
     height: 50,
   },
   text: {
-    color: "white",
-    fontFamily: "Parkinsans-Medium",
-    fontWeight: "300",
+    color: 'white',
+    fontFamily: 'ParkinsansMedium',
     fontSize: 20,
   },
   arrow: {
