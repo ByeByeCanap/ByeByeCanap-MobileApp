@@ -1,31 +1,65 @@
-import { StyleSheet, View, Button } from "react-native";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function SignUpScreen() {
-  const clientId = "";
-
-  const [user, setUser] = useState(null);
-
-  const handleLogin = (credentialResponse) => {
-    setUser(jwtDecode(credentialResponse.credential));
-  };
   return (
-    <GoogleOAuthProvider clientId={clientId}>
-      <View style={styles.container}>
-        <View style={styles.UpZone}>
-          <GoogleLogin
-            onSuccess={(credentialResponse) => handleLogin(credentialResponse)}
-            onError={(error) => console.error(error)}
-          />
-          <Button>Connect with Facebook</Button>
-        </View>
-        <View style={styles.separator}>OR</View>
-        <View style={styles.DownZone}>
-          <Button>Connect with email</Button>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.UpZone}>
+        <TouchableOpacity style={styles.GoogleButton}>
+          <FontAwesome name="google" size={20} color="white" />
+          <Text style={styles.TextGoogleButton}>Connect with Google</Text>
+        </TouchableOpacity>
       </View>
-    </GoogleOAuthProvider>
+      <Text style={styles.separator}>OR</Text>
+      <View style={styles.DownZone}>
+        <TouchableOpacity style={styles.EmailButton}>
+          <FontAwesome name="envelope" size={20} color="white" />
+          <Text style={styles.TexteEmailButton}>Connect with email</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  UpZone: {
+    marginBottom: 20,
+  },
+  GoogleButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F3773B",
+    padding: 10,
+    borderRadius: 20,
+  },
+  TextGoogleButton: {
+    color: "white",
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+  separator: {
+    marginVertical: 20,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  DownZone: {
+    marginTop: 20,
+  },
+  EmailButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F3773B",
+    padding: 10,
+    borderRadius: 20,
+  },
+  TexteEmailButton: {
+    color: "white",
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+});
