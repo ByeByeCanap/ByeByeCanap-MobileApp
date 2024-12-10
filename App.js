@@ -9,8 +9,9 @@ import users from "./reducers/users";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // importer les COMPOSANTS
-import SignScreen from "./screens/SignScreen";
+import SignScreen from "./screens/SignUpScreen";
 import MapScreen from "./screens/MapScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 // Import pour icônes FONTAWESOME
@@ -18,7 +19,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 // REDUX
 const reducers = combineReducers({ users });
-const persistConfig = { key: "Bye Bye Canap'", storage };
+const persistConfig = { key: "Bye Bye Canap'", storage: AsyncStorage,};
 
 const store = configureStore({
     reducer: persistReducer(persistConfig, reducers),
