@@ -1,16 +1,23 @@
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-export default function SignScreen() {
+
+export default function SignScreen( { navigation } ) {
+  const signUp = () => navigation.navigate('SignUpScreen');
+  const signIn = () => navigation.navigate('SignInScreen');
 
   return (
-    <View>
-      <View styles={styles.signUp}>
+    <View style={styles.container}>
+      <View style={styles.signUp}>
         <Text>Pas encore membre ?</Text>
-        <Button styles={styles.button}>Sign-Up</Button>
+        <TouchableOpacity style={styles.button} onPress={signUp}>
+          <Text style={styles.buttonText}>Sign-Up</Text>
+        </TouchableOpacity>
       </View>
-      <View styles={styles.signIn}>
+      <View style={styles.signIn}>
         <Text>Déjà un compte ?</Text>
-        <Button styles={styles.button}>Sign-In</Button>
+        <TouchableOpacity style={styles.button} onPress={signIn}>
+          <Text style={styles.buttonText}>Sign-In</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
@@ -18,29 +25,30 @@ export default function SignScreen() {
 }
 
 const styles = StyleSheet.create({
-  signUp: {
-    fontFamily: "parkinsans",
-    fontWeight: "medium",
-    fontSize: 20,
-    textAlign: "center",
+  container: {
+    flex: 1,
     justifyContent: "center",
-    width: 227, 
-    height: 106,
+    alignItems: "center",
+  },
+  signUp: {
+    marginBottom: 20,
+    alignItems: "center",
   },
   signIn: {
-    fontFamily: "parkinsans",
-    fontWeight: "medium",
-    fontSize: 20,
-    textAlign: "center",
-    justifyContent: "center",
-    width: 227, 
-    height: 106,
+    marginTop: 20,
+    alignItems: "center",
   },
-
   button: {
-    color: '#f3773b',
+    backgroundColor: "#f3773b",
     borderRadius: 19,
     width: 227,
     height: 48,
-  }
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
