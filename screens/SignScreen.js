@@ -2,7 +2,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 
 export default function SignScreen( { navigation } ) {
-  const signUp = () => navigation.navigate('SignUpScreen');
+  const signUp = () => navigation.navigate('UserTypeScreen');
   const signIn = () => navigation.navigate('SignInScreen');
 
   return (
