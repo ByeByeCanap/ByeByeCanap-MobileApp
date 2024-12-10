@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // Définir l'état initial
 const initialState = {
-    value: { token: null, nickName: null },
+    value: { token: null, email: null },
 };
 
 // Créer une tranche d'un état (stockée dans une variable qui contient:
@@ -14,11 +14,11 @@ export const usersSlice = createSlice({
         // fonction qui a pour paramètre l'état initiale et l'action à exécuter
         login: (state, action) => {
             state.value.token = action.payload.token;
-            state.value.nickName = action.payload.nickName;
+            state.value.email = action.payload.email;
           },
           logout: (state) => {
             state.value.token = null;
-            state.value.nickName = null;
+            state.value.email = null;
           },
     },
 });

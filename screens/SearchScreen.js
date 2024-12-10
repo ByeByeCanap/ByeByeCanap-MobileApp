@@ -1,10 +1,10 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 export default function HomeScreen() {
 
   return (
     <View>
-        
+        <Text>Search Screen</Text>
     </View>
   )
     
@@ -13,3 +13,4 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   
 });
+

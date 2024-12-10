@@ -4,40 +4,45 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from "../reducers/users";
 // Import pour navigation
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
+// import { NavigationProp, ParamListBase } from '@react-navigation/native';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // Import pour icône
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 // Import pour style
-import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, TextInput } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, TextInput , Image} from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
 
-  const [SignInNickName, setSignInNickName] = useState("");
-  const [SignInPassword, setSignInPassword] = useState("");
+  const [signInEmail, setSignInEmail] = useState("");
+  const [signInPassword, setSignInPassword] = useState("");
   const [eyeStatus, setEyeStatus] = useState(false);
   let iconEyeName ='';
 
 
   const handleSignIn = () => {
-    console.log('Click is working'); //ok 
-    fetch("http://localhost:3000/users/signin", {
+    //console.log('Click is working'); //ok 
+    fetch("http://10.127.234.79:3000/users/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        nickName: SignInNickName,
-        password: SignInPassword,
+        email: signInEmail,
+        password: signInPassword,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         if (data.result) {
-          dispatch(login({ nickName: SignInNickName, token: data.token }));
-          setSignInNickName("");
+          dispatch(login({ email: signInEmail, token: data.result.token }));
+          setSignInEmail("");
           setSignInPassword("");
-          console.log('fetch is working'); //ok          
+          console.log(user); //ok
         }
       });
   };
@@ -63,17 +68,22 @@ export default function SignIn({ navigation }) {
   return (
 <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
 
-      {/* <View style={styles.arrow}>
-        <Icon name="arrow-back-outline" size={40} color="black" />
-      </View> */}
+        {/* <LinearGradient style={styles.header} colors={['#fdc731','#f3773b']} useAngle={true} angle={135} start={{ x: 0, y: 1 }}>
+          <Image style={styles.logoIcon} resizeMode="cover" source={require('../assets/logoIcon.png')} />
+        </LinearGradient> 
+          */}
 
+        {/* <View > */}
         <View style={styles.inputContainer}>
+          {/* <View style={styles.arrow}>
+            <FontAwesome name='arrow-left' size={30} />
+        </View> */}
         <View style={styles.input}>
         <TextInput
             style={styles.textInput}
             placeholder={'Pseudo'}
-            onChangeText={(value) => setSignInNickName(value)}
-            value={SignInNickName}
+            onChangeText={(value) => setSignInEmail(value)}
+            value={signInEmail}
           />
           {/* {emailError && <Text style={styles.error}>Invalid email address</Text>} */}
         </View>
@@ -83,7 +93,7 @@ export default function SignIn({ navigation }) {
             style={styles.textInput}
             placeholder={'Mot de Passe'}
             onChangeText={(value) => setSignInPassword(value)}
-            value={SignInPassword}
+            value={signInPassword}
           />
           <FontAwesome name={iconEyeName} size={36} onPress={() => handleEyeIcon()}/>
           </View>
@@ -92,8 +102,10 @@ export default function SignIn({ navigation }) {
         <TouchableOpacity onPress={() => handleSignIn()} style={styles.button} activeOpacity={0.8}>
             <Text style={styles.textButton}>Sign-In</Text>
           </TouchableOpacity>
+          {/* </View> */}
 
-      </KeyboardAvoidingView>
+          {/* <LinearGradient style={styles.footer} colors={['#fdc731','#f3773b']} start={{ x: 0, y: 1 }}/> */}
+</KeyboardAvoidingView>
     
   );
 }
@@ -105,18 +117,33 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       backgroundColor: '#FFFFFF',
     },
-    // arrow: {
-    //   paddingTop: 10,
-    //   paddingRight: 10,
-    //   paddingBottom: 10,
-    //   paddingLeft: 22,
-    //   flexDirection: "column",
-    //   alignItems: "flex-start",
-    //   alignSelf: "stretch",
-    // },
+    header: {
+      width: "100%",
+      height: 120,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingLeft: 22,
+      backgroundColor: "transparent"
+      },
+    logoIcon: {
+      top: 20,
+      width: 50,
+      height: 50
+      },
+    arrow: {
+      paddingTop: 10,
+      paddingRight: 10,
+      paddingBottom: 10,
+      paddingLeft: 22,
+      flexDirection: "column",
+      alignItems: "flex-start",
+      alignSelf: "stretch",
+    },
     inputContainer:{
       width: 321,
       height: 130,
+      gap: 50,
     },
     input:{
       width: 320,
@@ -149,5 +176,9 @@ const styles = StyleSheet.create({
     },
     textButton: {
       color: 'white',
-    }
+    },
+    footer: {
+      height: 100,
+      alignSelf: 'stretch',
+    },
   });
