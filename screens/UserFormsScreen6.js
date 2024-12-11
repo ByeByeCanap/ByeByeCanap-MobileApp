@@ -8,16 +8,23 @@ import { Dropdown } from "react-native-element-dropdown";
 import { RadioButton } from "react-native-paper";
 
 const preferencesOptions = [
-  { label: "Item1", value: "item1" },
-  { label: "Item2", value: "item2" },
-  { label: "Item3", value: "item3" },
+  { label: 'Centré sur les mêmes passions', value: 'memes_passions' },
+  { label: 'Ouvert à la découverte', value: 'decouverte' },
 ];
 
 const valuesOptions = [
-  { label: "Item1", value: "item1" },
-  { label: "Item2", value: "item2" },
-  { label: "Item3", value: "item3" },
+  { label: 'Bienveillance', value: 'bienveillance' },
+  { label: 'Authenticité', value: 'authenticite' },
+  { label: 'Solidarité', value: 'solidarite' },
+  { label: 'Créativité', value: 'creativite' }
 ];
+
+const projectOptions= [
+  { label: 'Écologie', value: 'ecologie' },
+  { label: 'Aide sociale', value: 'aide_sociale' },
+];
+
+
 
 export default function UserFormsPage6({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -90,7 +97,7 @@ export default function UserFormsPage6({ navigation }) {
         </Text>
         <Dropdown
           style={styles.dropdown}
-          data={valuesOptions}
+          data={projectOptions}
           labelField="label"
           valueField="value"
           placeholder="Choisissez !"
@@ -98,6 +105,8 @@ export default function UserFormsPage6({ navigation }) {
           onChange={(item) => setValues(item.value)}
         />
 
+
+        {/* Arrow Navigation */}
         <View style={styles.arrow}>
           <FontAwesome
             name="arrow-right"
@@ -107,12 +116,6 @@ export default function UserFormsPage6({ navigation }) {
           />
         </View>
       </ScrollView>
-
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }

@@ -15,7 +15,7 @@ import { Dropdown } from "react-native-element-dropdown";
 
 export default function UserFormsPage3({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [choice, setChoice] = useState(null);
+  const [motivation, setMotivation] = useState(null);
   const [value, onChangeText] = useState("");
 
   const loadFonts = async () => {
@@ -26,11 +26,14 @@ export default function UserFormsPage3({ navigation }) {
     });
   };
 
-  const dropdownOptions = [
-    { label: "Apprendre", value: "apprendre" },
-    { label: "Rencontrer des gens", value: "rencontrer" },
-    { label: "S'amuser", value: "amuser" },
+  const motivationOptions = [
+    { label: 'Faire des rencontres', value: 'faire_des_rencontres' },
+    { label: 'Apprendre de nouvelles choses', value: 'apprendre_nouvelles_choses' },
+    { label: 'Passer du bon temps', value: 'passer_du_bon_temps' },
+    { label: 'Développer vos compétences', value: 'developper_competences' },
+    { label: "Se sentir utile ou s'engager dans une cause", value: 's_engager_dans_une_cause' }
   ];
+
 
   if (!fontsLoaded) {
     return (
@@ -61,19 +64,21 @@ export default function UserFormsPage3({ navigation }) {
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.h1}>Objectifs & Motivations</Text>
 
+        {/* Dropdown 1 */}
         <Text style={styles.h3}>
           Pourquoi voulez-vous participer à des activités ?
         </Text>
         <Dropdown
           style={styles.dropdown}
-          data={dropdownOptions}
+          data={motivationOptions}
           labelField="label"
           valueField="value"
           placeholder="Choisissez !"
-          value={choice}
-          onChange={(item) => setChoice(item.value)}
+          value={motivation}
+          onChange={(item) => setMotivation(item.value)}
         />
 
+        {/* Free text */}
         <Text style={styles.h3}>
           Qu'espérez-vous retirer de ces expériences (plaisir, apprentissage,
           relationnel) ?
@@ -85,6 +90,7 @@ export default function UserFormsPage3({ navigation }) {
           placeholder="Dites-nous en plus !"
         />
 
+        {/* Arrow navigation */}
         <View style={styles.arrow}>
           <FontAwesome
             name="arrow-right"
@@ -94,12 +100,6 @@ export default function UserFormsPage3({ navigation }) {
           />
         </View>
       </ScrollView>
-
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }

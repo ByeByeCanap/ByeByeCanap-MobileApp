@@ -1,11 +1,13 @@
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
+
 // SignUpScreen Function
 export default function SignUpScreen({ navigation }) {
   // Handling Previous and Next Pages for navigations
   const GoBack = () => navigation.navigate("UserTypeScreen");
   const GoNext = () => navigation.navigate("UserFormsScreen1");
+  
 
   return (
     <View style={styles.container}>

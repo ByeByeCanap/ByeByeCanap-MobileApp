@@ -63,11 +63,6 @@ export default function UserTypeScreen( { navigation } ) {
         </TouchableOpacity>
       </View>
 
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }

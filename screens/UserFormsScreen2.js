@@ -7,22 +7,66 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
 import { RadioButton } from "react-native-paper";
 
-const themeOptions = [
-  { label: "Lecture", value: "lecture" },
-  { label: "Musique", value: "musique" },
-  { label: "Sport", value: "sport" },
+const activityOptions = [
+  {
+    theme: "Activités créatrices",
+    categorie: ["Artistique", "Manuel", "Musique"],
+  },
+  {
+    theme: "Sport",
+    categorie: [
+      "Pratiquer en extérieur (terre)",
+      "Pratiquer en extérieur (mer)",
+      "Pratiquer en intérieur",
+      "Supporter",
+    ],
+  },
+  {
+    theme: "Art & Culture",
+    categorie: [
+      "Cinéma",
+      "Concert",
+      "Musées",
+      "Lecture",
+      "Musique (pratiquer)",
+    ],
+  },
+  {
+    theme: "Boire & Manger",
+    categorie: ["Bars", "Restaurant", "Cuisiner"],
+  },
+  {
+    theme: "Entraide",
+    categorie: [
+      "Petsitter",
+      "Aide à la personne",
+      "Services",
+      "SOS",
+      "Acte citoyen",
+    ],
+  },
+  {
+    theme: "Spiritualité",
+    categorie: ["Relaxation", "Mysticisme"],
+  },
+  {
+    theme: "Apprentissage",
+    categorie: ["Langues", "Musique", "Bricolage"],
+  },
+  {
+    theme: "Plaisir coupable",
+    categorie: ["Divertissement", "Jeux", "Rire"],
+  },
 ];
 
-const categorieOptions = [
-  { label: "Culture", value: "culture" },
-  { label: "Loisirs", value: "loisirs" },
-  { label: "Voyages", value: "voyages" },
-];
-
-export default function UserFormsPage2({ navigation }) {
+export default function UserFormsPage2( { navigation } ) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [theme, setTheme] = useState(null);
-  const [categorie, setCategorie] = useState(null);
+  const [interestTheme, setInterestTheme] = useState(null);
+  const [interestCategorie, setInterestCategorie] = useState(null);
+  const [skillTheme, setSkillTheme] = useState(null);
+  const [skillCategorie, setSkillCategorie] = useState(null);
+  const [filteredInterestCategories, setFilteredInterestCategories] = useState([]);
+  const [filteredSkillCategories, setFilteredSkillCategories] = useState([]);
   const [checked, setChecked] = useState("");
 
   const loadFonts = async () => {
@@ -32,6 +76,25 @@ export default function UserFormsPage2({ navigation }) {
       NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
     });
   };
+
+  const handleInterestThemeChange = (selectedInterestTheme) => {
+    setInterestTheme(selectedInterestTheme);
+    const selectedActivity = activityOptions.find(
+      (activity) => activity.theme === selectedInterestTheme
+    );
+    setFilteredInterestCategories(selectedActivity ? selectedActivity.categorie : []);
+    setInterestCategorie(null);
+  };
+
+  const handleSkillThemeChange = (selectedSkillTheme) => {
+    setSkillTheme(selectedSkillTheme);
+    const selectedActivity = activityOptions.find(
+      (activity) => activity.theme === selectedSkillTheme
+    );
+    setFilteredSkillCategories(selectedActivity ? selectedActivity.categorie : []);
+    setSkillCategorie(null);
+  };
+
 
   if (!fontsLoaded) {
     return (
@@ -43,7 +106,7 @@ export default function UserFormsPage2({ navigation }) {
     );
   }
 
-  const GoNext = () => navigation.navigate("UserFormsScreen3");
+  const GoNext = () => { navigation.navigate("UserFormsScreen3")};
 
   return (
     <View style={styles.container}>
@@ -62,52 +125,71 @@ export default function UserFormsPage2({ navigation }) {
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.h1}>Centres d’intérêts</Text>
 
+
+        {/* Dropdown 1 */}
         <Text style={styles.h3}>
           Qu’est-ce que vous aimez faire pendant votre temps libre ?
         </Text>
         <Dropdown
           style={styles.dropdown}
-          data={themeOptions}
+          data={activityOptions.map((activity) => ({
+            label: activity.theme,
+            value: activity.theme,
+          }))}
           labelField="label"
           valueField="value"
           placeholder="Thèmes"
-          value={theme}
-          onChange={(item) => setTheme(item.value)}
+          value={interestTheme}
+          onChange={(item) => handleInterestThemeChange(item.value)}
         />
 
         <Dropdown
           style={styles.dropdown}
-          data={categorieOptions}
+          data={filteredInterestCategories.map((category) => ({
+            label: category,
+            value: category,
+          }))}
           labelField="label"
           valueField="value"
           placeholder="Catégories"
-          value={categorie}
-          onChange={(item) => setCategorie(item.value)}
+          value={interestCategorie}
+          onChange={(item) => setInterestCategorie(item.value)}
         />
 
+
+
+        {/* Dropdown 2 */}
         <Text style={styles.h3}>
           Qu’est-ce que vous savez bien faire et aimeriez partager ?
         </Text>
         <Dropdown
           style={styles.dropdown}
-          data={themeOptions}
+          data={activityOptions.map((activity) => ({
+            label: activity.theme,
+            value: activity.theme,
+          }))}
           labelField="label"
           valueField="value"
           placeholder="Thèmes"
-          value={theme}
-          onChange={(item) => setTheme(item.value)}
+          value={skillTheme}
+          onChange={(item) => handleSkillThemeChange(item.value)}
         />
 
         <Dropdown
           style={styles.dropdown}
-          data={categorieOptions}
+          data={filteredSkillCategories.map((category) => ({
+            label: category,
+            value: category,
+          }))}
           labelField="label"
           valueField="value"
           placeholder="Catégories"
-          value={categorie}
-          onChange={(item) => setCategorie(item.value)}
+          value={skillCategorie}
+          onChange={(item) => setSkillCategorie(item.value)}
         />
 
+
+        {/* Radiobutton Gender Choice */}
         <Text style={styles.h3}>
           Êtes-vous intéressé(e) par des activités d'engagement social ou de
           bénévolat ?
@@ -126,21 +208,11 @@ export default function UserFormsPage2({ navigation }) {
           </RadioButton.Group>
         </View>
 
+        {/* Arrow navigation */}
         <View style={styles.arrow}>
-          <FontAwesome
-            name="arrow-right"
-            size={40}
-            color="black"
-            onPress={GoNext}
-          />
+          <FontAwesome name="arrow-right" size={40} color="black" onPress={GoNext}/>
         </View>
       </ScrollView>
-
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }
