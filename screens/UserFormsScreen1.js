@@ -14,12 +14,17 @@ import AppLoading from "expo-app-loading";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { RadioButton } from "react-native-paper";
+import { useDispatch } from 'react-redux';
+import { CreateAccount } from "../reducers/users";
 
 export default function UserFormsPage1({ navigation }) {
+
+  const dispatch = useDispatch()
+
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [userName, setUserName] = useState("");
+  const [nickName, setNickName] = useState("");
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
   const [manualDate, setManualDate] = useState(
@@ -30,6 +35,7 @@ export default function UserFormsPage1({ navigation }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [email, setEmail] = useState('')
 
   const loadFonts = async () => {
     await Font.loadAsync({
@@ -40,13 +46,33 @@ export default function UserFormsPage1({ navigation }) {
   };
 
   const CheckUserInfosAndNavigation = () => {
-    console.log(name);
-    console.log(lastName);
-    console.log(userName);
-    console.log(date);
-    console.log(checked);
-    console.log(password);
-    console.log(confirmPassword);
+            fetch('http://10.10.200.19:3000/users/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          firstName : firstName,
+          lastName : lastName,
+          email : email,
+          nickName: nickName,
+          birthdate: date.toISOString(),
+          gender : checked,
+          password : password,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.result);
+          });
+
+
+    // dispatch(createAccount(firstName));
+    // dispatch(lastName);
+    // dispatch(nickName);
+    // dispatch(date);
+    // dispatch(email)
+    // console.log(checked);
+    // console.log(password);
+    // console.log(confirmPassword);
     navigation.navigate("UserFormsScreen2");
   };
 
@@ -97,22 +123,29 @@ export default function UserFormsPage1({ navigation }) {
 
         <TextInput
           style={styles.input}
-          value={lastName}
-          onChangeText={setLastName}
-          placeholder="Nom"
-          placeholderTextColor="#A9A9A9"
-        />
-        <TextInput
-          style={styles.input}
-          value={name}
-          onChangeText={setName}
+          value={firstName}
+          onChangeText={setFirstName}
           placeholder="Prénom"
           placeholderTextColor="#A9A9A9"
         />
         <TextInput
           style={styles.input}
-          value={userName}
-          onChangeText={setUserName}
+          value={lastName}
+          onChangeText={setLastName}
+          placeholder="Nom"
+          placeholderTextColor="#A9A9A9"
+        />
+         <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Email"
+          placeholderTextColor="#A9A9A9"
+        />
+        <TextInput
+          style={styles.input}
+          value={nickName}
+          onChangeText={setNickName}
           placeholder="Nom d'utilisateur"
           placeholderTextColor="#A9A9A9"
         />
@@ -130,14 +163,14 @@ export default function UserFormsPage1({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {showPicker && (
+        {/* {showPicker && (
           <DateTimePicker
             value={date}
             mode="date"
             display="calendar"
             onChange={onChangeDate}
           />
-        )}
+        )} */}
 
         <View style={styles.radioGroup}>
           {["Homme", "Femme", "Autre"].map((value) => (
@@ -201,12 +234,6 @@ export default function UserFormsPage1({ navigation }) {
           />
         </View>
       </ScrollView>
-
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }

@@ -6,15 +6,22 @@ import AppLoading from "expo-app-loading";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
 
-const data = [
-  { label: "Item 1", value: "1" },
-  { label: "Item 2", value: "2" },
-  { label: "Item 3", value: "3" },
-  { label: "Item 4", value: "4" },
-  { label: "Item 5", value: "5" },
-  { label: "Item 6", value: "6" },
-  { label: "Item 7", value: "7" },
-  { label: "Item 8", value: "8" },
+const groupOptions = [
+  { label: 'Petit groupe (2-5 personnes)', value: 'petit_groupe' },
+  { label: 'Groupe moyen (6-10 personnes)', value: 'groupe_moyen' },
+  { label: 'Grand groupe (10+ personnes)', value: 'grand_groupe' }
+];
+
+
+const interestOptions = [
+  { label: 'Similaires', value: 'similaires' },
+  { label: 'Divers', value: 'divers' }
+];
+
+const ageOptions = [
+  { label: 'Intergénérationnelles', value: 'intergenerationnelles' },
+  { label: 'Proche de mon âge', value: 'proche_de_mon_age' },
+  { label: 'Peu importe', value: 'peu_importe' }
 ];
 
 export default function UserFormsPage4({ navigation }) {
@@ -23,7 +30,7 @@ export default function UserFormsPage4({ navigation }) {
   const [activityPreference, setActivityPreference] = useState(null);
   const [generationPreference, setGenerationPreference] = useState(null);
 
-  // Charger les polices personnalisées
+
   const loadFonts = async () => {
     await Font.loadAsync({
       ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
@@ -69,7 +76,7 @@ export default function UserFormsPage4({ navigation }) {
         </Text>
         <Dropdown
           style={styles.dropdown}
-          data={data}
+          data={groupOptions}
           labelField="label"
           valueField="value"
           placeholder="Choisissez !"
@@ -86,7 +93,7 @@ export default function UserFormsPage4({ navigation }) {
         </Text>
         <Dropdown
           style={styles.dropdown}
-          data={data}
+          data={interestOptions}
           labelField="label"
           valueField="value"
           placeholder="Choisissez !"
@@ -101,7 +108,7 @@ export default function UserFormsPage4({ navigation }) {
         </Text>
         <Dropdown
           style={styles.dropdown}
-          data={data}
+          data={ageOptions}
           labelField="label"
           valueField="value"
           placeholder="Choisissez !"
@@ -109,7 +116,7 @@ export default function UserFormsPage4({ navigation }) {
           onChange={(item) => setGenerationPreference(item.value)}
         />
 
-        {/* Arrow Icon */}
+        {/* Arrow Navigation */}
         <View style={styles.arrow}>
           <FontAwesome
             name="arrow-right"
@@ -119,13 +126,6 @@ export default function UserFormsPage4({ navigation }) {
           />
         </View>
       </ScrollView>
-
-      {/* Footer */}
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }

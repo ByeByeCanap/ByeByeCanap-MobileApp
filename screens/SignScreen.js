@@ -34,11 +34,6 @@ export default function SignScreen( { navigation } ) {
           <Text style={styles.text}>Sign-In</Text>
         </TouchableOpacity>
       </View>
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   )
     
@@ -83,11 +78,6 @@ const styles = StyleSheet.create({
     paddingLeft: 22,
     flexDirection: "column",
     alignItems: "flex-start",
-    alignSelf: "stretch",
-  },
-
-  footer: {
-    height: 100,
     alignSelf: "stretch",
   },
 

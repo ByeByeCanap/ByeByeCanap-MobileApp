@@ -11,13 +11,18 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../reducers/users';
+
 
 export default function UserFormsPage7({ navigation }) {
+
+  // const user = useSelector((state) => state.user);
+
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [choice, setChoice] = useState(null);
-  const [value, onChangeText] = useState("");
+  const [descriptionProfil, setDescriptionProfil] = useState("");
 
   const loadFonts = async () => {
     await Font.loadAsync({
@@ -27,10 +32,11 @@ export default function UserFormsPage7({ navigation }) {
     });
   };
 
-  const dropdownOptions = [
-    { label: "Choice1", value: "choice2" },
-    { label: "Choice2", value: "choice2" },
-    { label: "Choice3", value: "choice3" },
+  const suggestionsOptions = [
+    { label: "En fonction de mes centres d’intérêt", value: "interet" },
+    { label: "En fonction de mes compétences", value: "competences" },
+    { label: "En fonction de mes disponibilités", value: "disponibilites" },
+    { label: "en fonction de mes valeurs", value: "valeurs" },
   ];
 
   if (!fontsLoaded) {
@@ -43,7 +49,57 @@ export default function UserFormsPage7({ navigation }) {
     );
   }
 
-  const GoNext = () => navigation.navigate("HomeScreen");
+    const CheckUserInfosAndNavigation = () => {
+
+      // fetch('http://10.10.200.19:3000/users/signup', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ 
+      //     firstName : user.firstName,
+      //     lastName : lastName,
+      //     email : email,
+      //     nickName: nickName,
+      //     birthdate: date.toISOString(),
+      //     gender : gender,
+      //     password : password,
+      //     themesInterest : interestTheme,
+      //     categoriesInterest : interestCategorie,
+      //     themesSkill : skillTheme,
+      //     categoriesSkill : skillCategorie,
+      //     motivations : motivation,
+      //     availability : availability,
+      //     locationPreference : place,
+      //     preferredGroupType : groupPreference,
+      //     personalValues : values,
+      //     preferredPeople : activityPreference,
+      //     causes : project,
+      //     suggestions : choice,
+      //   }),
+      // })
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     console.log(data);
+          // if (data.result) {
+          //   dispatch(CreateAccount({ 
+          //     name: newPlace, 
+          //     latitude: tempCoordinates.latitude, 
+          //     longitude: tempCoordinates.longitude 
+          //   }));
+          //   setModalVisible(false);
+          //   setNewPlace('');
+          // }
+        // })
+      // dispatch(CreateAccount(firstName));
+      // dispatch(CreateAccount(lastName));
+      // dispatch(CreateAccount(nickName));
+      // dispatch(CreateAccount(gender));
+      // dispatch(CreateAccount(date));
+      // dispatch(CreateAccount(password));
+      // dispatch(CreateAccount(isChecked));
+      // dispatch(login(email));
+      navigation.navigate("HomeScreen");
+      // dispatch(login(descriptionProfil));
+  };
 
   return (
     <View style={styles.container}>
@@ -63,11 +119,11 @@ export default function UserFormsPage7({ navigation }) {
         <Text style={styles.h1}>Matching et Suggestions</Text>
 
         <Text style={styles.h3}>
-          Pourquoi voulez-vous participer à des activités ?
+        Je veux des suggestions personnalisées d’activités ou de groupes..
         </Text>
         <Dropdown
           style={styles.dropdown}
-          data={dropdownOptions}
+          data={suggestionsOptions}
           labelField="label"
           valueField="value"
           placeholder="Choisissez !"
@@ -80,21 +136,15 @@ export default function UserFormsPage7({ navigation }) {
         </Text>
         <TextInput
           style={styles.textInput}
-          onChangeText={(text) => onChangeText(text)}
-          value={value}
+          onChangeText={(descriptionProfil) => setDescriptionProfil(descriptionProfil)}
+          value={descriptionProfil}
           placeholder="Dites-nous en plus !"
         />
 
-        <TouchableOpacity style={styles.button} onPress={GoNext}>
+        <TouchableOpacity style={styles.button} onPress={CheckUserInfosAndNavigation}>
           <Text style={styles.text}>Soumettre profil</Text>
         </TouchableOpacity>
       </ScrollView>
-
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }

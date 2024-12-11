@@ -5,17 +5,17 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
-import { RadioButton } from "react-native-paper";
 
 const availabilityOptions = [
-  { label: "En semaine", value: "en semaine" },
-  { label: "En soirée", value: "en soirée" },
-  { label: "Plutôt le week-end", value: "weekend" },
+  { label: 'En semaine', value: 'en_semaine' },
+  { label: 'En soirée', value: 'en_soiree' },
+  { label: 'Le week-end', value: 'weekend' },
+  { label: 'Journée', value: 'journee' },
 ];
 
 const placeOptions = [
-  { label: "En intérieur", value: "intérieur" },
-  { label: "En extérieur", value: "extérieur" },
+  { label: 'En intérieur', value: 'interieur' },
+  { label: 'En extérieur', value: 'exterieur' },
 ];
 
 export default function UserFormsPage5({ navigation }) {
@@ -84,7 +84,7 @@ export default function UserFormsPage5({ navigation }) {
           value={place}
           onChange={(item) => setPlace(item.value)}
         />
-
+        {/* Arrow Navigation */}
         <View style={styles.arrow}>
           <FontAwesome
             name="arrow-right"
@@ -94,12 +94,6 @@ export default function UserFormsPage5({ navigation }) {
           />
         </View>
       </ScrollView>
-
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }
