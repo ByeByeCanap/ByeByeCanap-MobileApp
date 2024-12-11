@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Font from "expo-font";
@@ -13,16 +14,16 @@ import AppLoading from "expo-app-loading";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
 
-export default function UserFormsPage7() {
+export default function UserFormsPage7({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [choice, setChoice] = useState(null);
   const [value, onChangeText] = useState("");
 
   const loadFonts = async () => {
     await Font.loadAsync({
-      ParkinsansMedium: require("./assets/fonts/ParkinsansMedium.ttf"),
-      NotoSansDisplayLight: require("./assets/fonts/NotoSansDisplayLight.ttf"),
-      NotoSansDisplayRegular: require("./assets/fonts/NotoSansDisplayRegular.ttf"),
+      ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
+      NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
+      NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
     });
   };
 
@@ -42,6 +43,8 @@ export default function UserFormsPage7() {
     );
   }
 
+  const GoNext = () => navigation.navigate("HomeScreen");
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -52,7 +55,7 @@ export default function UserFormsPage7() {
         <Image
           style={styles.logoIcon}
           resizeMode="cover"
-          source={require("./assets/logoIcon.png")}
+          source={require("../assets/logoIcon.png")}
         />
       </LinearGradient>
 
@@ -73,7 +76,7 @@ export default function UserFormsPage7() {
         />
 
         <Text style={styles.h3}>
-        Pour finir, une petite description sur vous ?
+          Pour finir, une petite description sur vous ?
         </Text>
         <TextInput
           style={styles.textInput}
@@ -82,7 +85,7 @@ export default function UserFormsPage7() {
           placeholder="Dites-nous en plus !"
         />
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={GoNext}>
           <Text style={styles.text}>Soumettre profil</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -128,24 +131,24 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   h3: {
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
     fontSize: 18,
-    fontFamily: 'NotoSansDisplayRegular',
-    color: '#000',
+    fontFamily: "NotoSansDisplayRegular",
+    color: "#000",
     paddingTop: 30,
   },
   dropdown: {
-    width: '100%',
+    width: "100%",
     height: 50,
     borderRadius: 19,
     borderWidth: 1,
-    borderColor: '#F3773B',
-    backgroundColor: '#fff',
+    borderColor: "#F3773B",
+    backgroundColor: "#fff",
     paddingHorizontal: 15,
     marginVertical: 10,
-    fontFamily: 'NotoSansDisplayLight',
+    fontFamily: "NotoSansDisplayLight",
     fontSize: 16,
-    color: '#282828'
+    color: "#282828",
   },
   textInput: {
     borderWidth: 1,
@@ -168,19 +171,19 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
 
-  button : {
-    backgroundColor: '#F3773B',
+  button: {
+    backgroundColor: "#F3773B",
     paddingTop: 10,
     borderRadius: 19,
     marginVertical: 10,
-    alignItems: 'center',
+    alignItems: "center",
     width: 227,
     height: 50,
   },
 
   text: {
-    color: 'white',
-    fontFamily: 'ParkinsansMedium',
+    color: "white",
+    fontFamily: "ParkinsansMedium",
     fontSize: 20,
-  }
+  },
 });

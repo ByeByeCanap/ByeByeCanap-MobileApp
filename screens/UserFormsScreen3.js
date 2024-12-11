@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
+  TextInput,
   Image,
   ScrollView,
 } from "react-native";
@@ -12,16 +13,16 @@ import AppLoading from "expo-app-loading";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
 
-export default function UserFormsPage3() {
+export default function UserFormsPage3({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [choice, setChoice] = useState(null);
   const [value, onChangeText] = useState("");
 
   const loadFonts = async () => {
     await Font.loadAsync({
-      ParkinsansMedium: require("./assets/fonts/ParkinsansMedium.ttf"),
-      NotoSansDisplayLight: require("./assets/fonts/NotoSansDisplayLight.ttf"),
-      NotoSansDisplayRegular: require("./assets/fonts/NotoSansDisplayRegular.ttf"),
+      ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
+      NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
+      NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
     });
   };
 
@@ -41,6 +42,8 @@ export default function UserFormsPage3() {
     );
   }
 
+  const GoNext = () => navigation.navigate("UserFormsScreen4");
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -51,7 +54,7 @@ export default function UserFormsPage3() {
         <Image
           style={styles.logoIcon}
           resizeMode="cover"
-          source={require("./assets/logoIcon.png")}
+          source={require("../assets/logoIcon.png")}
         />
       </LinearGradient>
 
@@ -83,7 +86,12 @@ export default function UserFormsPage3() {
         />
 
         <View style={styles.arrow}>
-          <FontAwesome name="arrow-right" size={40} color="black" />
+          <FontAwesome
+            name="arrow-right"
+            size={40}
+            color="black"
+            onPress={GoNext}
+          />
         </View>
       </ScrollView>
 
