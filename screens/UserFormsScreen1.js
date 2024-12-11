@@ -14,7 +14,6 @@ import AppLoading from "expo-app-loading";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { RadioButton } from "react-native-paper";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function UserFormsPage1({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -38,6 +37,17 @@ export default function UserFormsPage1({ navigation }) {
       NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
       NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
     });
+  };
+
+  const CheckUserInfosAndNavigation = () => {
+    console.log(name);
+    console.log(lastName);
+    console.log(userName);
+    console.log(date);
+    console.log(checked);
+    console.log(password);
+    console.log(confirmPassword);
+    navigation.navigate("UserFormsScreen2");
   };
 
   const onChangeDate = (event, selectedDate) => {
@@ -87,15 +97,15 @@ export default function UserFormsPage1({ navigation }) {
 
         <TextInput
           style={styles.input}
-          value={name}
-          onChangeText={setName}
+          value={lastName}
+          onChangeText={setLastName}
           placeholder="Nom"
           placeholderTextColor="#A9A9A9"
         />
         <TextInput
           style={styles.input}
-          value={lastName}
-          onChangeText={setLastName}
+          value={name}
+          onChangeText={setName}
           placeholder="Prénom"
           placeholderTextColor="#A9A9A9"
         />
@@ -187,7 +197,7 @@ export default function UserFormsPage1({ navigation }) {
             name="arrow-right"
             size={40}
             color="black"
-            onPress={GoNext}
+            onPress={CheckUserInfosAndNavigation}
           />
         </View>
       </ScrollView>

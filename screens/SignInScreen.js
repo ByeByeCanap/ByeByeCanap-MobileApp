@@ -11,11 +11,15 @@ import {
   Image,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { BACK_IP } from "@env";
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  const goBack = () => navigation.navigate('SignScreen');
+  const goBack = () => {
+    navigation.navigate("SignScreen");
+    console.log(BACK_IP);
+  };
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
   const [eyeStatus, setEyeStatus] = useState(false);
@@ -23,7 +27,7 @@ export default function SignIn({ navigation }) {
 
   const handleSignIn = () => {
     //console.log('Click is working'); //ok
-    fetch("http://10.10.200.22:3000/users/signin", {
+    fetch(`${BACK_IP}/users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -74,7 +78,7 @@ export default function SignIn({ navigation }) {
 
       <View style={styles.inputContainer}>
         <View style={styles.arrow}>
-          <FontAwesome name="arrow-left" size={30} onPress={goBack}/>
+          <FontAwesome name="arrow-left" size={30} onPress={goBack} />
         </View>
         <View style={styles.input}>
           <TextInput
@@ -181,24 +185,24 @@ const styles = StyleSheet.create({
     bottom: 40,
   },
   input: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     width: 300,
     height: 50,
     borderRadius: 19,
     borderWidth: 1,
-    borderColor: '#F3773B',
-    backgroundColor: '#fff',
+    borderColor: "#F3773B",
+    backgroundColor: "#fff",
     paddingHorizontal: 15,
     marginVertical: 10,
   },
   textInput: {
-    flex: 1, 
+    flex: 1,
     fontSize: 16,
-    color: '#282828',
+    color: "#282828",
     fontFamily: "Parkinsans-Medium",
     fontWeight: "300",
-    fontSize: 20
+    fontSize: 20,
   },
   eyeIconContainer: {
     padding: 5,
