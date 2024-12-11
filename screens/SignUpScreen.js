@@ -1,14 +1,9 @@
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text,
-  TextInput,
-} from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function SignUpScreen({ navigation }) {
-  const GoBack = () => navigation.navigate("SignScreen");
+  const GoBack = () => navigation.navigate("UserTypeScreen");
+  const GoNext = () => navigation.navigate("UserFormsScreen1");
 
   return (
     <View style={styles.container}>
@@ -24,7 +19,7 @@ export default function SignUpScreen({ navigation }) {
         </View>
         <Text style={styles.separator}>OR</Text>
         <View style={styles.DownZone}>
-          <TouchableOpacity style={styles.EmailButton}>
+          <TouchableOpacity style={styles.EmailButton} onPress={GoNext}>
             <FontAwesome name="envelope" size={20} color="white" />
             <Text style={styles.TexteEmailButton}>Connect with email</Text>
           </TouchableOpacity>
