@@ -114,7 +114,6 @@ function App() {
             />
             <Stack.Screen name="SignInScreen" component={SignInScreen} />
             <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} />
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
