@@ -1,24 +1,29 @@
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
+// SignUpScreen Function
 export default function SignUpScreen({ navigation }) {
+  // Handling Previous and Next Pages for navigations
   const GoBack = () => navigation.navigate("UserTypeScreen");
   const GoNext = () => navigation.navigate("UserFormsScreen1");
 
   return (
     <View style={styles.container}>
       <View style={styles.arrow}>
+        {/* Calls of the GoBack functions to navigate on UserTypeScreen */}
         <FontAwesome name="arrow-left" size={30} onPress={GoBack} />
       </View>
       <View>
         <View style={styles.UpZone}>
           <TouchableOpacity style={styles.GoogleButton}>
+            {/* Google's Button (not fonctionnal for the moment) */}
             <FontAwesome name="google" size={20} color="white" />
             <Text style={styles.TextGoogleButton}>Connect with Google</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.separator}>OR</Text>
         <View style={styles.DownZone}>
+          {/* Calls of the GoNext functions to navigate on UserFormsScreen1 */}
           <TouchableOpacity style={styles.EmailButton} onPress={GoNext}>
             <FontAwesome name="envelope" size={20} color="white" />
             <Text style={styles.TexteEmailButton}>Connect with email</Text>
@@ -29,6 +34,7 @@ export default function SignUpScreen({ navigation }) {
   );
 }
 
+// CSS Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
