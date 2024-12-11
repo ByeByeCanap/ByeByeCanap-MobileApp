@@ -43,7 +43,7 @@ export default function UserFormsPage7({ navigation }) {
     );
   }
 
-  const GoNext = () => navigation.navigate("HomeScreen");
+  const GoNext = () => navigation.navigate("TabNavigator");
 
   return (
     <View style={styles.container}>
