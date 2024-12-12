@@ -20,6 +20,7 @@ import MapScreen from "./screens/MapScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import UserTypeScreen from "./screens/UserTypeScreen";
 import HomeScreen from "./screens/HomeScreen";
+import SearchScreen from "./screens/SearchScreen";
 
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -48,7 +49,7 @@ const TabNavigator = () => {
           let iconName = "";
 
           if (route.name === "Home") {
-            iconName = "house";
+            iconName = "home";
           } else if (route.name === "Map") {
             iconName = "map";
           } else if (route.name === "Profile") {
@@ -84,6 +85,8 @@ function App() {
             />
             <Stack.Screen name="SignInScreen" component={SignInScreen} />
             <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} />
+            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+            <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
