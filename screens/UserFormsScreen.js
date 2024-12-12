@@ -14,10 +14,11 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { RadioButton } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { CreateAccount } from "../reducers/users";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Dropdown } from "react-native-element-dropdown";
+import { userType } from "../reducers/users";
 
 const activityOptions = [
   {
@@ -174,9 +175,12 @@ export default function UserFormsPage({ navigation }) {
   const [availability, setAvailability] = useState([]);
   const [preferences, setPreferences] = useState(null);
   const [values, setValues] = useState([]);
+  const [project, setProject] = useState("");
   const [choice, setChoice] = useState(null);
   const [descriptionProfil, setDescriptionProfil] = useState("");
 
+
+  const user = useSelector((state) => state.users.value);
 
   const loadFonts = async () => {
     await Font.loadAsync({
@@ -239,23 +243,38 @@ export default function UserFormsPage({ navigation }) {
   };
 
   const GoNext = () => {
-    //       fetch('http://10.10.200.19:3000/users/signup', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     firstName : firstName,
-    //     lastName : lastName,
-    //     email : email,
-    //     nickName: nickName,
-    //     birthdate: date.toISOString(),
-    //     gender : checked,
-    //     password : password,
-    //   }),
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data.result);
-    //     });
+          fetch('http://10.10.200.19:3000/users/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName : firstName,
+        lastName : lastName,
+        email : email,
+        nickName: nickName,
+        birthdate: date.toISOString(),
+        gender : gender,
+        password : password,
+        userType : user.userType, 
+        birthdate : selectedDate,
+        themesInterest : interestTheme,
+        categoriesInterest : interestCategorie,
+        themesSkill : skillTheme,
+        categoriesSkill : skillCategorie,
+        motivations : motivation,
+        preferredGroupType : groupPreference,
+        preferredPeople : generationPreference,
+        availability : availability,
+        locationPreference : place,
+        personalValues : values,
+        causes : project,
+        suggestions : choice,
+        descriptionProfile : descriptionProfil,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        });
 
     navigation.navigate("TabNavigator", { screen: "HomeScreen" });
   };
@@ -607,8 +626,8 @@ export default function UserFormsPage({ navigation }) {
           labelField="label"
           valueField="value"
           placeholder="Choisissez !"
-          value={values}
-          onChange={(item) => setValues(item.value)}
+          value={project}
+          onChange={(item) => setProject(item.value)}
         />
 
         <Text style={styles.h1}>Matching et Suggestions</Text>

@@ -5,10 +5,20 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { userType } from "../reducers/users";
 
 export default function UserTypeScreen( { navigation } ) {
+
+  const dispatch = useDispatch();
+
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const particularToSignUp = () => navigation.navigate('SignUpScreen');
+  const particularToSignUp = () =>  {
+    console.log(dispatch(userType('Particulier')))
+    dispatch(userType('Particulier'));
+    navigation.navigate('SignUpScreen')};
+
+
   const goBack = () => navigation.navigate('SignScreen');
 
   const loadFonts = async () => {
