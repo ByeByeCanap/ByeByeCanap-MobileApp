@@ -14,6 +14,7 @@ const initialState = {
     nickName: null,
     birthdate: null,
     gender: null,
+    userType : null,
   },
 };
 
@@ -40,9 +41,12 @@ export const usersSlice = createSlice({
     logout: (state) => {
       state.value = null;
     },
+    userType: (state, action) => {
+      state.value.userType = action.payload
+    }
   },
 });
 
 // Export
-export const { login, CreateAccount, logout } = usersSlice.actions;
+export const { login, CreateAccount, logout, userType } = usersSlice.actions;
 export default usersSlice.reducer;
