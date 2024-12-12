@@ -13,6 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Calendar } from "react-native-calendars";
 
+//Tableau d'activité
 const activityOptions = [
   {
     categorie: ["Artistique", "Manuel", "Musique"],
@@ -59,6 +60,9 @@ const activityOptions = [
 
 export default function HomeScreen({ navigation }) {
   const [isModalVisible, setModalVisible] = useState(false);
+  const handleTabNav = () => { 
+    navigation.navigate("TabNavigation", { screen: "ProfileScreen" } );
+  }
 
   // Extraire toutes les catégories en un tableau unique
   const allCategories = activityOptions.flatMap((option) => option.categorie);
@@ -145,7 +149,7 @@ export default function HomeScreen({ navigation }) {
           <TouchableOpacity style={styles.actionButton}>
             <Text style={styles.text}>Proposer un événement</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity style={styles.actionButton} >
             <Text style={styles.text}>Chercher un événement</Text>
           </TouchableOpacity>
         </View>
