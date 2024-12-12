@@ -1,18 +1,71 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  ScrollView,
+  Modal,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Calendar } from "react-native-calendars";
 
-export default function HomeScreen({ navigation }) {
+const activityOptions = [
+  {
+    categorie: ["Artistique", "Manuel", "Musique"],
+  },
+  {
+    categorie: [
+      "Pratiquer en extérieur (terre)",
+      "Pratiquer en extérieur (mer)",
+      "Pratiquer en intérieur",
+      "Supporter",
+    ],
+  },
+  {
+    categorie: [
+      "Cinéma",
+      "Concert",
+      "Musées",
+      "Lecture",
+      "Musique (pratiquer)",
+    ],
+  },
+  {
+    categorie: ["Bars", "Restaurant", "Cuisiner"],
+  },
+  {
+    categorie: [
+      "Petsitter",
+      "Aide à la personne",
+      "Services",
+      "SOS",
+      "Acte citoyen",
+    ],
+  },
+  {
+    categorie: ["Relaxation", "Mysticisme"],
+  },
+  {
+    categorie: ["Langues", "Musique", "Bricolage"],
+  },
+  {
+    categorie: ["Divertissement", "Jeux", "Rire"],
+  },
+];
 
-  const [profiles, setProfiles] = useState([
-    { id: "1", name: "User 1" },
-    { id: "2", name: "User 2" },
-    { id: "3", name: "User 3" },
-    { id: "4", name: "User 4" },
-    {id: "5", name: "User 5"},
-  ]);
+export default function HomeScreen({ navigation }) {
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  // Extraire toutes les catégories en un tableau unique
+  const allCategories = activityOptions.flatMap((option) => option.categorie);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   return (
     <View style={styles.container}>
@@ -34,13 +87,15 @@ export default function HomeScreen({ navigation }) {
         </View>
       </LinearGradient>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
         <View style={styles.buttonSearch}>
           <TouchableOpacity style={styles.button}>
             <Text style={styles.text}>Thèmes</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={toggleModal}>
             <Text style={styles.text}>Catégories</Text>
           </TouchableOpacity>
         </View>
@@ -60,20 +115,27 @@ export default function HomeScreen({ navigation }) {
             monthTextColor: "#f3773b",
           }}
           markedDates={{
-            "2024-12-11": { selected: true, marked: true, selectedColor: "#f3773b" },
+            "2024-12-11": {
+              selected: true,
+              marked: true,
+              selectedColor: "#f3773b",
+            },
           }}
         />
 
         <Text style={styles.sectionTitle}>Proposition de profils</Text>
         <View style={styles.avatarContainer}>
           <FlatList
-            data={profiles}
+            data={[{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }, { id: "5" }]}
             horizontal
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
+            renderItem={() => (
               <View style={styles.avatar}>
-                <FontAwesome name="user-circle" size={50} color="#f3773b" />
-                <Text style={styles.avatarName}>{item.name}</Text>
+                <Image
+                  style={styles.logoIcon}
+                  resizeMode="cover"
+                  source={require("../assets/avatar1.png")}
+                />
               </View>
             )}
           />
@@ -89,11 +151,28 @@ export default function HomeScreen({ navigation }) {
         </View>
       </ScrollView>
 
+      {/* Modal */}
+      <Modal
+        visible={isModalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={toggleModal}
+      >
+        <View style={styles.modalOverlay}>
+          <ScrollView contentContainerStyle={styles.modalContent}>
+            {allCategories.map((item, index) => (
+              <Text key={index} style={styles.modalOptionText}>
+                {item}
+              </Text>
+            ))}
+          </ScrollView>
+        </View>
+      </Modal>
+
       <LinearGradient
         style={styles.footer}
         colors={["#fdc731", "#f3773b"]}
         start={{ x: 0, y: 1 }}
-        onPress={handleTabNavigate}
       />
     </View>
   );
@@ -128,7 +207,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     alignItems: "center",
-    paddingBottom: 50, 
+    paddingBottom: 50,
   },
   buttonSearch: {
     flexDirection: "row",
@@ -165,12 +244,6 @@ const styles = StyleSheet.create({
   avatar: {
     marginHorizontal: 10,
   },
-  avatarName: {
-    fontSize: 12,
-    color: "#333",
-    marginTop: 5,
-    alignSelf: "center"
-  },
   actionButtons: {
     marginVertical: 20,
     width: "90%",
@@ -185,5 +258,19 @@ const styles = StyleSheet.create({
   footer: {
     height: 100,
     alignSelf: "stretch",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(253, 199, 49, 0.9)",
+    justifyContent: "center",
+  },
+  modalContent: {
+    alignItems: "center",
+    paddingVertical: 50,
+  },
+  modalOptionText: {
+    fontSize: 18,
+    color: "#333",
+    marginVertical: 15,
   },
 });
