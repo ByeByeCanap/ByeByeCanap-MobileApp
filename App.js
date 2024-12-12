@@ -15,13 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SignScreen from "./screens/SignScreen";
 import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignUpScreen";
-import UserFormsScreen1 from "./screens/UserFormsScreen1";
-import UserFormsScreen2 from "./screens/UserFormsScreen2";
-import UserFormsScreen3 from "./screens/UserFormsScreen3";
-import UserFormsScreen4 from "./screens/UserFormsScreen4";
-import UserFormsScreen5 from "./screens/UserFormsScreen5";
-import UserFormsScreen6 from "./screens/UserFormsScreen6";
-import UserFormsScreen7 from "./screens/UserFormsScreen7";
+import UserFormsScreen from "./screens/UserFormsScreen";
 import MapScreen from "./screens/MapScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import UserTypeScreen from "./screens/UserTypeScreen";
@@ -85,32 +79,8 @@ function App() {
             <Stack.Screen name="SignScreen" component={SignScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
             <Stack.Screen
-              name="UserFormsScreen1"
-              component={UserFormsScreen1}
-            />
-            <Stack.Screen
-              name="UserFormsScreen2"
-              component={UserFormsScreen2}
-            />
-            <Stack.Screen
-              name="UserFormsScreen3"
-              component={UserFormsScreen3}
-            />
-            <Stack.Screen
-              name="UserFormsScreen4"
-              component={UserFormsScreen4}
-            />
-            <Stack.Screen
-              name="UserFormsScreen5"
-              component={UserFormsScreen5}
-            />
-            <Stack.Screen
-              name="UserFormsScreen6"
-              component={UserFormsScreen6}
-            />
-            <Stack.Screen
-              name="UserFormsScreen7"
-              component={UserFormsScreen7}
+              name="UserFormsScreen"
+              component={UserFormsScreen}
             />
             <Stack.Screen name="SignInScreen" component={SignInScreen} />
             <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} />

@@ -6,7 +6,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 export default function SignUpScreen({ navigation }) {
   // Handling Previous and Next Pages for navigations
   const GoBack = () => navigation.navigate("UserTypeScreen");
-  const GoNext = () => navigation.navigate("UserFormsScreen1");
+  const GoNext = () => navigation.navigate("UserFormsScreen");
   
 
   return (
