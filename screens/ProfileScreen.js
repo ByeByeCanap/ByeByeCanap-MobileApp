@@ -4,7 +4,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function ProfilScreen( { navigation } ) {
 
-  const GoBack = () => navigation.navigate("TabNavigation");
+  const GoBack = () => navigation.navigate("TabNavigator", { screen: "HomeScreen" });
+  // const userButton = () => navigation.navigate(" ");
 
   return (
     <View style={styles.container}>
@@ -26,6 +27,7 @@ export default function ProfilScreen( { navigation } ) {
           <View style={styles.textContainer}>
             <Text style={styles.text}>Personnaliser</Text>
             <FontAwesome name="pencil" size={30} />
+            {/* onPress={userButton} */}
           
             <Text style={styles.text}>Thème clair/sombre</Text>
             <FontAwesome name="moon-o" size={30} />

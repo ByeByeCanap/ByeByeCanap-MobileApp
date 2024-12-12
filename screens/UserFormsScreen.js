@@ -369,7 +369,6 @@ export default function UserFormsPage({ navigation }) {
             placeholder="Mot de passe"
             placeholderTextColor="#A9A9A9"
             fontFamily= 'NotoSansDisplayLight'
-            fontSize= '16'
             secureTextEntry={!showPassword}
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
@@ -390,7 +389,6 @@ export default function UserFormsPage({ navigation }) {
             placeholderTextColor="#A9A9A9"
             secureTextEntry={!showConfirmPassword}
             fontFamily= 'NotoSansDisplayLight'
-            fontSize= '16'
           />
           <TouchableOpacity
             onPress={() => setShowConfirmPassword(!showConfirmPassword)}

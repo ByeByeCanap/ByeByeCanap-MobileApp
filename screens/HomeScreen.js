@@ -13,12 +13,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Calendar } from "react-native-calendars";
 
-//Tableau d'activité
 const activityOptions = [
   {
+    theme: "Activités créatrices",
     categorie: ["Artistique", "Manuel", "Musique"],
   },
   {
+    theme: "Sport",
     categorie: [
       "Pratiquer en extérieur (terre)",
       "Pratiquer en extérieur (mer)",
@@ -27,6 +28,7 @@ const activityOptions = [
     ],
   },
   {
+    theme: "Art & Culture",
     categorie: [
       "Cinéma",
       "Concert",
@@ -36,9 +38,11 @@ const activityOptions = [
     ],
   },
   {
+    theme: "Boire & Manger",
     categorie: ["Bars", "Restaurant", "Cuisiner"],
   },
   {
+    theme: "Entraide",
     categorie: [
       "Petsitter",
       "Aide à la personne",
@@ -48,28 +52,47 @@ const activityOptions = [
     ],
   },
   {
+    theme: "Spiritualité",
     categorie: ["Relaxation", "Mysticisme"],
   },
   {
+    theme: "Apprentissage",
     categorie: ["Langues", "Musique", "Bricolage"],
   },
   {
+    theme: "Plaisir coupable",
     categorie: ["Divertissement", "Jeux", "Rire"],
   },
 ];
 
-export default function HomeScreen({ navigation }) {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const handleTabNav = () => { 
-    navigation.navigate("TabNavigation", { screen: "ProfileScreen" } );
-  }
-
-  // Extraire toutes les catégories en un tableau unique
-  const allCategories = activityOptions.flatMap((option) => option.categorie);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+export default function HomeScreen( { navigation } ) {
+  const [isThemeModalVisible, setThemeModalVisible] = useState(false);
+  const [isCategoryModalVisible, setCategoryModalVisible] = useState(false);
+  const [selectedTheme, setSelectedTheme] = useState(null);
+  
+  const goEvent = () => {
+    navigation.navigate('CreateEventScreen')
   };
+
+  const goSearcheEvent = () => {
+    navigation.navigate('SearchScreen')
+  };
+
+  const toggleThemeModal = () => {
+    setThemeModalVisible(!isThemeModalVisible);
+  };
+
+  const toggleCategoryModal = () => {
+    setCategoryModalVisible(!isCategoryModalVisible);
+  };
+
+  const handleThemeSelect = (theme) => {
+    setSelectedTheme(theme);
+    toggleThemeModal(); // Fermeture du modal des thèmes
+  };
+
+  const filteredCategories = selectedTheme
+  ?.categorie || activityOptions.flatMap((data) => data.categorie);
 
   return (
     <View style={styles.container}>
@@ -96,10 +119,10 @@ export default function HomeScreen({ navigation }) {
         contentContainerStyle={styles.scrollContent}
       >
         <View style={styles.buttonSearch}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={toggleThemeModal}>
             <Text style={styles.text}>Thèmes</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={toggleModal}>
+          <TouchableOpacity style={styles.button} onPress={toggleCategoryModal}>
             <Text style={styles.text}>Catégories</Text>
           </TouchableOpacity>
         </View>
@@ -118,19 +141,18 @@ export default function HomeScreen({ navigation }) {
             arrowColor: "#f3773b",
             monthTextColor: "#f3773b",
           }}
-          markedDates={{
-            "2024-12-11": {
-              selected: true,
-              marked: true,
-              selectedColor: "#f3773b",
-            },
-          }}
         />
 
         <Text style={styles.sectionTitle}>Proposition de profils</Text>
         <View style={styles.avatarContainer}>
           <FlatList
-            data={[{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }, { id: "5" }]}
+            data={[
+              { id: "1" },
+              { id: "2" },
+              { id: "3" },
+              { id: "4" },
+              { id: "5" },
+            ]}
             horizontal
             keyExtractor={(item) => item.id}
             renderItem={() => (
@@ -144,27 +166,47 @@ export default function HomeScreen({ navigation }) {
             )}
           />
         </View>
-
         <View style={styles.actionButtons}>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity style={styles.actionButton} onPress={goEvent}>
             <Text style={styles.text}>Proposer un événement</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} >
+          <TouchableOpacity style={styles.actionButton} onPress={goSearcheEvent}>
             <Text style={styles.text}>Chercher un événement</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
 
-      {/* Modal */}
+      {/* Modal des Thèmes */}
       <Modal
-        visible={isModalVisible}
+        visible={isThemeModalVisible}
         transparent={true}
         animationType="slide"
-        onRequestClose={toggleModal}
+        onRequestClose={toggleThemeModal}
       >
         <View style={styles.modalOverlay}>
           <ScrollView contentContainerStyle={styles.modalContent}>
-            {allCategories.map((item, index) => (
+            {activityOptions.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleThemeSelect(item)}
+              >
+                <Text style={styles.modalOptionText}>{item.theme}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+      </Modal>
+
+      {/* Modal des Catégories */}
+      <Modal
+        visible={isCategoryModalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={toggleCategoryModal}
+      >
+        <View style={styles.modalOverlay}>
+          <ScrollView contentContainerStyle={styles.modalContent}>
+            {filteredCategories.map((item, index) => (
               <Text key={index} style={styles.modalOptionText}>
                 {item}
               </Text>
