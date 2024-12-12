@@ -1555,7 +1555,7 @@
   dependencies:
     merge-options "^3.0.4"
 
-"@react-native-community/datetimepicker@^8.2.0":
+"@react-native-community/datetimepicker@8.2.0":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-8.2.0.tgz#f62ac4fc12bd527fbbe93934e6c1cfbb7ba570f3"
   integrity sha512-qrUPhiBvKGuG9Y+vOqsc56RPFcHa1SU2qbAMT0hfGkoFIj3FodE0VuPVrEa8fgy7kcD5NQmkZIKgHOBLV0+hWg==
@@ -6930,6 +6930,13 @@ react-native-element-dropdown@^2.12.2:
   integrity sha512-Tf8hfRuniYEXo+LGoVgIMoItKWuPLX6jbqlwAFgMbBhmWGTuV+g1OVOAx/ny16kgnwp+NhgJoWpxhVvr7HSmXA==
   dependencies:
     lodash "^4.17.21"
+
+react-native-modal-datetime-picker@^18.0.0:
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-18.0.0.tgz#0555b2c9ab34318629a251f250de68a0e3b3980d"
+  integrity sha512-0jdvhhraZQlRACwr7pM6vmZ2kxgzJ4CpnmV6J3TVA6MrXMXK6Zo/upRBKkRp0+fTOiKuNblzesA2U59rYo6SGA==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-native-paper@^5.12.5:
   version "5.12.5"
