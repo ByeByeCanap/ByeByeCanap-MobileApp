@@ -84,8 +84,7 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="SignScreen" component={SignScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
             <Stack.Screen name="UserFormsScreen" component={UserFormsScreen} />
@@ -95,8 +94,14 @@ function App() {
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="ProfilScreen" component={ProfilScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
-            <Stack.Screen name="CreateEventScreen" component={CreateEventScreen} />
-            <Stack.Screen name="SearchEventScreen" component={SearchEventScreen} />
+            <Stack.Screen
+              name="CreateEventScreen"
+              component={CreateEventScreen}
+            />
+            <Stack.Screen
+              name="SearchEventScreen"
+              component={SearchEventScreen}
+            />
             <Stack.Screen name="SolutionScreen" component={SolutionScreen} />
           </Stack.Navigator>
         </NavigationContainer>

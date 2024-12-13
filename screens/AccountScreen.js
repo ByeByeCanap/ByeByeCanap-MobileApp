@@ -19,8 +19,6 @@ export default function AccountScreen({ navigation }) {
         <FontAwesome name="moon-o" size={30} />
         <Text style={styles.text}>Compte</Text>
         <FontAwesome name="user" size={30} onPress={goMyProfil} />
-        <Text style={styles.text}>Compte</Text>
-        <FontAwesome name="user" size={30} />
 
         <Text style={styles.text}>Aide</Text>
         <FontAwesome name="question" size={30} />
