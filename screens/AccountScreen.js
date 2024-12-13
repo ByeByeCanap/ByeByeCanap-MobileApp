@@ -2,10 +2,10 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function ProfilScreen( { navigation } ) {
+export default function AccountScreen( { navigation } ) {
 
-  const GoBack = () => navigation.navigate("TabNavigator", { screen: "HomeScreen" });
   // const userButton = () => navigation.navigate(" ");
+  const goMyProfil = () => navigation.navigate("ProfilScreen")
 
   return (
     <View style={styles.container}>
@@ -22,7 +22,6 @@ export default function ProfilScreen( { navigation } ) {
               source={require("../assets/logoIcon.png")}
             />
           </LinearGradient>
-          <FontAwesome name="arrow-left" size={30} onPress={GoBack} />
 
           <View style={styles.textContainer}>
             <Text style={styles.text}>Personnaliser</Text>
@@ -36,7 +35,7 @@ export default function ProfilScreen( { navigation } ) {
             <FontAwesome name="gear" size={30} />
 
             <Text style={styles.text}>Compte</Text>
-            <FontAwesome name="user" size={30} />
+            <FontAwesome name="user" size={30} onPress={goMyProfil}/>
 
             <Text style={styles.text}>Aide</Text>
             <FontAwesome name="question" size={30} />
