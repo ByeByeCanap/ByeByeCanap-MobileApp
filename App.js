@@ -24,6 +24,7 @@ import SearchScreen from "./screens/SearchScreen";
 
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { LinearGradient } from "expo-linear-gradient";
 
 // REDUX
 const reducers = combineReducers({ users });
@@ -51,16 +52,19 @@ const TabNavigator = () => {
           if (route.name === "Home") {
             iconName = "home";
           } else if (route.name === "Map") {
-            iconName = "map";
+            iconName = "map-marker";
           } else if (route.name === "Profile") {
-            iconName = "user";
+            iconName = "user-circle";
           }
 
           return <FontAwesome name={iconName} size={size} color={color} />;
         },
+        tabBarBackground: () => (
+          <LinearGradient colors={["#fdc731", "#f3773b"]} style={{ flex: 1 }} />
+        ),
 
-        tabBarActiveTintColor: "black",
-        tabBarInactiveTintColor: "grey",
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: "black",
         headerShown: false,
       })}
     >
@@ -79,10 +83,7 @@ function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="SignScreen" component={SignScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-            <Stack.Screen
-              name="UserFormsScreen"
-              component={UserFormsScreen}
-            />
+            <Stack.Screen name="UserFormsScreen" component={UserFormsScreen} />
             <Stack.Screen name="SignInScreen" component={SignInScreen} />
             <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} />
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
