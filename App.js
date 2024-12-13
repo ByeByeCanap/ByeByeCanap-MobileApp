@@ -17,10 +17,11 @@ import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import UserFormsScreen from "./screens/UserFormsScreen";
 import MapScreen from "./screens/MapScreen";
-import ProfileScreen from "./screens/ProfileScreen";
+import AccountScreen from "./screens/AccountScreen";
 import UserTypeScreen from "./screens/UserTypeScreen";
 import HomeScreen from "./screens/HomeScreen";
 import SearchScreen from "./screens/SearchScreen";
+import ProfilScreen from "./screens/ProfilScreen";
 
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -66,7 +67,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Profile" component={AccountScreen} />
     </Tab.Navigator>
   );
 };
@@ -79,14 +80,12 @@ function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="SignScreen" component={SignScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-            <Stack.Screen
-              name="UserFormsScreen"
-              component={UserFormsScreen}
-            />
+            <Stack.Screen name="UserFormsScreen" component={UserFormsScreen} />
             <Stack.Screen name="SignInScreen" component={SignInScreen} />
             <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} />
-            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+            <Stack.Screen name="AccountScreen" component={AccountScreen} />
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
+            <Stack.Screen name="ProfilScreen" component={ProfilScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
