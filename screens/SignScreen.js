@@ -1,27 +1,14 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
-import { LinearGradient } from "expo-linear-gradient";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import Header from "../components/header";
 
-export default function SignScreen( { navigation } ) {
-  const signUp = () => navigation.navigate('UserTypeScreen');
-  const signIn = () => navigation.navigate('SignInScreen');
+export default function SignScreen({ navigation }) {
+  const signUp = () => navigation.navigate("UserTypeScreen");
+  const signIn = () => navigation.navigate("SignInScreen");
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
-
+      <Header />
       <View style={styles.btnContainer}>
         <Text>Pas encore membre ?</Text>
         <TouchableOpacity style={styles.button} onPress={signUp}>
@@ -35,8 +22,7 @@ export default function SignScreen( { navigation } ) {
         </TouchableOpacity>
       </View>
     </View>
-  )
-    
+  );
 }
 
 const styles = StyleSheet.create({
