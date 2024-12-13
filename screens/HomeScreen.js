@@ -75,7 +75,7 @@ export default function HomeScreen( { navigation } ) {
   };
 
   const goSearcheEvent = () => {
-    navigation.navigate('SearchScreen')
+    navigation.navigate('SearchEventScreen')
   };
 
   const toggleThemeModal = () => {

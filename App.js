@@ -22,6 +22,9 @@ import UserTypeScreen from "./screens/UserTypeScreen";
 import HomeScreen from "./screens/HomeScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfilScreen from "./screens/ProfilScreen";
+import CreateEventScreen from "./screens/CreateEventScreen";
+import SearchEventScreen from "./screens/SearchEventScreen";
+import SolutionScreen from "./screens/SolutionScreen";
 
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -77,7 +80,8 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="SignScreen" component={SignScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
             <Stack.Screen name="UserFormsScreen" component={UserFormsScreen} />
@@ -87,6 +91,9 @@ function App() {
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="ProfilScreen" component={ProfilScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
+            <Stack.Screen name="CreateEventScreen" component={CreateEventScreen} />
+            <Stack.Screen name="SearchEventScreen" component={SearchEventScreen} />
+            <Stack.Screen name="SolutionScreen" component={SolutionScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
