@@ -1,31 +1,30 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { userType } from "../reducers/users";
+import Header from "../components/header";
 
-export default function UserTypeScreen( { navigation } ) {
-
+export default function UserTypeScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const particularToSignUp = () =>  {
-    console.log(dispatch(userType('Particulier')))
-    dispatch(userType('Particulier'));
-    navigation.navigate('SignUpScreen')};
+  const particularToSignUp = () => {
+    console.log(dispatch(userType("Particulier")));
+    dispatch(userType("Particulier"));
+    navigation.navigate("SignUpScreen");
+  };
 
-
-  const goBack = () => navigation.navigate('SignScreen');
+  const goBack = () => navigation.navigate("SignScreen");
 
   const loadFonts = async () => {
     await Font.loadAsync({
-      ParkinsansMedium: require('../assets/fonts/ParkinsansMedium.ttf'),
-      NotoSansDisplayLight: require('../assets/fonts/NotoSansDisplayLight.ttf'),
-      NotoSansDisplayRegular: require('../assets/fonts/NotoSansDisplayRegular.ttf'),
+      ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
+      NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
+      NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
     });
   };
 
@@ -41,26 +40,13 @@ export default function UserTypeScreen( { navigation } ) {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
-
+      <Header />
       <View style={styles.arrow}>
-        <FontAwesome name="arrow-left" size={30} onPress={goBack}/>
+        <FontAwesome name="arrow-left" size={30} onPress={goBack} />
       </View>
 
       <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.button} onPress={particularToSignUp} >
+        <TouchableOpacity style={styles.button} onPress={particularToSignUp}>
           <Text style={styles.text}>Particulier</Text>
         </TouchableOpacity>
 
@@ -72,7 +58,6 @@ export default function UserTypeScreen( { navigation } ) {
           <Text style={styles.text}>Association</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
 }
@@ -104,8 +89,8 @@ const styles = StyleSheet.create({
     height: 50,
   },
   text: {
-    color: 'white',
-    fontFamily: 'ParkinsansMedium',
+    color: "white",
+    fontFamily: "ParkinsansMedium",
     fontSize: 20,
   },
   arrow: {

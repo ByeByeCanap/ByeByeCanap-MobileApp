@@ -19,6 +19,7 @@ import { CreateAccount } from "../reducers/users";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Dropdown } from "react-native-element-dropdown";
 import { userType } from "../reducers/users";
+import Header from "../components/header";
 
 const activityOptions = [
   {
@@ -139,7 +140,6 @@ const suggestionsOptions = [
   { label: "en fonction de mes valeurs", value: "valeurs" },
 ];
 
-
 export default function UserFormsPage({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -178,7 +178,6 @@ export default function UserFormsPage({ navigation }) {
   const [project, setProject] = useState("");
   const [choice, setChoice] = useState(null);
   const [descriptionProfil, setDescriptionProfil] = useState("");
-
 
   const user = useSelector((state) => state.users.value);
 
@@ -243,57 +242,47 @@ export default function UserFormsPage({ navigation }) {
   };
 
   const GoNext = () => {
-          fetch('http://10.10.200.19:3000/users/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://10.10.200.19:3000/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        firstName : firstName,
-        lastName : lastName,
-        email : email,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
         nickName: nickName,
         birthdate: date.toISOString(),
-        gender : gender,
-        password : password,
-        userType : user.userType, 
-        birthdate : selectedDate,
-        themesInterest : interestTheme,
-        categoriesInterest : interestCategorie,
-        themesSkill : skillTheme,
-        categoriesSkill : skillCategorie,
-        motivations : motivation,
-        preferredGroupType : groupPreference,
-        preferredPeople : generationPreference,
-        availability : availability,
-        locationPreference : place,
-        personalValues : values,
-        causes : project,
-        suggestions : choice,
-        descriptionProfile : descriptionProfil,
+        gender: gender,
+        password: password,
+        userType: user.userType,
+        birthdate: selectedDate,
+        themesInterest: interestTheme,
+        categoriesInterest: interestCategorie,
+        themesSkill: skillTheme,
+        categoriesSkill: skillCategorie,
+        motivations: motivation,
+        preferredGroupType: groupPreference,
+        preferredPeople: generationPreference,
+        availability: availability,
+        locationPreference: place,
+        personalValues: values,
+        causes: project,
+        suggestions: choice,
+        descriptionProfile: descriptionProfil,
       }),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log(data);
-        });
+      });
 
     navigation.navigate("TabNavigator", { screen: "HomeScreen" });
   };
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
+      <Header />
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.h1} >Identité et généralités</Text>
+        <Text style={styles.h1}>Identité et généralités</Text>
 
         <TextInput
           style={styles.input}
@@ -324,24 +313,22 @@ export default function UserFormsPage({ navigation }) {
           placeholderTextColor="#A9A9A9"
         />
 
-          <View style={styles.dateInputContainer}>
-            <TouchableOpacity onPress={showDatePicker} style={styles.dateButton}>
-              <Text style={styles.dateText}>
-                {selectedDate || "Date de naissance"}
-              </Text>
-            </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={datePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
-          </View>
+        <View style={styles.dateInputContainer}>
+          <TouchableOpacity onPress={showDatePicker} style={styles.dateButton}>
+            <Text style={styles.dateText}>
+              {selectedDate || "Date de naissance"}
+            </Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={datePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
+        </View>
 
-          <Text style={styles.h3}>
-            Quel est votre genre ?
-          </Text>
-          <View style={styles.radioGroup}>
+        <Text style={styles.h3}>Quel est votre genre ?</Text>
+        <View style={styles.radioGroup}>
           <RadioButton.Group
             onValueChange={(newValue) => setChecked(newValue)}
             value={checked}
@@ -350,7 +337,7 @@ export default function UserFormsPage({ navigation }) {
               <View key={value} style={styles.radioItem}>
                 <RadioButton
                   value={value}
-                  backgroundColor= '#F3773B'
+                  backgroundColor="#F3773B"
                   color="white"
                   style={styles.radiobtn}
                 />
@@ -358,8 +345,7 @@ export default function UserFormsPage({ navigation }) {
               </View>
             ))}
           </RadioButton.Group>
-          </View>
-
+        </View>
 
         <View style={styles.passwordInput}>
           <TextInput
@@ -368,7 +354,7 @@ export default function UserFormsPage({ navigation }) {
             onChangeText={setPassword}
             placeholder="Mot de passe"
             placeholderTextColor="#A9A9A9"
-            fontFamily= 'NotoSansDisplayLight'
+            fontFamily="NotoSansDisplayLight"
             secureTextEntry={!showPassword}
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
@@ -388,7 +374,7 @@ export default function UserFormsPage({ navigation }) {
             placeholder="Confirmer mot de passe"
             placeholderTextColor="#A9A9A9"
             secureTextEntry={!showConfirmPassword}
-            fontFamily= 'NotoSansDisplayLight'
+            fontFamily="NotoSansDisplayLight"
           />
           <TouchableOpacity
             onPress={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -478,7 +464,7 @@ export default function UserFormsPage({ navigation }) {
               <View key={value} style={styles.radioItem}>
                 <RadioButton
                   value={value}
-                  backgroundColor= '#F3773B'
+                  backgroundColor="#F3773B"
                   color="white"
                 />
                 <Text style={styles.radioText}>{value}</Text>
@@ -666,7 +652,7 @@ export default function UserFormsPage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
   content: {
     alignItems: "center",
@@ -712,7 +698,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginVertical: 10,
     color: "#282828",
-    fontFamily: 'NotoSansDisplayLight',
+    fontFamily: "NotoSansDisplayLight",
     fontSize: 16,
   },
   datePickerContainer: {
@@ -726,7 +712,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 15,
     marginVertical: 10,
-    fontFamily: 'NotoSansDisplayLight',
+    fontFamily: "NotoSansDisplayLight",
     fontSize: 16,
   },
   dateInput: {
@@ -764,7 +750,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginVertical: 10,
     width: "100%",
-    fontFamily: 'NotoSansDisplayLight',
+    fontFamily: "NotoSansDisplayLight",
     fontSize: 16,
   },
   inputFlex: {
@@ -794,7 +780,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginVertical: 10,
     color: "#282828",
-    fontFamily: 'NotoSansDisplayLight',
+    fontFamily: "NotoSansDisplayLight",
     fontSize: 16,
   },
   button: {
@@ -825,7 +811,7 @@ const styles = StyleSheet.create({
     fontFamily: "NotoSansDisplayLight",
     fontSize: 16,
   },
-  
+
   dateInputContainer: {
     width: "100%",
     height: 50,
@@ -842,17 +828,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start", // Aligne le contenu à droite
   },
-  
+
   dateButton: {
     flex: 1,
     justifyContent: "center",
   },
-  
+
   dateText: {
     color: "#A9A9A9",
     fontFamily: "NotoSansDisplayLight",
     fontSize: 16,
     textAlign: "left", // Aligne le texte à droite
   },
-  
 });

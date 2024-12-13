@@ -9,9 +9,8 @@ import {
   ScrollView,
   Modal,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Calendar } from "react-native-calendars";
+import Header from "../components/header";
 
 const activityOptions = [
   {
@@ -65,17 +64,17 @@ const activityOptions = [
   },
 ];
 
-export default function HomeScreen( { navigation } ) {
+export default function HomeScreen({ navigation }) {
   const [isThemeModalVisible, setThemeModalVisible] = useState(false);
   const [isCategoryModalVisible, setCategoryModalVisible] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState(null);
-  
+
   const goEvent = () => {
-    navigation.navigate('CreateEventScreen')
+    navigation.navigate("CreateEventScreen");
   };
 
   const goSearcheEvent = () => {
-    navigation.navigate('SearchEventScreen')
+    navigation.navigate("SearchEventScreen");
   };
 
   const toggleThemeModal = () => {
@@ -91,29 +90,13 @@ export default function HomeScreen( { navigation } ) {
     toggleThemeModal(); // Fermeture du modal des thèmes
   };
 
-  const filteredCategories = selectedTheme
-  ?.categorie || activityOptions.flatMap((data) => data.categorie);
+  const filteredCategories =
+    selectedTheme?.categorie ||
+    activityOptions.flatMap((data) => data.categorie);
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-        <View style={styles.headerIcons}>
-          <FontAwesome name="bell" size={30} color="#fff" />
-          <FontAwesome name="search" size={30} color="#fff" />
-        </View>
-      </LinearGradient>
-
+      <Header />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -170,7 +153,10 @@ export default function HomeScreen( { navigation } ) {
           <TouchableOpacity style={styles.actionButton} onPress={goEvent}>
             <Text style={styles.text}>Proposer un événement</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={goSearcheEvent}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={goSearcheEvent}
+          >
             <Text style={styles.text}>Chercher un événement</Text>
           </TouchableOpacity>
         </View>
@@ -214,12 +200,6 @@ export default function HomeScreen( { navigation } ) {
           </ScrollView>
         </View>
       </Modal>
-
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }
@@ -229,25 +209,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
-  header: {
-    width: "100%",
-    height: 120,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingTop: 30,
-    backgroundColor: "transparent",
-  },
   logoIcon: {
     width: 50,
     height: 50,
   },
-  headerIcons: {
-    flexDirection: "row",
-    gap: 20,
-  },
   scrollView: {
+    marginTop: 20,
     flex: 1,
     width: "100%",
   },
