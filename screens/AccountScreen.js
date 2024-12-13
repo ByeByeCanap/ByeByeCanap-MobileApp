@@ -3,13 +3,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import Header from "../components/header";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function ProfilScreen() {
+export default function AccountScreen({ navigation }) {
   // const userButton = () => navigation.navigate(" ");
+  const goMyProfil = () => navigation.navigate("ProfilScreen");
 
   return (
     <View style={styles.container}>
       <Header />
-
       <View style={styles.textContainer}>
         <Text style={styles.text}>Personnaliser</Text>
         <FontAwesome name="pencil" size={30} />
@@ -17,10 +17,8 @@ export default function ProfilScreen() {
 
         <Text style={styles.text}>Thème clair/sombre</Text>
         <FontAwesome name="moon-o" size={30} />
-
-        <Text style={styles.text}>Paramètres</Text>
-        <FontAwesome name="gear" size={30} />
-
+        <Text style={styles.text}>Compte</Text>
+        <FontAwesome name="user" size={30} onPress={goMyProfil} />
         <Text style={styles.text}>Compte</Text>
         <FontAwesome name="user" size={30} />
 
