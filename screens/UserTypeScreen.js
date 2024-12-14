@@ -7,17 +7,26 @@ import AppLoading from 'expo-app-loading';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { userType } from "../reducers/users";
+import { useSelector } from "react-redux";
+//import Header from "../components/header";
 
 export default function UserTypeScreen( { navigation } ) {
 
   const dispatch = useDispatch();
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  // Only to check the status of the store ! correct implementation of useType for example and check that the rest is empty
+  // A cause du PERSIST store, it is not empty !
+  const user = useSelector((state) => state.users.value);
+  //console.log("Store BEFORE dispatching", user);
+
   const particularToSignUp = () =>  {
-    console.log(dispatch(userType('Particulier')))
-    dispatch(userType('Particulier'));
+    dispatch(userType('User'));
+   // console.log("Store AFTER dispatching", user);
     navigation.navigate('SignUpScreen')};
 
+    
 
   const goBack = () => navigation.navigate('SignScreen');
 
@@ -41,26 +50,23 @@ export default function UserTypeScreen( { navigation } ) {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
-
+                  <LinearGradient
+                      style={styles.header}
+                      colors={["#fdc731", "#f3773b"]}
+                      start={{ x: 0, y: 1 }}
+                  >
+                      <Image
+                          style={styles.logoIcon}
+                          resizeMode="cover"
+                          source={require("../assets/logoIcon.png")}
+   />
+</LinearGradient>
       <View style={styles.arrow}>
-        <FontAwesome name="arrow-left" size={30} onPress={goBack}/>
+        <FontAwesome name="arrow-left" size={30} onPress={goBack} />
       </View>
 
       <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.button} onPress={particularToSignUp} >
+        <TouchableOpacity style={styles.button} onPress={particularToSignUp}>
           <Text style={styles.text}>Particulier</Text>
         </TouchableOpacity>
 
@@ -72,7 +78,6 @@ export default function UserTypeScreen( { navigation } ) {
           <Text style={styles.text}>Association</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
 }
