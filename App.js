@@ -21,13 +21,15 @@ import ProfileScreen from "./screens/ProfileScreen";
 import UserTypeScreen from "./screens/UserTypeScreen";
 import HomeScreen from "./screens/HomeScreen";
 import SearchScreen from "./screens/SearchScreen";
+// Pour reset le store pendant le développement de l'appli uniquement !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+import ResetApp from "./screens/ResetApp";
 
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 // REDUX
 const reducers = combineReducers({ users });
-const persistConfig = { key: "Bye Bye Canap'", storage: AsyncStorage };
+const persistConfig = { key: "Bye Bye Canap", storage: AsyncStorage };
 
 const store = configureStore({
   reducer: persistReducer(persistConfig, reducers),
@@ -96,11 +98,3 @@ function App() {
 }
 
 export default App;
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
