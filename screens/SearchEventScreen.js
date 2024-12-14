@@ -107,11 +107,11 @@ export default function SearchEventScreen({ navigation }) {
   });
 
   const goSolutionScreen = () => {
-    navigation.navigate('SolutionScreen')
+    navigation.navigate("SolutionScreen");
   };
 
-  const goHome = () => {
-    navigation.navigate('HomeScreen')
+  const goBack = () => {
+    navigation.navigate("TabNavigator");
   };
 
   return (
@@ -131,7 +131,7 @@ export default function SearchEventScreen({ navigation }) {
       </LinearGradient>
 
       <View style={styles.arrow}>
-        <FontAwesome name="arrow-left" size={30} onPress={goHome} />
+        <FontAwesome name="arrow-left" size={30} onPress={goBack} />
         <Text style={styles.h1}>Chercher un événement</Text>
       </View>
 
@@ -146,7 +146,10 @@ export default function SearchEventScreen({ navigation }) {
         <ScrollView>{catalogue}</ScrollView>
 
         {/* J'ai pas trouvé --> redirection vers SolutionScreen */}
-        <TouchableOpacity style={styles.buttonSolution} onPress={goSolutionScreen}>
+        <TouchableOpacity
+          style={styles.buttonSolution}
+          onPress={goSolutionScreen}
+        >
           <Text style={styles.text}>J'ai pas trouvé...</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
 
   content: {
