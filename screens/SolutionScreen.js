@@ -32,6 +32,14 @@ export default function SolutionScreen( { navigation } ) {
     );
   }
 
+  const goCreateEventScreen =() => {
+    navigation.navigate('CreateEventScreen')
+  };
+
+  const goHome = () => {
+    navigation.navigate('HomeScreen')
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -53,7 +61,7 @@ export default function SolutionScreen( { navigation } ) {
       </View>
       
       <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.button} >
+        <TouchableOpacity style={styles.button} onPress={goCreateEventScreen} >
           <Text style={styles.text}>Proposer un événement</Text> 
         </TouchableOpacity>
 
@@ -61,7 +69,7 @@ export default function SolutionScreen( { navigation } ) {
           <Text style={styles.text}>Recevoir une alerte</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={goHome}>
           <Text style={styles.text}>Revenir plus tard</Text>
         </TouchableOpacity>
       </View>
@@ -75,6 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: 'white'
   },
 
   header: {

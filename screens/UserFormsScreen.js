@@ -32,7 +32,7 @@ import {
     suggestionsOptions,
 } from "../utils/userFormList";
 import { BACK_IP } from "@env";
-//import Header from "../components/header";
+import Header from "../components/header";
 
 export default function UserFormsPage({ navigation }) {
     // Construire la variable dispatch quelque soit le nombre de reducer
@@ -259,18 +259,7 @@ export default function UserFormsPage({ navigation }) {
     
     return (
         <View style={styles.container}>
-          
-            <LinearGradient
-                style={styles.header}
-                colors={["#fdc731", "#f3773b"]}
-                start={{ x: 0, y: 1 }}
-            >
-                <Image
-                    style={styles.logoIcon}
-                    resizeMode="cover"
-                    source={require("../assets/logoIcon.png")}
-                />
-            </LinearGradient>
+             <Header />
             <ScrollView contentContainerStyle={styles.content}>
                 <Text style={styles.h1}>Identité et généralités</Text>
 

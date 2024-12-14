@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { userType } from "../reducers/users";
 import { useSelector } from "react-redux";
-//import Header from "../components/header";
+import Header from "../components/header";
 
 export default function UserTypeScreen( { navigation } ) {
 
@@ -50,17 +50,7 @@ export default function UserTypeScreen( { navigation } ) {
 
   return (
     <View style={styles.container}>
-                  <LinearGradient
-                      style={styles.header}
-                      colors={["#fdc731", "#f3773b"]}
-                      start={{ x: 0, y: 1 }}
-                  >
-                      <Image
-                          style={styles.logoIcon}
-                          resizeMode="cover"
-                          source={require("../assets/logoIcon.png")}
-   />
-</LinearGradient>
+      <Header />
       <View style={styles.arrow}>
         <FontAwesome name="arrow-left" size={30} onPress={goBack} />
       </View>
@@ -109,8 +99,8 @@ const styles = StyleSheet.create({
     height: 50,
   },
   text: {
-    color: 'white',
-    fontFamily: 'ParkinsansMedium',
+    color: "white",
+    fontFamily: "ParkinsansMedium",
     fontSize: 20,
   },
   arrow: {
