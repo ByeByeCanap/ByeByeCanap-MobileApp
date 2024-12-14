@@ -29,8 +29,11 @@ import SolutionScreen from "./screens/SolutionScreen";
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
+<<<<<<< HEAD
 // Pour reset le store pendant le développement de l'appli uniquement !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 import ResetApp from "./screens/ResetApp";
+=======
+>>>>>>> 97b843fb244be6c60c7dba457e37942b2e301081
 
 // REDUX
 const reducers = combineReducers({ users });
