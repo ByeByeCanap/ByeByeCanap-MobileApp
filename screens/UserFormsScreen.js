@@ -254,7 +254,7 @@ export default function UserFormsPage({ navigation }) {
                 console.error("Error:", error.message);               
             });
 
-        // navigation.navigate("TabNavigator", { screen: "HomeScreen" });
+        navigation.navigate("TabNavigator", { screen: "HomeScreen" });
     };
     
     return (
