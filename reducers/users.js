@@ -12,7 +12,7 @@ const initialState = {
     lastName: null,
     firstName: null,
     nickName: null,
-    birthdate: null,
+    birthDate: null,
     gender: null,
     userType : null,
   },
@@ -24,29 +24,36 @@ export const usersSlice = createSlice({
   initialState,
   reducers: {
     // fonction qui a pour paramètre l'état initiale et l'action à exécuter
+    userType: (state, action) => {
+      state.value.userType = action.payload
+    },
     login: (state, action) => {
       state.value.token = action.payload.token;
       state.value.email = action.payload.email;
       state.value.nickName = action.payload.nickName;
     },
     CreateAccount: (state, action) => {
+      state.value.token = action.payload.token;
       state.value.email = action.payload.email;
       state.value.password = action.payload.password;
       state.value.lastName = action.payload.lastName;
       state.value.firstName = action.payload.firstName;
       state.value.nickName = action.payload.nickName;
-      state.value.birthdate = action.payload.birthdate;
+      state.value.birthDate = action.payload.birthDate;
       state.value.gender = action.payload.gender;
     },
     logout: (state) => {
+      state.value = initialState.value;
+    },
+    resetStore: (state) => {
       state.value = null;
     },
-    userType: (state, action) => {
-      state.value.userType = action.payload
+    reintializationStore: (state) => {
+      state.value = {};
     }
   },
 });
 
 // Export
-export const { login, CreateAccount, logout, userType } = usersSlice.actions;
+export const { login, CreateAccount, logout, userType, resetStore, reintializationStore } = usersSlice.actions;
 export default usersSlice.reducer;

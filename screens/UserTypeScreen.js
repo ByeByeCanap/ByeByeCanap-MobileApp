@@ -1,30 +1,40 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import * as Font from "expo-font";
-import AppLoading from "expo-app-loading";
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { userType } from "../reducers/users";
+import { useSelector } from "react-redux";
 import Header from "../components/header";
 
-export default function UserTypeScreen({ navigation }) {
+export default function UserTypeScreen( { navigation } ) {
+
   const dispatch = useDispatch();
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const particularToSignUp = () => {
-    console.log(dispatch(userType("Particulier")));
-    dispatch(userType("Particulier"));
-    navigation.navigate("SignUpScreen");
-  };
 
-  const goBack = () => navigation.navigate("SignScreen");
+  // Only to check the status of the store ! correct implementation of useType for example and check that the rest is empty
+  // A cause du PERSIST store, it is not empty !
+  const user = useSelector((state) => state.users.value);
+  //console.log("Store BEFORE dispatching", user);
+
+  const particularToSignUp = () =>  {
+    dispatch(userType('User'));
+   // console.log("Store AFTER dispatching", user);
+    navigation.navigate('SignUpScreen')};
+
+    
+
+  const goBack = () => navigation.navigate('SignScreen');
 
   const loadFonts = async () => {
     await Font.loadAsync({
-      ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
-      NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
-      NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
+      ParkinsansMedium: require('../assets/fonts/ParkinsansMedium.ttf'),
+      NotoSansDisplayLight: require('../assets/fonts/NotoSansDisplayLight.ttf'),
+      NotoSansDisplayRegular: require('../assets/fonts/NotoSansDisplayRegular.ttf'),
     });
   };
 
