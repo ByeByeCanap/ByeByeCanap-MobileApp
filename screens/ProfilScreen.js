@@ -5,14 +5,14 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  FlatList
+  FlatList,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useSelector } from "react-redux";
 
 export default function ProfilScreen({ navigation }) {
-  const GoBack = () => navigation.navigate("AccountScreen");
+  const GoBack = () => navigation.navigate("TabNavigator");
   const users = useSelector((state) => state.users.value);
 
   return (
@@ -36,7 +36,7 @@ export default function ProfilScreen({ navigation }) {
         <FontAwesome name="arrow-left" size={30} onPress={GoBack}/>
       </View>
 
-      <ScrollView  contentContainerStyle={styles.content} >
+      <ScrollView contentContainerStyle={styles.content}>
         {/* User Info */}
         <View style={styles.userContainer}>
           <Image
@@ -66,27 +66,27 @@ export default function ProfilScreen({ navigation }) {
 
         {/* Followers Section */}
         <View style={styles.avatarContainer}>
-        <FlatList
-          data={[
-            { id: "1" },
-            { id: "2" },
-            { id: "3" },
-            { id: "4" },
-            { id: "5" },
-          ]}
-          horizontal
-          keyExtractor={(item) => item.id}
-          renderItem={() => (
-            <View style={styles.avatarFake}>
-              <Image
-                style={styles.logoFake}
-                resizeMode="cover"
-                source={require("../assets/avatar1.png")}
-              />
-            </View>
-          )}
-        />
-    </View>
+          <FlatList
+            data={[
+              { id: "1" },
+              { id: "2" },
+              { id: "3" },
+              { id: "4" },
+              { id: "5" },
+            ]}
+            horizontal
+            keyExtractor={(item) => item.id}
+            renderItem={() => (
+              <View style={styles.avatarFake}>
+                <Image
+                  style={styles.logoFake}
+                  resizeMode="cover"
+                  source={require("../assets/avatar1.png")}
+                />
+              </View>
+            )}
+          />
+        </View>
         {/* Follow Button */}
         <TouchableOpacity style={styles.followButton}>
           <Text style={styles.followButtonText}>Follow</Text>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   content: {
     paddingBottom: 20,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   userContainer: {
     justifyContent: "center",
@@ -209,6 +209,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginHorizontal: 10,
     width: 100,
-    height: 100
-  }
+    height: 100,
+  },
 });

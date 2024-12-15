@@ -28,6 +28,11 @@ import SolutionScreen from "./screens/SolutionScreen";
 
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { LinearGradient } from "expo-linear-gradient";
+
+// Pour reset le store pendant le développement de l'appli uniquement !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+import ResetApp from "./screens/ResetApp";
+
 
 // REDUX
 const reducers = combineReducers({ users });
@@ -55,16 +60,19 @@ const TabNavigator = () => {
           if (route.name === "Home") {
             iconName = "home";
           } else if (route.name === "Map") {
-            iconName = "map";
+            iconName = "map-marker";
           } else if (route.name === "Profile") {
-            iconName = "user";
+            iconName = "user-circle";
           }
 
           return <FontAwesome name={iconName} size={size} color={color} />;
         },
+        tabBarBackground: () => (
+          <LinearGradient colors={["#fdc731", "#f3773b"]} style={{ flex: 1 }} />
+        ),
 
-        tabBarActiveTintColor: "black",
-        tabBarInactiveTintColor: "grey",
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: "black",
         headerShown: false,
       })}
     >
@@ -80,7 +88,8 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
+
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="SignScreen" component={SignScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
             <Stack.Screen name="UserFormsScreen" component={UserFormsScreen} />
@@ -91,8 +100,14 @@ function App() {
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="ProfilScreen" component={ProfilScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
-            <Stack.Screen name="CreateEventScreen" component={CreateEventScreen} />
-            <Stack.Screen name="SearchEventScreen" component={SearchEventScreen} />
+            <Stack.Screen
+              name="CreateEventScreen"
+              component={CreateEventScreen}
+            />
+            <Stack.Screen
+              name="SearchEventScreen"
+              component={SearchEventScreen}
+            />
             <Stack.Screen name="SolutionScreen" component={SolutionScreen} />
           </Stack.Navigator>
         </NavigationContainer>

@@ -1,11 +1,11 @@
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import Header from "../components/header";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function AccountScreen( { navigation } ) {
-
+export default function AccountScreen({ navigation }) {
   // const userButton = () => navigation.navigate(" ");
-  const goMyProfil = () => navigation.navigate("ProfilScreen")
+  const goMyProfil = () => navigation.navigate("ProfilScreen");
 
   return (
     <View style={styles.container}>
@@ -57,14 +57,13 @@ export default function AccountScreen( { navigation } ) {
             </View>
           </View>
 
-          <LinearGradient
-                  style={styles.footer}
-                  colors={["#fdc731", "#f3773b"]}
-                  start={{ x: 0, y: 1 }}
-          />
+      <LinearGradient
+        style={styles.footer}
+        colors={["#fdc731", "#f3773b"]}
+        start={{ x: 0, y: 1 }}
+      />
     </View>
-  )
-    
+  );
 }
 
 const styles = StyleSheet.create({
@@ -94,6 +93,7 @@ const styles = StyleSheet.create({
     fontFamily: 'NotoSansDisplayRegular',
     fontSize: 18,
   },
+
   textContainer: {
     padding: 30,
   },

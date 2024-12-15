@@ -1,4 +1,5 @@
 import React from "react";
+
 import { useState} from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
@@ -31,20 +32,7 @@ export default function SignScreen( { navigation } ) {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
-
+      <Header />
       <View style={styles.btnContainer}>
         <Text style={styles.h2}>Pas encore membre ?</Text>
         <TouchableOpacity style={styles.button} onPress={signUp}>
@@ -58,8 +46,7 @@ export default function SignScreen( { navigation } ) {
         </TouchableOpacity>
       </View>
     </View>
-  )
-    
+  );
 }
 
 const styles = StyleSheet.create({

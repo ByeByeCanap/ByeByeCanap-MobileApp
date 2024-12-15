@@ -1,15 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
-  StyleSheet,
   View,
   Text,
-  Image,
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Button,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -18,170 +15,95 @@ import { useSelector } from "react-redux";
 import { CreateAccount } from "../reducers/users";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Dropdown } from "react-native-element-dropdown";
-import { userType } from "../reducers/users";
-
-const activityOptions = [
-  {
-    theme: "Activités créatrices",
-    categorie: ["Artistique", "Manuel", "Musique"],
-  },
-  {
-    theme: "Sport",
-    categorie: [
-      "Pratiquer en extérieur (terre)",
-      "Pratiquer en extérieur (mer)",
-      "Pratiquer en intérieur",
-      "Supporter",
-    ],
-  },
-  {
-    theme: "Art & Culture",
-    categorie: [
-      "Cinéma",
-      "Concert",
-      "Musées",
-      "Lecture",
-      "Musique (pratiquer)",
-    ],
-  },
-  {
-    theme: "Boire & Manger",
-    categorie: ["Bars", "Restaurant", "Cuisiner"],
-  },
-  {
-    theme: "Entraide",
-    categorie: [
-      "Petsitter",
-      "Aide à la personne",
-      "Services",
-      "SOS",
-      "Acte citoyen",
-    ],
-  },
-  {
-    theme: "Spiritualité",
-    categorie: ["Relaxation", "Mysticisme"],
-  },
-  {
-    theme: "Apprentissage",
-    categorie: ["Langues", "Musique", "Bricolage"],
-  },
-  {
-    theme: "Plaisir coupable",
-    categorie: ["Divertissement", "Jeux", "Rire"],
-  },
-];
-
-const motivationOptions = [
-  { label: "Faire des rencontres", value: "faire_des_rencontres" },
-  {
-    label: "Apprendre de nouvelles choses",
-    value: "apprendre_nouvelles_choses",
-  },
-  { label: "Passer du bon temps", value: "passer_du_bon_temps" },
-  { label: "Développer vos compétences", value: "developper_competences" },
-  {
-    label: "Se sentir utile ou s'engager dans une cause",
-    value: "s_engager_dans_une_cause",
-  },
-];
-
-const groupOptions = [
-  { label: "Petit groupe (2-5 personnes)", value: "petit_groupe" },
-  { label: "Groupe moyen (6-10 personnes)", value: "groupe_moyen" },
-  { label: "Grand groupe (10+ personnes)", value: "grand_groupe" },
-];
-
-const interestOptions = [
-  { label: "Similaires", value: "similaires" },
-  { label: "Divers", value: "divers" },
-];
-
-const ageOptions = [
-  { label: "Intergénérationnelles", value: "intergenerationnelles" },
-  { label: "Proche de mon âge", value: "proche_de_mon_age" },
-  { label: "Peu importe", value: "peu_importe" },
-];
-
-const availabilityOptions = [
-  { label: "En semaine", value: "en_semaine" },
-  { label: "En soirée", value: "en_soiree" },
-  { label: "Le week-end", value: "weekend" },
-  { label: "Journée", value: "journee" },
-];
-
-const placeOptions = [
-  { label: "En intérieur", value: "interieur" },
-  { label: "En extérieur", value: "exterieur" },
-];
-
-const preferencesOptions = [
-  { label: "Centré sur les mêmes passions", value: "memes_passions" },
-  { label: "Ouvert à la découverte", value: "decouverte" },
-];
-
-const valuesOptions = [
-  { label: "Bienveillance", value: "bienveillance" },
-  { label: "Authenticité", value: "authenticite" },
-  { label: "Solidarité", value: "solidarite" },
-  { label: "Créativité", value: "creativite" },
-];
-
-const projectOptions = [
-  { label: "Écologie", value: "ecologie" },
-  { label: "Aide sociale", value: "aide_sociale" },
-];
-
-const suggestionsOptions = [
-  { label: "En fonction de mes centres d’intérêt", value: "interet" },
-  { label: "En fonction de mes compétences", value: "competences" },
-  { label: "En fonction de mes disponibilités", value: "disponibilites" },
-  { label: "en fonction de mes valeurs", value: "valeurs" },
-];
-
+import {
+  activityOptions,
+  motivationOptions,
+  groupOptions,
+  interestOptions,
+  ageOptions,
+  availabilityOptions,
+  placeOptions,
+  preferencesOptions,
+  valuesOptions,
+  projectOptions,
+  suggestionsOptions,
+} from "../utils/userFormList";
+import { BACK_IP } from "@env";
+import Header from "../components/header";
 
 export default function UserFormsPage({ navigation }) {
+  // Construire la variable dispatch quelque soit le nombre de reducer
+  const dispatch = useDispatch();
+
+  // Custom font
+  // Android and iOS come with their own set of platform fonts
   const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  // Authentification --------------------------------------------------------------------------
+  // Identitty
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nickName, setNickName] = useState("");
   const [email, setEmail] = useState("");
+  const [token, setToken] = useState(""); // setToken non utilié
+  const [gender, setGender] = useState("");
+
+  // Password
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Dates ------------------------------------------------------------------------------------------
   const [datePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [date, setDate] = useState(new Date());
   const [manualDate, setManualDate] = useState(
     date.toLocaleDateString("fr-FR")
-  );
-  const [gender, setGender] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  ); // UseState pas utilisé
+
+  // Interests, Skills  and motivation ----------------------------------------------------------------
   const [interestTheme, setInterestTheme] = useState(null);
   const [interestCategorie, setInterestCategorie] = useState(null);
-  const [skillTheme, setSkillTheme] = useState(null);
-  const [skillCategorie, setSkillCategorie] = useState(null);
   const [filteredInterestCategories, setFilteredInterestCategories] = useState(
     []
   );
+
+  const [skillTheme, setSkillTheme] = useState(null);
+  const [skillCategorie, setSkillCategorie] = useState(null);
   const [filteredSkillCategories, setFilteredSkillCategories] = useState([]);
-  const [checked, setChecked] = useState("");
+  // Pour le bénévolat
+  const [helper, setHelper] = useState("");
+
   const [motivation, setMotivation] = useState(null);
+  // Description sur les attentes (Text Input)
   const [value, onChangeText] = useState("");
+
+  // Préférences ----------------------------------------------------------------------------------------
+  // taille group
   const [groupPreference, setGroupPreference] = useState(null);
+  // centre d'intérêt communs ou différent
   const [activityPreference, setActivityPreference] = useState(null);
+  // génération
   const [generationPreference, setGenerationPreference] = useState(null);
-  const [place, setPlace] = useState(null);
+  // temps: plutôt semaine, week-end etc ...
   const [availability, setAvailability] = useState([]);
+  // plutôt à l'intérieur
+  const [place, setPlace] = useState(null);
+  // centre d'intérêt communs ou différent ATTENTION DOUBLON !!!
   const [preferences, setPreferences] = useState(null);
+
+  // Affinités & valeurs ---------------------------------------------------------------------------------
   const [values, setValues] = useState([]);
   const [project, setProject] = useState("");
   const [choice, setChoice] = useState(null);
   const [descriptionProfil, setDescriptionProfil] = useState("");
 
-
+  // Info from reducer
   const user = useSelector((state) => state.users.value);
+  console.log(user);
 
+  // Font.loadAsync = méthode fournie par la bibliothèque expo-font
   const loadFonts = async () => {
     await Font.loadAsync({
       ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
@@ -200,8 +122,7 @@ export default function UserFormsPage({ navigation }) {
     );
   }
 
-  // TimePickerTest Modal
-
+  // TimePickerTest Modal: test lié à la sélection d'une heure (time picker) ???????????????????????????????????
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -220,6 +141,7 @@ export default function UserFormsPage({ navigation }) {
     hideDatePicker();
   };
 
+  // Handle, interests, Skills  and motivation ----------------------------------------------------------------
   const handleInterestThemeChange = (selectedInterestTheme) => {
     setInterestTheme(selectedInterestTheme);
     const selectedActivity = activityOptions.find(
@@ -242,58 +164,102 @@ export default function UserFormsPage({ navigation }) {
     setSkillCategorie(null);
   };
 
+  // When clicking on Submit button => fetch(POST) to Backend
+  // AJOUTER le reset set("") !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // AJOUTER le dispatch to store!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  console.log("DATA DU STORE", "userType:", user);
+
   const GoNext = () => {
-          fetch('http://10.10.200.19:3000/users/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    //console.log("clique sur le Submit", `${BACK_IP}/users/signup`);
+
+    fetch(`${BACK_IP}/users/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        firstName : firstName,
-        lastName : lastName,
-        email : email,
+        email: email,
+        password: password,
+        lastName: lastName,
+        userType: user.userType,
+        firstName: firstName,
+        birthDate: selectedDate,
+        gender: gender,
         nickName: nickName,
-        birthdate: date.toISOString(),
-        gender : gender,
-        password : password,
-        userType : user.userType, 
-        birthdate : selectedDate,
-        themesInterest : interestTheme,
-        categoriesInterest : interestCategorie,
-        themesSkill : skillTheme,
-        categoriesSkill : skillCategorie,
-        motivations : motivation,
-        preferredGroupType : groupPreference,
-        preferredPeople : generationPreference,
-        availability : availability,
-        locationPreference : place,
-        personalValues : values,
-        causes : project,
-        suggestions : choice,
-        descriptionProfile : descriptionProfil,
+
+        themesInterest: interestTheme,
+        categoriesInterest: interestCategorie,
+        themesSkill: skillTheme,
+        categoriesSkill: skillCategorie,
+        motivations: motivation,
+        preferredGroupType: groupPreference,
+        preferredPeople: generationPreference,
+        availability: availability,
+        locationPreference: place,
+        personalValues: values,
+        causes: project,
+        suggestions: choice,
+        descriptionProfile: descriptionProfil,
       }),
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        });
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data, "fetch data");
+        dispatch(
+          CreateAccount({
+            token: token, // DO NOT WORK - HOW TO GET TOKEN FROM
+            email: email,
+            password: password,
+            lastName: lastName,
+            firstName: firstName,
+            nickName: nickName,
+            birthDate: selectedDate,
+            gender: gender,
+          })
+        );
+
+        setFirstName("");
+        setLastName("");
+        setNickName("");
+        setEmail("");
+        setGender("");
+        setPassword("");
+        setConfirmPassword("");
+        setShowPassword(false);
+        setShowConfirmPassword(false);
+        setDatePickerVisibility(false);
+        setSelectedDate(null);
+        setInterestTheme(null);
+        setInterestCategorie(null);
+        setFilteredInterestCategories([]);
+        setSkillTheme(null);
+        setSkillCategorie(null);
+        setFilteredSkillCategories([]);
+        setHelper("");
+        setMotivation(null);
+        onChangeText("");
+        setGroupPreference(null);
+        setActivityPreference(null);
+        setGenerationPreference(null);
+        setAvailability([]);
+        setPlace(null);
+        setPreferences(null);
+        setValues([]);
+        setProject("");
+        setChoice(null);
+        setDescriptionProfil("");
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
 
     navigation.navigate("TabNavigator", { screen: "HomeScreen" });
   };
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
+      <Header />
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.h1} >Identité et généralités</Text>
+        <Text style={styles.h1}>Identité et généralités</Text>
 
         <TextInput
           style={styles.input}
@@ -324,33 +290,31 @@ export default function UserFormsPage({ navigation }) {
           placeholderTextColor="#A9A9A9"
         />
 
-          <View style={styles.dateInputContainer}>
-            <TouchableOpacity onPress={showDatePicker} style={styles.dateButton}>
-              <Text style={styles.dateText}>
-                {selectedDate || "Date de naissance"}
-              </Text>
-            </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={datePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
-          </View>
+        <View style={styles.dateInputContainer}>
+          <TouchableOpacity onPress={showDatePicker} style={styles.dateButton}>
+            <Text style={styles.dateText}>
+              {selectedDate || "Date de naissance"}
+            </Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={datePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
+        </View>
 
-          <Text style={styles.h3}>
-            Quel est votre genre ?
-          </Text>
-          <View style={styles.radioGroup}>
+        <Text style={styles.h3}>Quel est votre genre ?</Text>
+        <View style={styles.radioGroup}>
           <RadioButton.Group
-            onValueChange={(newValue) => setChecked(newValue)}
-            value={checked}
+            onValueChange={(newValue) => setGender(newValue)}
+            value={gender}
           >
             {["Homme", "Femme", "Autre"].map((value) => (
               <View key={value} style={styles.radioItem}>
                 <RadioButton
                   value={value}
-                  backgroundColor= '#F3773B'
+                  backgroundColor="#F3773B"
                   color="white"
                   style={styles.radiobtn}
                 />
@@ -358,8 +322,7 @@ export default function UserFormsPage({ navigation }) {
               </View>
             ))}
           </RadioButton.Group>
-          </View>
-
+        </View>
 
         <View style={styles.passwordInput}>
           <TextInput
@@ -368,7 +331,7 @@ export default function UserFormsPage({ navigation }) {
             onChangeText={setPassword}
             placeholder="Mot de passe"
             placeholderTextColor="#A9A9A9"
-            fontFamily= 'NotoSansDisplayLight'
+            fontFamily="NotoSansDisplayLight"
             secureTextEntry={!showPassword}
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
@@ -388,7 +351,7 @@ export default function UserFormsPage({ navigation }) {
             placeholder="Confirmer mot de passe"
             placeholderTextColor="#A9A9A9"
             secureTextEntry={!showConfirmPassword}
-            fontFamily= 'NotoSansDisplayLight'
+            fontFamily="NotoSansDisplayLight"
           />
           <TouchableOpacity
             onPress={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -471,14 +434,14 @@ export default function UserFormsPage({ navigation }) {
 
         <View style={styles.radioGroup}>
           <RadioButton.Group
-            onValueChange={(newValue) => setChecked(newValue)}
-            value={checked}
+            onValueChange={(newValue) => setHelper(newValue)}
+            value={helper}
           >
             {["Oui", "Non"].map((value) => (
               <View key={value} style={styles.radioItem}>
                 <RadioButton
                   value={value}
-                  backgroundColor= '#F3773B'
+                  backgroundColor="#F3773B"
                   color="white"
                 />
                 <Text style={styles.radioText}>{value}</Text>
@@ -655,204 +618,14 @@ export default function UserFormsPage({ navigation }) {
           placeholder="Dites-nous en plus !"
         />
 
-        <TouchableOpacity style={styles.button} onPress={GoNext}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={GoNext}
+          //onPress={() => handleSubmitProfile()}
+        >
           <Text style={styles.text}>Soumettre profil</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white'
-  },
-  content: {
-    alignItems: "center",
-    padding: 30,
-  },
-  header: {
-    width: "100%",
-    height: 120,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 22,
-    backgroundColor: "transparent",
-  },
-  logoIcon: {
-    top: 20,
-    width: 50,
-    height: 50,
-  },
-  footer: {
-    height: 100,
-  },
-  h1: {
-    fontSize: 20,
-    fontFamily: "ParkinsansMedium",
-    color: "#000",
-    marginTop: 40,
-    marginBottom: 40,
-  },
-  h3: {
-    alignSelf: "stretch",
-    fontSize: 18,
-    fontFamily: "NotoSansDisplayRegular",
-    color: "#000",
-  },
-  input: {
-    width: "100%",
-    height: 50,
-    borderRadius: 19,
-    borderWidth: 1,
-    borderColor: "#F3773B",
-    backgroundColor: "#fff",
-    paddingHorizontal: 15,
-    marginVertical: 10,
-    color: "#282828",
-    fontFamily: 'NotoSansDisplayLight',
-    fontSize: 16,
-  },
-  datePickerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: 300,
-    height: 50,
-    borderRadius: 19,
-    borderWidth: 1,
-    borderColor: "#F3773B",
-    backgroundColor: "#fff",
-    paddingHorizontal: 15,
-    marginVertical: 10,
-    fontFamily: 'NotoSansDisplayLight',
-    fontSize: 16,
-  },
-  dateInput: {
-    flex: 1,
-    fontSize: 16,
-    color: "#282828",
-    width: "100%",
-  },
-  radioGroup: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 20,
-    width: "100%",
-  },
-  radioItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  radioText: {
-    fontSize: 16,
-    fontFamily: "NotoSansDisplayLight",
-    color: "#000",
-    marginHorizontal: 10,
-  },
-  passwordInput: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 50,
-    borderRadius: 19,
-    borderWidth: 1,
-    borderColor: "#F3773B",
-    backgroundColor: "#fff",
-    paddingHorizontal: 15,
-    marginVertical: 10,
-    width: "100%",
-    fontFamily: 'NotoSansDisplayLight',
-    fontSize: 16,
-  },
-  inputFlex: {
-    flex: 1,
-    fontSize: 16,
-    color: "#282828",
-  },
-
-  dropdown: {
-    width: "100%",
-    height: 50,
-    borderRadius: 19,
-    borderWidth: 1,
-    borderColor: "#F3773B",
-    backgroundColor: "#fff",
-    paddingHorizontal: 15,
-    marginVertical: 10,
-  },
-
-  textInput: {
-    borderWidth: 1,
-    width: "100%",
-    height: 300,
-    borderColor: "#F3773B",
-    borderRadius: 15,
-    backgroundColor: "#fff",
-    paddingHorizontal: 15,
-    marginVertical: 10,
-    color: "#282828",
-    fontFamily: 'NotoSansDisplayLight',
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: "#F3773B",
-    paddingTop: 10,
-    borderRadius: 19,
-    marginVertical: 40,
-    alignItems: "center",
-    width: "70%",
-    height: 50,
-  },
-  text: {
-    color: "white",
-    fontFamily: "ParkinsansMedium",
-    fontSize: 20,
-  },
-
-  input: {
-    width: "100%",
-    height: 50,
-    borderRadius: 19,
-    borderWidth: 1,
-    borderColor: "#F3773B",
-    backgroundColor: "#fff",
-    paddingHorizontal: 15,
-    marginVertical: 10,
-    color: "#282828",
-    fontFamily: "NotoSansDisplayLight",
-    fontSize: 16,
-  },
-  
-  dateInputContainer: {
-    width: "100%",
-    height: 50,
-    borderRadius: 19,
-    borderWidth: 1,
-    borderColor: "#F3773B",
-    backgroundColor: "#fff",
-    paddingHorizontal: 15,
-    marginVertical: 10,
-    color: "#282828",
-    fontFamily: "NotoSansDisplayLight",
-    fontSize: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start", // Aligne le contenu à droite
-  },
-  
-  dateButton: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  
-  dateText: {
-    color: "#A9A9A9",
-    fontFamily: "NotoSansDisplayLight",
-    fontSize: 16,
-    textAlign: "left", // Aligne le texte à droite
-  },
-  
-});
