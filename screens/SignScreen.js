@@ -1,10 +1,33 @@
 import React from "react";
+import { useState} from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
 
 export default function SignScreen( { navigation } ) {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
   const signUp = () => navigation.navigate('UserTypeScreen');
   const signIn = () => navigation.navigate('SignInScreen');
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
+      NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
+      NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
+    });
+  };
+
+  if (!fontsLoaded) {
+    return (
+      <AppLoading
+        startAsync={loadFonts}
+        onFinish={() => setFontsLoaded(true)}
+        onError={(err) => console.error(err)}
+      />
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -23,15 +46,15 @@ export default function SignScreen( { navigation } ) {
       </LinearGradient>
 
       <View style={styles.btnContainer}>
-        <Text>Pas encore membre ?</Text>
+        <Text style={styles.h2}>Pas encore membre ?</Text>
         <TouchableOpacity style={styles.button} onPress={signUp}>
-          <Text style={styles.text}>Sign-Up</Text>
+          <Text style={styles.textBtn}>Sign-Up</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.btnContainer}>
-        <Text>Déjà un compte ?</Text>
+        <Text style={styles.h2}>Déjà un compte ?</Text>
         <TouchableOpacity style={styles.button} onPress={signIn}>
-          <Text style={styles.text}>Sign-In</Text>
+          <Text style={styles.textBtn}>Sign-In</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -44,6 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: 'white'
   },
 
   header: {
@@ -65,10 +89,9 @@ const styles = StyleSheet.create({
     width: 227,
     height: 50,
   },
-  text: {
+  textBtn: {
     color: "white",
-    fontFamily: "Parkinsans-Medium",
-    fontWeight: "300",
+    fontFamily: "ParkinsansMedium",
     fontSize: 20,
   },
   arrow: {
@@ -92,7 +115,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 274,
-    gap: 50,
-    bottom: 40,
+    gap: 20,
+    bottom: 45,
   },
+
+  h2 : {
+    fontFamily: 'ParkinsansMedium',
+    fontSize: 20,
+  }
 });

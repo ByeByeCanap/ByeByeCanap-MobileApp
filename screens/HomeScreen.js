@@ -118,12 +118,12 @@ export default function HomeScreen( { navigation } ) {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        <View style={styles.buttonSearch}>
-          <TouchableOpacity style={styles.button} onPress={toggleThemeModal}>
-            <Text style={styles.text}>Thèmes</Text>
+        <View style={styles.searchContainer}>
+          <TouchableOpacity style={styles.buttonFilter} onPress={toggleThemeModal}>
+            <Text style={styles.textFilter}>Thèmes</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={toggleCategoryModal}>
-            <Text style={styles.text}>Catégories</Text>
+          <TouchableOpacity style={styles.buttonFilter} onPress={toggleCategoryModal}>
+            <Text style={styles.textFilter}>Catégories</Text>
           </TouchableOpacity>
         </View>
 
@@ -158,7 +158,7 @@ export default function HomeScreen( { navigation } ) {
             renderItem={() => (
               <View style={styles.avatar}>
                 <Image
-                  style={styles.logoIcon}
+                  style={styles.avatarIcon}
                   resizeMode="cover"
                   source={require("../assets/avatar1.png")}
                 />
@@ -166,11 +166,11 @@ export default function HomeScreen( { navigation } ) {
             )}
           />
         </View>
-        <View style={styles.actionButtons}>
-          <TouchableOpacity style={styles.actionButton} onPress={goEvent}>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity style={styles.button} onPress={goEvent}>
             <Text style={styles.text}>Proposer un événement</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={goSearcheEvent}>
+          <TouchableOpacity style={styles.button} onPress={goSearcheEvent}>
             <Text style={styles.text}>Chercher un événement</Text>
           </TouchableOpacity>
         </View>
@@ -214,12 +214,6 @@ export default function HomeScreen( { navigation } ) {
           </ScrollView>
         </View>
       </Modal>
-
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }
@@ -243,6 +237,12 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+
+  avatarIcon: {
+    width: 100,
+    height: 100,
+  },
+  
   headerIcons: {
     flexDirection: "row",
     gap: 20,
@@ -255,29 +255,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 50,
   },
-  buttonSearch: {
+
+  searchContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
     width: "90%",
     marginVertical: 15,
   },
-  button: {
+  
+  buttonFilter: {
     backgroundColor: "#FDC731",
     padding: 10,
     borderRadius: 19,
     alignItems: "center",
     width: 120,
   },
-  text: {
+  textFilter: {
     color: "white",
-    fontWeight: "600",
+    fontFamily: 'NotoSansDisplayRegular',
     fontSize: 16,
   },
+
+  text: {
+    color: "white",
+    fontFamily: 'ParkinsansMedium',
+    fontSize: 20,
+  },
+
   sectionTitle: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
+    fontFamily: 'ParkinsansMedium',
+    color: "black",
     marginVertical: 10,
+    marginBottom: 20,
   },
   calendar: {
     width: 330,
@@ -290,21 +300,31 @@ const styles = StyleSheet.create({
   avatar: {
     marginHorizontal: 10,
   },
-  actionButtons: {
-    marginVertical: 20,
-    width: "90%",
-  },
-  actionButton: {
-    backgroundColor: "#f3773b",
+
+  button: {
+    backgroundColor: "#F3773B",
     padding: 10,
     borderRadius: 19,
     marginVertical: 10,
+    flexDirection : 'row',
     alignItems: "center",
+    justifyContent: "center",
+    gap : 20,
+    width: 300,
+    height: 50,
+    paddingLeft: 20,
   },
-  footer: {
-    height: 100,
-    alignSelf: "stretch",
+  
+  btnContainer: {
+    marginTop: 40,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    height: "120%",
+    gap: 20,
   },
+
+
   modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(253, 199, 49, 0.9)",

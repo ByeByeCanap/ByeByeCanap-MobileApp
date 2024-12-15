@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: 'white'
   },
 
   header: {
@@ -109,17 +110,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   arrow: {
-    paddingTop: 10,
+    paddingTop: 20,
     paddingRight: 10,
-    paddingBottom: 10,
     paddingLeft: 22,
     flexDirection: "column",
     alignItems: "flex-start",
-    alignSelf: "stretch",
-  },
-
-  footer: {
-    height: 100,
     alignSelf: "stretch",
   },
 

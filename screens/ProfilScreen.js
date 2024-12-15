@@ -31,7 +31,10 @@ export default function ProfilScreen({ navigation }) {
         />
         <FontAwesome name="bell" size={30} color="#fff" />
       </LinearGradient>
-      <FontAwesome name="arrow-left" size={30} onPress={GoBack} />
+
+      <View style={styles.arrow}>
+        <FontAwesome name="arrow-left" size={30} onPress={GoBack}/>
+      </View>
 
       <ScrollView  contentContainerStyle={styles.content} >
         {/* User Info */}
@@ -39,7 +42,7 @@ export default function ProfilScreen({ navigation }) {
           <Image
             style={styles.avatar}
             resizeMode="cover"
-            source={require("../assets/avatars/12861970-definir-des-avatars-de-personnes-visages-de-personnages-masculins-ou-feminins-gratuit-vectoriel_0011_Calque-12.png")}
+            source={require("../assets/avatars/avatar_12.png")}
           />
           <Text style={styles.nameContainer}>
             {users.firstName}Thomas {users.lastName}Garcia
@@ -121,6 +124,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 20,
   },
+  arrow: {
+    paddingTop: 20,
+    paddingRight: 10,
+    paddingLeft: 22,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
+  },
   avatar: {
     borderWidth: 3,
     borderColor: "black",
@@ -129,12 +140,13 @@ const styles = StyleSheet.create({
     height: 150,
   },
   nameContainer: {
+    fontFamily: 'ParkinsansMedium',
     fontSize: 24,
-    fontWeight: "bold",
     marginTop: 10,
   },
   nicknameContainer: {
-    fontSize: 16,
+    fontSize: 14,
+    fontFamily: 'NotoSansDisplayRegular',
     color: "gray",
     marginVertical: 5,
   },
@@ -142,19 +154,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    marginVertical: 10,
+    marginVertical: 5,
   },
   tag: {
     backgroundColor: "#fdc731",
     color: "#fff",
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 15,
     margin: 5,
-    fontSize: 14,
+    fontSize: 16,
+    fontFamily: 'NotoSansDisplayRegular',
   },
   descriptionContainer: {
-    marginVertical: 20,
+    marginVertical: 25,
     paddingHorizontal: 20,
     borderWidth: 1,
     borderColor: "#fdc731",
@@ -167,22 +180,26 @@ const styles = StyleSheet.create({
     color: "gray",
     padding: 10,
   },
+  
   followButton: {
-    backgroundColor: "#f3773b",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 25,
-    marginTop: 20,
+    backgroundColor: "#F3773B",
+    width: 100,
+    height: 50,
+    borderRadius: 19,
+    marginVertical: 25,
+    flexDirection : 'row',
     alignItems: "center",
     justifyContent: "center",
+   
   },
   followButtonText: {
     color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 20,
+    fontFamily: 'ParkinsansMedium'
   },
   avatarContainer: {
     flexDirection: "row",
+    paddingVertical: 25,
   },
   avatarFake: {
     marginHorizontal: 10,

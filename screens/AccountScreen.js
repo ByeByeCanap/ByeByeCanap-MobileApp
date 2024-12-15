@@ -24,24 +24,37 @@ export default function AccountScreen( { navigation } ) {
           </LinearGradient>
 
           <View style={styles.textContainer}>
+
+            <View style={styles.function}>
             <Text style={styles.text}>Personnaliser</Text>
             <FontAwesome name="pencil" size={30} />
+            </View>
             {/* onPress={userButton} */}
           
+            <View style={styles.function}>
             <Text style={styles.text}>Thème clair/sombre</Text>
             <FontAwesome name="moon-o" size={30} />
+            </View>
 
+            <View style={styles.function}>
             <Text style={styles.text}>Paramètres</Text>
             <FontAwesome name="gear" size={30} />
+            </View>
 
+            <View style={styles.function}>
             <Text style={styles.text}>Compte</Text>
             <FontAwesome name="user" size={30} onPress={goMyProfil}/>
+            </View>
 
+            <View style={styles.function}>
             <Text style={styles.text}>Aide</Text>
             <FontAwesome name="question" size={30} />
+            </View>
 
+            <View style={styles.function}>
             <Text style={styles.text}>Se déconnecter</Text>
             <FontAwesome name="sign-out" size={30} />
+            </View>
           </View>
 
           <LinearGradient
@@ -78,10 +91,17 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   text: {
-    fontWeight: "600",
-    fontSize: 26,
+    fontFamily: 'NotoSansDisplayRegular',
+    fontSize: 18,
   },
   textContainer: {
-    
-  }
+    padding: 30,
+  },
+
+  function:{
+    flexDirection: 'row',
+    paddingVertical: 20,
+    justifyContent:'space-between',
+    alignItems: "center",
+  },
 });
