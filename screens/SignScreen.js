@@ -1,10 +1,10 @@
 import React from "react";
-
 import { useState} from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
+import Header from "../components/header";
 
 export default function SignScreen( { navigation } ) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -32,7 +32,7 @@ export default function SignScreen( { navigation } ) {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header/>
       <View style={styles.btnContainer}>
         <Text style={styles.h2}>Pas encore membre ?</Text>
         <TouchableOpacity style={styles.button} onPress={signUp}>

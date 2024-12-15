@@ -155,7 +155,7 @@ export default function HomeScreen({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.actionButton}
+            style={styles.button}
             onPress={goSearcheEvent}
           >
             <Text style={styles.text}>Chercher un événement</Text>
