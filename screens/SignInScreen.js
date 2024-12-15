@@ -76,10 +76,12 @@ export default function SignIn({ navigation }) {
         />
       </LinearGradient>
 
-      <View style={styles.inputContainer}>
-        <View style={styles.arrow}>
+      <View style={styles.arrow}>
           <FontAwesome name="arrow-left" size={30} onPress={goBack} />
-        </View>
+      </View>
+
+      <View style={styles.inputContainer}>
+
         <View style={styles.input}>
           <TextInput
             autoCapitalize="none" // https://reactnative.dev/docs/textinput#autocapitalize
@@ -106,10 +108,11 @@ export default function SignIn({ navigation }) {
             onPress={handleEyeIcon}
             style={styles.eyeIconContainer}
           >
-            <FontAwesome name={iconEyeName} size={20} color="#F3773B" />
+            <FontAwesome name={iconEyeName} size={35} color="#000000" />
           </TouchableOpacity>
         </View>
       </View>
+
       <View style={styles.btnContainer}>
         <TouchableOpacity
           onPress={() => handleSignIn()}
@@ -119,12 +122,6 @@ export default function SignIn({ navigation }) {
           <Text style={styles.textButton}>Sign-In</Text>
         </TouchableOpacity>
       </View>
-
-      <LinearGradient
-        style={styles.footer}
-        colors={["#fdc731", "#f3773b"]}
-        start={{ x: 0, y: 1 }}
-      />
     </View>
   );
 }
@@ -134,6 +131,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: 'white',
   },
 
   header: {
@@ -155,18 +153,13 @@ const styles = StyleSheet.create({
     width: 227,
     height: 50,
   },
+
   arrow: {
-    paddingTop: 10,
+    paddingTop: 20,
     paddingRight: 10,
-    paddingBottom: 10,
     paddingLeft: 22,
     flexDirection: "column",
     alignItems: "flex-start",
-    alignSelf: "stretch",
-  },
-
-  footer: {
-    height: 100,
     alignSelf: "stretch",
   },
 
@@ -174,6 +167,12 @@ const styles = StyleSheet.create({
     top: 20,
     width: 50,
     height: 50,
+  },
+
+  inputContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   btnContainer: {
@@ -196,15 +195,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginVertical: 10,
   },
+
   textInput: {
     flex: 1,
     fontSize: 16,
     color: "#282828",
-    fontFamily: "Parkinsans-Medium",
+    fontFamily: "NotoSansDisplayLight",
     fontWeight: "300",
-    fontSize: 20,
+    fontSize: 16,
   },
   eyeIconContainer: {
     padding: 5,
+  },
+
+  textButton: {
+    fontFamily: "ParkinsansMedium",
+    fontSize: '20',
+    color: 'white'
   },
 });

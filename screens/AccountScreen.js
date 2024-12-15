@@ -9,23 +9,53 @@ export default function AccountScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header />
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>Personnaliser</Text>
-        <FontAwesome name="pencil" size={30} />
-        {/* onPress={userButton} */}
+          <LinearGradient
+            style={styles.header}
+            colors={["#fdc731", "#f3773b"]}
+            useAngle={true}
+            angle={135}
+            start={{ x: 0, y: 1 }}
+          >
+            <Image
+              style={styles.logoIcon}
+              resizeMode="cover"
+              source={require("../assets/logoIcon.png")}
+            />
+          </LinearGradient>
 
-        <Text style={styles.text}>Thème clair/sombre</Text>
-        <FontAwesome name="moon-o" size={30} />
-        <Text style={styles.text}>Compte</Text>
-        <FontAwesome name="user" size={30} onPress={goMyProfil} />
+          <View style={styles.textContainer}>
 
-        <Text style={styles.text}>Aide</Text>
-        <FontAwesome name="question" size={30} />
+            <View style={styles.function}>
+            <Text style={styles.text}>Personnaliser</Text>
+            <FontAwesome name="pencil" size={30} />
+            </View>
+            {/* onPress={userButton} */}
+          
+            <View style={styles.function}>
+            <Text style={styles.text}>Thème clair/sombre</Text>
+            <FontAwesome name="moon-o" size={30} />
+            </View>
 
-        <Text style={styles.text}>Se déconnecter</Text>
-        <FontAwesome name="sign-out" size={30} />
-      </View>
+            <View style={styles.function}>
+            <Text style={styles.text}>Paramètres</Text>
+            <FontAwesome name="gear" size={30} />
+            </View>
+
+            <View style={styles.function}>
+            <Text style={styles.text}>Compte</Text>
+            <FontAwesome name="user" size={30} onPress={goMyProfil}/>
+            </View>
+
+            <View style={styles.function}>
+            <Text style={styles.text}>Aide</Text>
+            <FontAwesome name="question" size={30} />
+            </View>
+
+            <View style={styles.function}>
+            <Text style={styles.text}>Se déconnecter</Text>
+            <FontAwesome name="sign-out" size={30} />
+            </View>
+          </View>
 
       <LinearGradient
         style={styles.footer}
@@ -60,8 +90,18 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   text: {
-    fontWeight: "600",
-    fontSize: 26,
+    fontFamily: 'NotoSansDisplayRegular',
+    fontSize: 18,
   },
-  textContainer: {},
+
+  textContainer: {
+    padding: 30,
+  },
+
+  function:{
+    flexDirection: 'row',
+    paddingVertical: 20,
+    justifyContent:'space-between',
+    alignItems: "center",
+  },
 });

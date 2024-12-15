@@ -1,5 +1,7 @@
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { LinearGradient } from "expo-linear-gradient";
+
 
 
 // SignUpScreen Function
@@ -11,26 +13,42 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <LinearGradient
+        style={styles.header}
+        colors={["#fdc731", "#f3773b"]}
+        useAngle={true}
+        angle={135}
+        start={{ x: 0, y: 1 }}
+      >
+         <Image
+          style={styles.logoIcon}
+          resizeMode="cover"
+          source={require("../assets/logoIcon.png")}
+        />
+      </LinearGradient>
+
       <View style={styles.arrow}>
         {/* Calls of the GoBack functions to navigate on UserTypeScreen */}
         <FontAwesome name="arrow-left" size={30} onPress={GoBack} />
       </View>
-      <View>
-        <View style={styles.UpZone}>
-          <TouchableOpacity style={styles.GoogleButton}>
+
+      
+      <View style={styles.btnContainer}>
+
+          <TouchableOpacity style={styles.button}>
             {/* Google's Button (not fonctionnal for the moment) */}
-            <FontAwesome name="google" size={20} color="white" />
-            <Text style={styles.TextGoogleButton}>Connect with Google</Text>
+            <FontAwesome name="google" size={30} color="white" />
+            <Text style={styles.textButton}>Connect with Google</Text>
           </TouchableOpacity>
-        </View>
-        <Text style={styles.separator}>OR</Text>
-        <View style={styles.DownZone}>
+       
+          <Text style={styles.h2}>or</Text>
+
           {/* Calls of the GoNext functions to navigate on UserFormsScreen1 */}
-          <TouchableOpacity style={styles.EmailButton} onPress={GoNext}>
-            <FontAwesome name="envelope" size={20} color="white" />
-            <Text style={styles.TexteEmailButton}>Connect with email</Text>
+          <TouchableOpacity style={styles.button} onPress={GoNext}>
+            <FontAwesome name="envelope" size={30} color="white" />
+            <Text style={styles.textButton}>Connect with email</Text>
           </TouchableOpacity>
-        </View>
+
       </View>
     </View>
   );
@@ -42,46 +60,72 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: 'white'
   },
+  header: {
+    width: "100%",
+    height: 120,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingLeft: 22,
+    backgroundColor: "transparent",
+  },
+
+  logoIcon: {
+    top: 20,
+    width: 50,
+    height: 50,
+  },
+
   arrow: {
-    position: "absolute",
-    top: 40,
-    left: 10,
+    paddingTop: 20,
+    paddingRight: 10,
+    paddingLeft: 22,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
   },
-  UpZone: {
-    marginBottom: 20,
-  },
-  GoogleButton: {
-    flexDirection: "row",
+
+  content: {
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
+    height: 274,
+    gap: 50,
+    bottom: 40,
+  },
+
+  btnContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 274,
+    gap: 50,
+    bottom: 40,
+  },
+
+  button: {
     backgroundColor: "#F3773B",
     padding: 10,
-    borderRadius: 20,
-  },
-  TextGoogleButton: {
-    color: "white",
-    fontWeight: "bold",
-    marginLeft: 10,
-  },
-  separator: {
-    marginVertical: 20,
-    fontSize: 18,
-    fontWeight: "bold",
-    alignSelf: "center",
-  },
-  DownZone: {
-    marginTop: 20,
-  },
-  EmailButton: {
-    flexDirection: "row",
+    borderRadius: 19,
+    marginVertical: 10,
+    flexDirection : 'row',
     alignItems: "center",
-    backgroundColor: "#F3773B",
-    padding: 10,
-    borderRadius: 20,
+    gap : 20,
+    width: 300,
+    height: 50,
+    paddingLeft: 20,
   },
-  TexteEmailButton: {
-    color: "white",
-    fontWeight: "bold",
-    marginLeft: 10,
+
+  textButton:{
+    color: 'white',
+    fontFamily: 'ParkinsansMedium',
+    fontSize: 20,
+  },
+
+  h2 : {
+    fontFamily: 'ParkinsansMedium',
+    fontSize: 20,
   },
 });
