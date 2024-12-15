@@ -35,8 +35,8 @@ export default function Header() {
 const styles = StyleSheet.create({
   header: {
     borderWidth: 1,
-    borderBottomColor: "white",
-    height: 100,
+    borderBottomColor: "#fdc731",
+    height: 120,
     paddingTop: 40,
     flexDirection: "row",
   },
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   LeftIcon: {
     width: 50,
     height: 50,
-    marginLeft: 10,
+    marginLeft: 20,
     marginRight: 20,
   },
   RightSide: {
