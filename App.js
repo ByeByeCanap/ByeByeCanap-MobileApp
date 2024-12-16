@@ -25,6 +25,8 @@ import ProfilScreen from "./screens/ProfilScreen";
 import CreateEventScreen from "./screens/CreateEventScreen";
 import SearchEventScreen from "./screens/SearchEventScreen";
 import SolutionScreen from "./screens/SolutionScreen";
+import RequestScreen from "./screens/RequestScreen";
+import EventDetailScreen from "./screens/EventDetailScreen";
 import MenuScreen from "./screens/MenuScreen";
 
 // Import pour icônes FONTAWESOME
@@ -89,7 +91,6 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
-
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="SignScreen" component={SignScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
@@ -102,15 +103,11 @@ function App() {
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="ProfilScreen" component={ProfilScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
-            <Stack.Screen
-              name="CreateEventScreen"
-              component={CreateEventScreen}
-            />
-            <Stack.Screen
-              name="SearchEventScreen"
-              component={SearchEventScreen}
-            />
+            <Stack.Screen name="CreateEventScreen" component={CreateEventScreen}/>
+            <Stack.Screen name="SearchEventScreen" component={SearchEventScreen}/>
             <Stack.Screen name="SolutionScreen" component={SolutionScreen} />
+            <Stack.Screen name="RequestScreen" component={RequestScreen} />
+            <Stack.Screen name="EventDetailScreen" component={EventDetailScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
