@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { Calendar } from "react-native-calendars";
 import Header from "../components/header";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Animation from "../components/animation";
 
 const activityOptions = [
   {
@@ -65,9 +67,19 @@ const activityOptions = [
 ];
 
 export default function HomeScreen({ navigation }) {
+  const [showAnimation, setShowAnimation] = useState(true); // État pour afficher l'animation
   const [isThemeModalVisible, setThemeModalVisible] = useState(false);
   const [isCategoryModalVisible, setCategoryModalVisible] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState(null);
+
+  // Animation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAnimation(false);
+    }, 4000); // Animation de 4 secondes
+
+    return () => clearTimeout(timer); // Stopper le timer
+  }, []);
 
   const goEvent = () => {
     navigation.navigate("CreateEventScreen");
@@ -87,16 +99,25 @@ export default function HomeScreen({ navigation }) {
 
   const handleThemeSelect = (theme) => {
     setSelectedTheme(theme);
-    toggleThemeModal(); // Fermeture du modal des thèmes
+    toggleThemeModal(); // Fermer le modal des thèmes
   };
 
   const filteredCategories =
     selectedTheme?.categorie ||
     activityOptions.flatMap((data) => data.categorie);
 
+  const goToSearch = () => {
+    navigation.navigate("SearchScreen");
+  };
+  
+  // Affiche l'animation au début
+  if (showAnimation) {
+    return <Animation duration={4000} />; 
+  }
+
   return (
     <View style={styles.container}>
-      <Header />
+      <Header navigation={navigation} />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -129,13 +150,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.sectionTitle}>Proposition de profils</Text>
         <View style={styles.avatarContainer}>
           <FlatList
-            data={[
-              { id: "1" },
-              { id: "2" },
-              { id: "3" },
-              { id: "4" },
-              { id: "5" },
-            ]}
+            data={[{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }, { id: "5" }]}
             horizontal
             keyExtractor={(item) => item.id}
             renderItem={() => (
@@ -154,10 +169,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.text}>Proposer un événement</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={goSearcheEvent}
-          >
+          <TouchableOpacity style={styles.button} onPress={goSearcheEvent}>
             <Text style={styles.text}>Chercher un événement</Text>
           </TouchableOpacity>
         </View>
@@ -171,12 +183,12 @@ export default function HomeScreen({ navigation }) {
         onRequestClose={toggleThemeModal}
       >
         <View style={styles.modalOverlay}>
+          <TouchableOpacity style={styles.closeIcon} onPress={toggleThemeModal}>
+            <FontAwesome name="close" size={30} />
+          </TouchableOpacity>
           <ScrollView contentContainerStyle={styles.modalContent}>
             {activityOptions.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => handleThemeSelect(item)}
-              >
+              <TouchableOpacity key={index} onPress={() => handleThemeSelect(item)}>
                 <Text style={styles.modalOptionText}>{item.theme}</Text>
               </TouchableOpacity>
             ))}
@@ -192,9 +204,12 @@ export default function HomeScreen({ navigation }) {
         onRequestClose={toggleCategoryModal}
       >
         <View style={styles.modalOverlay}>
+          <TouchableOpacity style={styles.closeIcon} onPress={toggleCategoryModal}>
+            <FontAwesome name="close" size={30} />
+          </TouchableOpacity>
           <ScrollView contentContainerStyle={styles.modalContent}>
             {filteredCategories.map((item, index) => (
-              <Text key={index} style={styles.modalOptionText}>
+              <Text key={index} style={styles.modalOptionText} onPress={goToSearch}>
                 {item}
               </Text>
             ))}
@@ -317,4 +332,10 @@ const styles = StyleSheet.create({
     color: "#333",
     marginVertical: 15,
   },
+  closeIcon: {
+    position: "absolute",
+    top: 20,
+    right: 20,
+    zIndex: 1,
+  },  
 });

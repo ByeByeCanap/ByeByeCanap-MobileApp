@@ -202,7 +202,6 @@ const styles = StyleSheet.create({
     color: "#282828",
     fontFamily: "NotoSansDisplayLight",
     fontWeight: "300",
-    fontSize: 16,
   },
   eyeIconContainer: {
     padding: 5,
@@ -210,7 +209,7 @@ const styles = StyleSheet.create({
 
   textButton: {
     fontFamily: "ParkinsansMedium",
-    fontSize: '20',
+    fontSize: 20,
     color: 'white'
   },
 });

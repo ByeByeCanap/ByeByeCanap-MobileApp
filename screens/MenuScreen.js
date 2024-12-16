@@ -1,36 +1,34 @@
-import { StyleSheet, View, Text, Image } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { StyleSheet, View, Text } from "react-native";
 import Header from "../components/header";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function AccountScreen({ navigation }) {
-  // const userButton = () => navigation.navigate(" ");
 
+    const goMyAccount = () => navigation.navigate('ProfilScreen')
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} />
+          <Header navigation={navigation} />
 
           <View style={styles.textContainer}>
 
             <View style={styles.function}>
-            <Text style={styles.text}>Personnaliser</Text>
-            <FontAwesome name="pencil" size={30} />
+            <Text style={styles.text}>Mon Profil</Text>
+            <FontAwesome name="user" size={30} onPress={goMyAccount}/>
             </View>
-            {/* onPress={userButton} */}
           
             <View style={styles.function}>
-            <Text style={styles.text}>Thème clair/sombre</Text>
-            <FontAwesome name="moon-o" size={30} />
+            <Text style={styles.text}>Mes préférences</Text>
+            <FontAwesome name="star" size={30} />
             </View>
 
             <View style={styles.function}>
-            <Text style={styles.text}>Paramètres</Text>
-            <FontAwesome name="gear" size={30} />
+            <Text style={styles.text}>Chat groupe</Text>
+            <FontAwesome name="wechat" size={30} />
             </View>
 
             <View style={styles.function}>
-            <Text style={styles.text}>Aide</Text>
-            <FontAwesome name="question" size={30} />
+            <Text style={styles.text}>Se Déconnecter</Text>
+            <FontAwesome name="sign-out" size={30} />
             </View>
           </View>
     </View>
