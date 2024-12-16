@@ -27,6 +27,7 @@ import SearchEventScreen from "./screens/SearchEventScreen";
 import SolutionScreen from "./screens/SolutionScreen";
 import RequestScreen from "./screens/RequestScreen";
 import EventDetailScreen from "./screens/EventDetailScreen";
+import MenuScreen from "./screens/MenuScreen";
 
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -63,7 +64,7 @@ const TabNavigator = () => {
             iconName = "home";
           } else if (route.name === "Map") {
             iconName = "map-marker";
-          } else if (route.name === "Profile") {
+          } else if (route.name === "Account") {
             iconName = "user-circle";
           }
 
@@ -80,7 +81,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Profile" component={AccountScreen} />
+      <Tab.Screen name="Account" component={AccountScreen} />
     </Tab.Navigator>
   );
 };
@@ -97,6 +98,7 @@ function App() {
             <Stack.Screen name="SignInScreen" component={SignInScreen} />
             <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="MenuScreen" component={MenuScreen} />
             <Stack.Screen name="AccountScreen" component={AccountScreen} />
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="ProfilScreen" component={ProfilScreen} />
