@@ -5,15 +5,16 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
-  TextInput,
   ScrollView,
   Image,
+  Pressable,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { useState } from "react";
+import { Header } from "../components/header"
 
 const activityOptions = [
   {
@@ -90,17 +91,35 @@ export default function SearchEventScreen({ navigation }) {
 
   const catalogue = activityOptions.map((data, index) => {
     return (
-      <View key={index} style={styles.catalogueItem}>
+      <View key={index}>
         <View style={styles.bannerTheme}>
           <Text style={styles.textTheme}>{data.theme}</Text>
         </View>
 
         <ScrollView horizontal={true} style={styles.themeContainer}>
-          {data.categorie.map((category, categoryIndex) => (
-            <View key={categoryIndex} style={styles.categorie}>
-              <Text>{category}</Text>
+          {data.categorie.map((category, categoryIndex) => {
+            const imageSource = [
+              require(`../assets/imagesEvent/theme_0.jpg`),
+              require(`../assets/imagesEvent/theme_1.jpg`),
+              require(`../assets/imagesEvent/theme_2.jpg`),
+              require(`../assets/imagesEvent/theme_3.jpg`),
+              require(`../assets/imagesEvent/theme_4.jpg`),
+              require(`../assets/imagesEvent/theme_5.jpg`),
+              require(`../assets/imagesEvent/theme_6.jpg`),
+              require(`../assets/imagesEvent/theme_7.jpg`),
+            ];
+            return (
+            <View style={styles.justify}>
+            <ImageBackground
+              key={categoryIndex}
+              source={imageSource[index]}
+              style={styles.categorie}
+              >
+            </ImageBackground>
+            <Text style={styles.textDescription}>{category}</Text>
+            
             </View>
-          ))}
+        )})}
         </ScrollView>
       </View>
     );
@@ -113,6 +132,13 @@ export default function SearchEventScreen({ navigation }) {
   const goBack = () => {
     navigation.navigate("TabNavigator");
   };
+
+  const goRequestScreen = () => {
+    navigation.navigate('RequestScreen')
+  }
+  const goDetailScreen = () => {
+    navigation.navigate('SearchScreen')
+  }
 
   return (
     <View style={styles.container}>
@@ -136,18 +162,28 @@ export default function SearchEventScreen({ navigation }) {
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.mainEvent}>
-          {/* <ImageBackground source={'./assets/imagesEvent/event_1.jpg'}/> */}
-          <TouchableOpacity style={styles.btnJoin}>
-            <Text style={styles.textJoin}>Participer</Text>
+        <Pressable style={{ width: '100%', alignItems: 'center' }} onPress={goDetailScreen}>
+        <ImageBackground
+          source={require('../assets/imagesEvent/event_main.jpg')}
+          style={styles.mainEvent}
+          imageStyle={{ borderRadius: 15 }}
+          >
+         
+        </ImageBackground>
+        </Pressable>
+
+        <Text>Infos sur l'événement</Text>
+        
+
+        <TouchableOpacity style={styles.buttonParticiper}  onPress={goRequestScreen}> 
+            <Text style={styles.text}>Participer</Text>
           </TouchableOpacity>
-        </View>
+        
 
         <ScrollView>{catalogue}</ScrollView>
 
-        {/* J'ai pas trouvé --> redirection vers SolutionScreen */}
         <TouchableOpacity
-          style={styles.buttonSolution}
+          style={styles.button}
           onPress={goSolutionScreen}
         >
           <Text style={styles.text}>J'ai pas trouvé...</Text>
@@ -160,15 +196,13 @@ export default function SearchEventScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
     backgroundColor: "white",
   },
 
   content: {
     alignItems: "center",
     justifyContent: "stretch",
-    paddingVertical: 10,
+    paddingVertical: 20,
   },
 
   arrow: {
@@ -198,7 +232,18 @@ const styles = StyleSheet.create({
     color: "#000",
   },
 
-  buttonSolution: {
+  button: {
+    backgroundColor: "#F3773B",
+    padding: 10,
+    borderRadius: 19,
+    marginVertical: 10,
+    alignItems: "center",
+    width: 250,
+    height: 50,
+    marginVertical: 50,
+  },
+
+  buttonParticiper: {
     backgroundColor: "#F3773B",
     padding: 10,
     borderRadius: 19,
@@ -221,70 +266,62 @@ const styles = StyleSheet.create({
     height: 50,
   },
 
-  textJoin: {
-    fontSize: 16,
-    letterSpacing: 0,
-    lineHeight: 28,
-    fontFamily: "NotoSansDisplayRegular",
-    color: "#fff",
-    textAlign: "center",
-  },
-
-  btnJoin: {
-    borderRadius: 20,
-    backgroundColor: "#fdc731",
-    width: 120,
-    height: 30,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 10,
-    paddingVertical: 0,
-  },
-
   mainEvent: {
     borderRadius: 15,
     flex: 1,
-    width: 320,
-    height: 234,
+    width: 340,
+    height: 300,
     alignItems: "flex-end",
     justifyContent: "flex-end",
     paddingHorizontal: 9,
     paddingVertical: 22,
-    backgroundColor: "grey",
   },
 
   textTheme: {
-    fontSize: 18,
+    fontSize: 20,
     letterSpacing: 0,
     lineHeight: 28,
-    fontFamily: "NotoSansDisplayRegular",
+    fontFamily: "ParkinsansMedium",
     color: "#fff",
     textAlign: "left",
   },
 
   bannerTheme: {
-    borderRadius: 19,
     backgroundColor: "#fdc731",
-    width: "90%",
+    width: '100%',
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: 'center',
     paddingLeft: 22,
     paddingTop: 10,
     paddingRight: 10,
     paddingBottom: 10,
     marginVertical: 20,
-    marginHorizontal: 20,
   },
 
   categorie: {
-    width: 120,
-    height: 120,
-    backgroundColor: "yellow",
+    width: 200,
+    height: 200,
     marginHorizontal: 10,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 
   themeContainer: {
     gap: 10,
   },
+
+  textDescription:{
+    color: 'black',
+    fontFamily: 'NotoSansDisplayMedium',
+    fontSize: 18,
+    paddingTop: 10,
+    textAlign: 'center',
+  },
+
+  justify: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    width: 210,
+  }
 });
