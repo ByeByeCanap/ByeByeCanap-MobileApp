@@ -612,6 +612,10 @@ export default function UserFormsPage({ navigation }) {
         </Text>
         <TextInput
           style={styles.textInput}
+          maxLength={280}
+          multiline={true}
+          editable={true}
+          textAlignVertical="top"
           onChangeText={(descriptionProfil) =>
             setDescriptionProfil(descriptionProfil)
           }

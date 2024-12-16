@@ -2,13 +2,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, View, Image } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const Material = MaterialCommunityIcons;
 
 export default function Header() {
   const route = useRoute();
   const showIcons = ["Home", "Profile", "Map"].includes(route.name);
+  const navigation = useNavigation();
+  const menuNavigation = () => navigation.navigate('MenuScreen');
 
   return (
     <LinearGradient
@@ -27,6 +29,7 @@ export default function Header() {
       </View>
       <View style={styles.RightSide}>
         {showIcons && <FontAwesome name="search" size={30} />}
+        {showIcons && <Material name="menu" size={30} onPress={menuNavigation}/>}
       </View>
     </LinearGradient>
   );
