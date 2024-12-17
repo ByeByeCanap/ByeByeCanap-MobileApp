@@ -118,6 +118,22 @@
     { label: "En fonction de mes valeurs", value: "valeurs" },
   ];
 
+  const genderOptions = [
+    { label: "Mixte", value: "mixte" },
+    { label: "Non-mixité (uniquement des femmes)", value: "non_mixte_femmes" },
+    { label: "Non-mixité (uniquement des hommes)", value: "non_mixte_hommes" },
+  ];
+  
+  const ageOptionsCreateEvent = [
+    { label: "18-24 ans", value: "18-24" },
+    { label: "25-29 ans", value: "25-29" },
+    { label: "30-34 ans", value: "30-34" },
+    { label: "35-39 ans", value: "35-39" },
+    { label: "40-49 ans", value: "40-49" },
+    { label: "50-59 ans", value: "50-59" },
+    { label: "60 ans +", value: "60+" },
+  ];
+
   module.exports = {activityOptions,
     motivationOptions, 
     groupOptions, 
@@ -128,4 +144,6 @@
     preferencesOptions,
     valuesOptions,
     projectOptions,
-    suggestionsOptions};
+    suggestionsOptions,
+    genderOptions,
+    ageOptionsCreateEvent};
