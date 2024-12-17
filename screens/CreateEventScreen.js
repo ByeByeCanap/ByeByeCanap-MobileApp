@@ -1,4 +1,5 @@
 import React from "react";
+// Import for style
 import {
   StyleSheet,
   View,
@@ -12,102 +13,29 @@ import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 
-const activityOptions = [
-  {
-    theme: "Activités créatrices",
-    categorie: ["Artistique", "Manuel", "Musique"],
-  },
-  {
-    theme: "Sport",
-    categorie: [
-      "Pratiquer en extérieur (terre)",
-      "Pratiquer en extérieur (mer)",
-      "Pratiquer en intérieur",
-      "Supporter",
-    ],
-  },
-  {
-    theme: "Art & Culture",
-    categorie: [
-      "Cinéma",
-      "Concert",
-      "Musées",
-      "Lecture",
-      "Musique (pratiquer)",
-    ],
-  },
-  {
-    theme: "Boire & Manger",
-    categorie: ["Bars", "Restaurant", "Cuisiner"],
-  },
-  {
-    theme: "Entraide",
-    categorie: [
-      "Petsitter",
-      "Aide à la personne",
-      "Services",
-      "SOS",
-      "Acte citoyen",
-    ],
-  },
-  {
-    theme: "Spiritualité",
-    categorie: ["Relaxation", "Mysticisme"],
-  },
-  {
-    theme: "Apprentissage",
-    categorie: ["Langues", "Musique", "Bricolage"],
-  },
-  {
-    theme: "Plaisir coupable",
-    categorie: ["Divertissement", "Jeux", "Rire"],
-  },
-];
+// Import for reducer use
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
-const groupOptions = [
-  { label: "Petit groupe (2-5 personnes)", value: "petit_groupe" },
-  { label: "Groupe moyen (6-10 personnes)", value: "groupe_moyen" },
-  { label: "Grand groupe (10+ personnes)", value: "grand_groupe" },
-];
+// Import option for creation of events
+import {
+  activityOptions,
+  groupOptions,
+  genderOptions,
+  ageOptionsCreateEvent
+} from "../utils/userFormList";
 
-const genderOptions = [
-  { label: "Mixte", value: "mixte" },
-  { label: "Non-mixité (uniquement des femmes)", value: "non_mixte_femmes" },
-  { label: "Non-mixité (uniquement des hommes)", value: "non_mixte_hommes" },
-];
+// Import for fetch
+import { BACK_IP } from "@env";
 
-const ageOptions = [
-  { label: "18-24 ans", value: "18-24" },
-  { label: "25-29 ans", value: "25-29" },
-  { label: "30-34 ans", value: "30-34" },
-  { label: "35-39 ans", value: "35-39" },
-  { label: "40-49 ans", value: "40-49" },
-  { label: "50-59 ans", value: "50-59" },
-  { label: "60 ans +", value: "60+" },
-];
 
 export default function CreateEventScreen({ navigation }) {
+
+  // Custom font --------------------------------------------------------------------------------
+  // Android and iOS come with their own set of platform fonts
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [eventTitle, setEventTitle] = useState("");
-  const [interestTheme, setInterestTheme] = useState("");
-  const [filteredInterestCategories, setFilteredInterestCategories] = useState(
-    []
-  );
-  const [interestCategorie, setInterestCategorie] = useState("");
-  const [place, setPlace] = useState("");
-  const [groupPreference, setGroupPreference] = useState("");
-  const [genderPreference, setGenderPreference] = useState("");
-  const [agePreference, setAgePreference] = useState("");
-  const [other, setOther] = useState("");
-  const [description, setDescription] = useState("");
-
-  // const goBack = () => navigation.navigate('SolutionPage');
-  // const publishEvent = () => navigation.naviagte('HomePage'); ?? On navigue vers quelle page une fois le formulaire complété ?
-  // ajouter TabNavigation
-
   const loadFonts = async () => {
     await Font.loadAsync({
       ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
@@ -116,6 +44,39 @@ export default function CreateEventScreen({ navigation }) {
     });
   };
 
+  // Preparation for creation of events -------------------------------------------------------
+  //const [organizerId, setOrganizerId] = useState(""); // foreign key from porfileInfos
+  const [eventTitle, setEventTitle] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+
+  // Thèmes: interestTheme, setInterestTheme to fetch to back
+  const [interestTheme, setInterestTheme] = useState("");
+  // Catégories (interestCategorie, setInterestCategorie to fetch to back)
+  const [interestCategorie, setInterestCategorie] = useState("");
+  const [filteredInterestCategories, setFilteredInterestCategories] = useState([]);
+  const [referenceEvent, setReferenceEvent] = useState("");
+  const [place, setPlace] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  // sizeGroup
+  const [groupPreference, setGroupPreference] = useState("");
+  // Preferences sous-doc: sizeGroup, Gender, âge selection et autre description
+  const [genderPreference, setGenderPreference] = useState("");
+  const [agePreference, setAgePreference] = useState("");
+  const [other, setOther] = useState("");
+  // Participant
+  //const [participants, setParticipants] = useState(""); // foreign key from users
+  const [description, setDescription] = useState("");
+  // isFinished
+  const [isFinished, setIsFinished] = useState("");
+  // Token to be retreived from reducer
+  const user = useSelector((state) => state.users.value);
+
+  // const goBack = () => navigation.navigate('SolutionPage');
+  // const publishEvent = () => navigation.naviagte('HomePage'); ?? On navigue vers quelle page une fois le formulaire complété ?
+  // ajouter TabNavigation
+
+
+// Application of style -----------------------------------------------------------------
   if (!fontsLoaded) {
     return (
       <AppLoading
@@ -126,6 +87,7 @@ export default function CreateEventScreen({ navigation }) {
     );
   }
 
+// Theme & category selection
   const handleInterestThemeChange = (selectedInterestTheme) => {
     setInterestTheme(selectedInterestTheme);
     const selectedActivity = activityOptions.find(
@@ -137,9 +99,101 @@ export default function CreateEventScreen({ navigation }) {
     setInterestCategorie(null);
   };
 
+// Definir Image
+// const [imageUrl, setImageUrl] = useState("");
+const handleImage = () => {
+
+}
+
+
+
+// Create an event ---------------------------------------------------------------------------------
+// || 
+//       !interestTheme ||
+//       !interestCategorie ||
+//       !place ||
+//       !eventDate ||
+//       !groupPreference ||
+//       !genderPreference |
+//       !agePreference
+  const handleCreateEvent= () => {
+
+    // console.log("click ok"); // click fonctionne
+    
+
+    if (!eventTitle ) return;
+const dataFetch = {
+
+  //organizer:organizerId, // foreign key from profileInfos
+  title:"eventTitle",
+  theme:"interestTheme",
+  category:"interestCategorie",
+  reference:"TxCyNz",
+  image:"url",
+  eventDate:"2024-12-13",
+  location:"place",
+  sizeGroup:"groupPreference",
+  description:"description",
+  preferences: {age: "agePreference", gender:"genderPreference", other:"other"}, // sous-doc
+  participants:[], // foreign key from users
+  isFinished: false,
+  token: user.token,        
+  
+  // //organizer:organizerId, // foreign key from profileInfos
+  // title:eventTitle,
+  // theme:interestTheme,
+  // category:interestCategorie,
+  // reference:"TxCyNz",
+  // image:"url",
+  // eventDate: "2024-12-13",
+  // location:place,
+  // sizeGroup:groupPreference,
+  // description:description,
+  // preferences: {age: agePreference, gender:genderPreference, other:other}, // sous-doc
+  // participants:[], // foreign key from users
+  // isFinished: false,
+  // token: user.token,
+}
+
+console.log(dataFetch)
+
+  //   fetch(`${BACK_IP}/events/propositionEvent`, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log("fetch ok", data)
+  //       // if (data && data.event) {
+  //       // setorganizer(""), // foreign key from profileInfos
+  //       // settitle(""),
+  //       // settheme(""),
+  //       // setcategory(""),
+  //       // setreference(""),
+  //       // setimage(""),
+  //       // seteventDate(""),
+  //       // setlocation(""),
+  //       // setsizeGroup(""),
+  //       // setdescription(""),
+  //       // setpreferences(""),
+  //       // setparticipants(""),
+  //       // setisFinished(""),
+  //       // settoken(""),
+  //       // }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error.message);
+  //     });
+
+  //    // navigation.navigate("TabNavigator", { screen: "HomeScreen" });
+  };
+
+  // Go to previous screen -----------------------------------------------------------------------
   const goBack = () => {
     navigation.navigate("TabNavigator");
   };
+
 
   return (
     <View style={styles.container}>
@@ -176,6 +230,7 @@ export default function CreateEventScreen({ navigation }) {
         <Image
           source={require("../assets/avatars/avatar_2.png")}
           style={styles.image}
+          onPress={handleImage}
         ></Image>
 
         <TouchableOpacity style={styles.button}>
@@ -268,7 +323,7 @@ export default function CreateEventScreen({ navigation }) {
           selectedTextStyle={styles.selectedTextStyle}
           itemTextStyle={styles.itemTextStyle}
           style={styles.dropdown}
-          data={ageOptions}
+          data={ ageOptionsCreateEvent}
           labelField="label"
           valueField="value"
           placeholder="Âge moyen des participants"
@@ -298,7 +353,7 @@ export default function CreateEventScreen({ navigation }) {
         />
 
         {/* Publier l'événement */}
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleCreateEvent}>
           <Text style={styles.text}>Publier l'événement</Text>
         </TouchableOpacity>
       </ScrollView>
