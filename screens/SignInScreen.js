@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { BACK_IP } from "@env";
+import { Header } from "../components/header";
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
@@ -78,6 +79,10 @@ export default function SignIn({ navigation }) {
 
       <View style={styles.arrow}>
           <FontAwesome name="arrow-left" size={30} onPress={goBack} />
+      </View>
+
+      <View style={styles.h1content}>
+        <Text style={styles.h1}>Heureux de vous revoir !</Text>
       </View>
 
       <View style={styles.inputContainer}>
@@ -211,5 +216,16 @@ const styles = StyleSheet.create({
     fontFamily: "ParkinsansMedium",
     fontSize: 20,
     color: 'white'
+  },
+
+  h1content : {
+    marginVertical: 50,
+  },
+
+  h1:{
+    width: 350,
+    fontFamily: 'ParkinsansMedium',
+    fontSize: 22,
+    textAlign: 'center',
   },
 });

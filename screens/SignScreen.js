@@ -33,6 +33,10 @@ export default function SignScreen( { navigation } ) {
   return (
     <View style={styles.container}>
       <Header/>
+      <View style= {styles.h1content}>
+      <Text style= {styles.h1}>Bienvenue sur </Text>
+      <Text style= {styles.h1}>Bye Bye Canap' !</Text>
+      </View>
       <View style={styles.btnContainer}>
         <Text style={styles.h2}>Pas encore membre ?</Text>
         <TouchableOpacity style={styles.button} onPress={signUp}>
@@ -109,5 +113,17 @@ const styles = StyleSheet.create({
   h2 : {
     fontFamily: 'ParkinsansMedium',
     fontSize: 20,
-  }
+  },
+
+  h1content : {
+    marginVertical: 50,
+  },
+
+  h1:{
+    width: 350,
+    fontFamily: 'ParkinsansMedium',
+    fontSize: 30,
+    textAlign: 'center',
+  },
+
 });

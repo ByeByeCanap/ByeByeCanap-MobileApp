@@ -4,7 +4,12 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function AccountScreen({ navigation }) {
 
-    const goMyAccount = () => navigation.navigate('ProfilScreen')
+
+
+  const goMyAccount = () => navigation.navigate('ProfilScreen');
+  const goToChatScreen = () => navigation.navigate('ChatScreen')
+
+
   return (
     <View style={styles.container}>
           <Header navigation={navigation} />
@@ -23,7 +28,7 @@ export default function AccountScreen({ navigation }) {
 
             <View style={styles.function}>
             <Text style={styles.text}>Chat groupe</Text>
-            <FontAwesome name="wechat" size={30} />
+            <FontAwesome name="wechat" size={30} onPress={goToChatScreen}/>
             </View>
 
             <View style={styles.function}>

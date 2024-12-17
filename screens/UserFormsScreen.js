@@ -662,7 +662,7 @@ const styles = StyleSheet.create({
       height: 100,
   },
   h1: {
-      fontSize: 20,
+      fontSize: 22,
       fontFamily: "ParkinsansMedium",
       color: "#000",
       marginTop: 40,
