@@ -25,11 +25,11 @@ export default function Header() {
           resizeMode="cover"
           source={require("../assets/logoIcon.png")}
         />
-        {showIcons && <Material name="bell-outline" size={30} />}
+        {showIcons && <Material name="bell-outline" size={40} />}
       </View>
       <View style={styles.RightSide}>
         {showIcons && <FontAwesome name="search" size={30} />}
-        {showIcons && <Material name="menu" size={30} onPress={menuNavigation}/>}
+        {showIcons && <Material name="menu" size={40} onPress={menuNavigation}/>}
       </View>
     </LinearGradient>
   );
@@ -62,5 +62,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end",
     paddingRight: 15,
+    gap : 15,
   },
 });

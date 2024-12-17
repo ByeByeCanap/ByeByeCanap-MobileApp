@@ -3,12 +3,17 @@ import { LinearGradient } from "expo-linear-gradient";
 import Header from "../components/header";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function AccountScreen({ navigation }) {
-  // const userButton = () => navigation.navigate(" ");
+export default function SettingScreen({ navigation }) {
+
+  const goBack = () => navigation.navigate("MenuScreen");
 
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
+
+      <View style={styles.arrow}>
+        <FontAwesome name="arrow-left" size={30} onPress={goBack}/>
+      </View>
 
           <View style={styles.textContainer}>
 
@@ -21,11 +26,6 @@ export default function AccountScreen({ navigation }) {
             <View style={styles.function}>
             <Text style={styles.text}>Thème clair/sombre</Text>
             <FontAwesome name="moon-o" size={30} />
-            </View>
-
-            <View style={styles.function}>
-            <Text style={styles.text}>Paramètres</Text>
-            <FontAwesome name="gear" size={30} />
             </View>
 
             <View style={styles.function}>
@@ -74,5 +74,14 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     justifyContent:'space-between',
     alignItems: "center",
+  },
+
+  arrow: {
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingLeft: 22,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
   },
 });
