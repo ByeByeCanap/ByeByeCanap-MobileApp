@@ -13,58 +13,8 @@ import { Calendar } from "react-native-calendars";
 import Header from "../components/header";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Animation from "../components/animation";
-
-const activityOptions = [
-  {
-    theme: "Activités créatrices",
-    categorie: ["Artistique", "Manuel", "Musique"],
-  },
-  {
-    theme: "Sport",
-    categorie: [
-      "Pratiquer en extérieur (terre)",
-      "Pratiquer en extérieur (mer)",
-      "Pratiquer en intérieur",
-      "Supporter",
-    ],
-  },
-  {
-    theme: "Art & Culture",
-    categorie: [
-      "Cinéma",
-      "Concert",
-      "Musées",
-      "Lecture",
-      "Musique (pratiquer)",
-    ],
-  },
-  {
-    theme: "Boire & Manger",
-    categorie: ["Bars", "Restaurant", "Cuisiner"],
-  },
-  {
-    theme: "Entraide",
-    categorie: [
-      "Petsitter",
-      "Aide à la personne",
-      "Services",
-      "SOS",
-      "Acte citoyen",
-    ],
-  },
-  {
-    theme: "Spiritualité",
-    categorie: ["Relaxation", "Mysticisme"],
-  },
-  {
-    theme: "Apprentissage",
-    categorie: ["Langues", "Musique", "Bricolage"],
-  },
-  {
-    theme: "Plaisir coupable",
-    categorie: ["Divertissement", "Jeux", "Rire"],
-  },
-];
+import { useSelector } from "react-redux";
+import { activityOptions } from "../utils/userFormList";
 
 export default function HomeScreen({ navigation }) {
   const [showAnimation, setShowAnimation] = useState(true); // État pour afficher l'animation
@@ -80,6 +30,11 @@ export default function HomeScreen({ navigation }) {
 
     return () => clearTimeout(timer); // Stopper le timer
   }, []);
+
+  // const user = useSelector((state) => state.users.value);
+  // const store = () => {
+  //   console.log("DATA DU STORE", "userType:", user);
+  // };
 
   const goEvent = () => {
     navigation.navigate("CreateEventScreen");
@@ -110,10 +65,10 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate("SearchScreen");
     setCategoryModalVisible(!isCategoryModalVisible);
   };
-  
+
   // Affiche l'animation au début
   if (showAnimation) {
-    return <Animation duration={4000} />; 
+    return <Animation duration={4000} />;
   }
 
   return (
@@ -124,11 +79,17 @@ export default function HomeScreen({ navigation }) {
         contentContainerStyle={styles.scrollContent}
       >
         <View style={styles.searchContainer}>
-          <TouchableOpacity style={styles.buttonFilter} onPress={toggleThemeModal}>
+          <TouchableOpacity
+            style={styles.buttonFilter}
+            onPress={toggleThemeModal}
+          >
             <Text style={styles.textFilter}>Thèmes</Text>
             <FontAwesome name="arrow-down" color="white"></FontAwesome>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonFilter} onPress={toggleCategoryModal}>
+          <TouchableOpacity
+            style={styles.buttonFilter}
+            onPress={toggleCategoryModal}
+          >
             <Text style={styles.textFilter}>Catégories</Text>
             <FontAwesome name="arrow-down" color="white"></FontAwesome>
           </TouchableOpacity>
@@ -153,7 +114,13 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.sectionTitle}>Proposition de profils</Text>
         <View style={styles.avatarContainer}>
           <FlatList
-            data={[{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }, { id: "5" }]}
+            data={[
+              { id: "1" },
+              { id: "2" },
+              { id: "3" },
+              { id: "4" },
+              { id: "5" },
+            ]}
             horizontal
             keyExtractor={(item) => item.id}
             renderItem={() => (
@@ -188,7 +155,10 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.modalOverlay}>
           <ScrollView contentContainerStyle={styles.modalContent}>
             {activityOptions.map((item, index) => (
-              <TouchableOpacity key={index} onPress={() => handleThemeSelect(item)}>
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleThemeSelect(item)}
+              >
                 <Text style={styles.modalOptionText}>{item.theme}</Text>
               </TouchableOpacity>
             ))}
@@ -207,18 +177,22 @@ export default function HomeScreen({ navigation }) {
         onRequestClose={toggleCategoryModal}
       >
         <View style={styles.modalOverlay}>
-         
           <ScrollView contentContainerStyle={styles.modalContent}>
             {filteredCategories.map((item, index) => (
-              <Text key={index} style={styles.modalOptionText} onPress={goToSearch}>
+              <Text
+                key={index}
+                style={styles.modalOptionText}
+                onPress={goToSearch}
+              >
                 {item}
               </Text>
-              
             ))}
-            
           </ScrollView>
-          <TouchableOpacity style={styles.closeIcon} onPress={toggleCategoryModal}>
-            <FontAwesome style={styles.icon} size={30} name="close"/>
+          <TouchableOpacity
+            style={styles.closeIcon}
+            onPress={toggleCategoryModal}
+          >
+            <FontAwesome style={styles.icon} size={30} name="close" />
           </TouchableOpacity>
         </View>
       </Modal>
@@ -240,7 +214,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-  
+
   headerIcons: {
     flexDirection: "row",
     gap: 20,
@@ -261,10 +235,10 @@ const styles = StyleSheet.create({
     width: "90%",
     marginVertical: 15,
   },
-  
+
   buttonFilter: {
     backgroundColor: "#FDC731",
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 10,
     borderRadius: 19,
     justifyContent: "center",
@@ -275,19 +249,19 @@ const styles = StyleSheet.create({
   },
   textFilter: {
     color: "white",
-    fontFamily: 'NotoSansDisplayRegular',
+    fontFamily: "NotoSansDisplayRegular",
     fontSize: 18,
   },
 
   text: {
     color: "white",
-    fontFamily: 'ParkinsansMedium',
+    fontFamily: "ParkinsansMedium",
     fontSize: 20,
   },
 
   sectionTitle: {
     fontSize: 20,
-    fontFamily: 'ParkinsansMedium',
+    fontFamily: "ParkinsansMedium",
     color: "black",
     marginVertical: 10,
     marginBottom: 20,
@@ -309,15 +283,15 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 19,
     marginVertical: 10,
-    flexDirection : 'row',
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap : 20,
+    gap: 20,
     width: 300,
     height: 50,
     paddingLeft: 20,
   },
-  
+
   btnContainer: {
     marginTop: 40,
     flex: 1,
@@ -326,7 +300,6 @@ const styles = StyleSheet.create({
     height: "120%",
     gap: 20,
   },
-
 
   modalOverlay: {
     flex: 1,
@@ -338,15 +311,14 @@ const styles = StyleSheet.create({
     paddingVertical: 100,
   },
   modalOptionText: {
-    fontFamily: 'ParkinsansMedium',
+    fontFamily: "ParkinsansMedium",
     fontSize: 20,
     color: "black",
     marginVertical: 15,
-
   },
   closeIcon: {
-    bottom : 50,
-    alignItems:"center",
+    bottom: 50,
+    alignItems: "center",
     zIndex: 1,
     backgroundColor: "rgb(253, 199, 49)",
     paddingTop: 20,
@@ -357,5 +329,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 7,
     borderRadius: 50,
-  }
+  },
 });
