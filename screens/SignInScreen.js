@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { BACK_IP } from "@env";
-import { Header } from "../components/header";
+import Header from "../components/header";
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
@@ -63,20 +63,7 @@ export default function SignIn({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
-
+      <Header/>
       <View style={styles.arrow}>
           <FontAwesome name="arrow-left" size={30} onPress={goBack} />
       </View>

@@ -1,6 +1,6 @@
 import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { LinearGradient } from "expo-linear-gradient";
+import Header from "../components/header";
 
 
 
@@ -9,23 +9,12 @@ export default function SignUpScreen({ navigation }) {
   // Handling Previous and Next Pages for navigations
   const GoBack = () => navigation.navigate("UserTypeScreen");
   const GoNext = () => navigation.navigate("UserFormsScreen");
+  const goToGoogleSignIn = () => navigation.navigate("GoogleSignInScreen")
   
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-         <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
+      <Header/>
 
       <View style={styles.arrow}>
         {/* Calls of the GoBack functions to navigate on UserTypeScreen */}
@@ -35,7 +24,7 @@ export default function SignUpScreen({ navigation }) {
       
       <View style={styles.btnContainer}>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={goToGoogleSignIn}>
             {/* Google's Button (not fonctionnal for the moment) */}
             <FontAwesome name="google" size={30} color="white" />
             <Text style={styles.textButton}>Connect with Google</Text>

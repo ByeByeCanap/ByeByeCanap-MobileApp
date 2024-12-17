@@ -14,7 +14,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { useState } from "react";
-import { Header } from "../components/header"
+import Header from "../components/header"
 
 const activityOptions = [
   {
@@ -137,24 +137,13 @@ export default function SearchEventScreen({ navigation }) {
     navigation.navigate('RequestScreen')
   }
   const goDetailScreen = () => {
-    navigation.navigate('SearchScreen')
+    navigation.navigate('EventDetailScreen')
   }
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
+        <Header navigation={navigation} />
+
 
       <View style={styles.arrow}>
         <FontAwesome name="arrow-left" size={30} onPress={goBack} />
@@ -172,7 +161,8 @@ export default function SearchEventScreen({ navigation }) {
         </ImageBackground>
         </Pressable>
 
-        <Text>Infos sur l'événement</Text>
+        <Text style={styles.h1}>Concert Blues</Text>
+        <Text style={styles.textDescription}>06 Juin à 20H30</Text>
         
 
         <TouchableOpacity style={styles.buttonParticiper}  onPress={goRequestScreen}> 
@@ -273,7 +263,7 @@ const styles = StyleSheet.create({
     height: 300,
     alignItems: "flex-end",
     justifyContent: "flex-end",
-    paddingHorizontal: 9,
+    paddingHorizontal: 10,
     paddingVertical: 22,
   },
 

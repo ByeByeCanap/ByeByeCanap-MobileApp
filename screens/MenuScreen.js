@@ -6,8 +6,10 @@ export default function AccountScreen({ navigation }) {
 
 
 
-  const goMyAccount = () => navigation.navigate('ProfilScreen');
-  const goToChatScreen = () => navigation.navigate('ChatScreen')
+  const goToSettings = () => navigation.navigate('SettingScreen');
+  const goToChatScreen = () => navigation.navigate('ChatScreen');
+  const goToSignScreen = () => navigation.navigate('SignScreen');
+  const goToFavoriteScreen = () => navigation.navigate('FavoriteScreen');
 
 
   return (
@@ -15,15 +17,15 @@ export default function AccountScreen({ navigation }) {
           <Header navigation={navigation} />
 
           <View style={styles.textContainer}>
-
-            <View style={styles.function}>
-            <Text style={styles.text}>Mon Profil</Text>
-            <FontAwesome name="user" size={30} onPress={goMyAccount}/>
-            </View>
           
             <View style={styles.function}>
-            <Text style={styles.text}>Mes préférences</Text>
-            <FontAwesome name="star" size={30} />
+            <Text style={styles.text}>Mes paramètres</Text>
+            <FontAwesome name="gear" size={30} onPress={goToSettings}/>
+            </View>
+
+            <View style={styles.function}>
+            <Text style={styles.text}>Favoris</Text>
+            <FontAwesome name="star" size={30} onPress={goToFavoriteScreen}/>
             </View>
 
             <View style={styles.function}>
@@ -33,7 +35,7 @@ export default function AccountScreen({ navigation }) {
 
             <View style={styles.function}>
             <Text style={styles.text}>Se Déconnecter</Text>
-            <FontAwesome name="sign-out" size={30} />
+            <FontAwesome name="sign-out" size={30} onPress={goToSignScreen}/>
             </View>
           </View>
     </View>

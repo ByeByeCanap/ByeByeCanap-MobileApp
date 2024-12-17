@@ -17,7 +17,7 @@ import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import UserFormsScreen from "./screens/UserFormsScreen";
 import MapScreen from "./screens/MapScreen";
-import AccountScreen from "./screens/AccountScreen";
+import SettingScreen from "./screens/SettingScreen";
 import UserTypeScreen from "./screens/UserTypeScreen";
 import HomeScreen from "./screens/HomeScreen";
 import SearchScreen from "./screens/SearchScreen";
@@ -30,6 +30,8 @@ import EventDetailScreen from "./screens/EventDetailScreen";
 import MenuScreen from "./screens/MenuScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import ChatScreen from "./screens/ChatScreen";
+import FavoriteScreen from "./screens/FavoriteScreen";
+import GoogleSignInScreen from "./screens/GoogleSignInScreen";
 
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -66,7 +68,7 @@ const TabNavigator = () => {
             iconName = "home";
           } else if (route.name === "Map") {
             iconName = "map-marker";
-          } else if (route.name === "Account") {
+          } else if (route.name === "Profile") {
             iconName = "user-circle";
           }
 
@@ -83,7 +85,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Account" component={AccountScreen} />
+      <Tab.Screen name="Profile" component={ProfilScreen} />
     </Tab.Navigator>
   );
 };
@@ -102,7 +104,7 @@ function App() {
             <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="MenuScreen" component={MenuScreen} />
-            <Stack.Screen name="AccountScreen" component={AccountScreen} />
+            <Stack.Screen name="SettingScreen" component={SettingScreen} />
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="ProfilScreen" component={ProfilScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
@@ -112,6 +114,8 @@ function App() {
             <Stack.Screen name="RequestScreen" component={RequestScreen} />
             <Stack.Screen name="EventDetailScreen" component={EventDetailScreen}/>
             <Stack.Screen name="ChatScreen" component={ChatScreen}/>
+            <Stack.Screen name="FavoriteScreen" component={FavoriteScreen}/>
+            <Stack.Screen name="GoogleSignInScreen" component={GoogleSignInScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

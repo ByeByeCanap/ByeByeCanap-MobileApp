@@ -1,14 +1,16 @@
 import { StyleSheet, View, Image, TouchableWithoutFeedback } from "react-native";
+import Header from "../components/header";
 
-export default function ChatScreen({ navigation }) {
+export default function FavoriteScreen({ navigation }) {
 
     const goBack = () => navigation.navigate('MenuScreen')
     return (
         <View style={styles.container}>
+        <Header/>
         <TouchableWithoutFeedback  onPress={goBack}>
             <Image 
             style={styles.image}
-            source={require('../assets/ChatScreen.jpg')}/>
+            source={require('../assets/FavoriteScreen.jpg')}/>
         </TouchableWithoutFeedback>
         </View>
     )

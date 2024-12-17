@@ -1,14 +1,17 @@
 import { StyleSheet, View, Image, TouchableWithoutFeedback } from "react-native";
+import Header from "../components/header";
 
-export default function ChatScreen({ navigation }) {
+export default function GoogleSignInScreen({ navigation }) {
 
-    const goBack = () => navigation.navigate('MenuScreen')
+    const signUp = () => navigation.navigate('UserFormsScreen')
+
     return (
         <View style={styles.container}>
-        <TouchableWithoutFeedback  onPress={goBack}>
+        <Header/>
+        <TouchableWithoutFeedback  onPress={signUp}>
             <Image 
             style={styles.image}
-            source={require('../assets/ChatScreen.jpg')}/>
+            source={require('../assets/GoogleSignInScreen.jpg')}/>
         </TouchableWithoutFeedback>
         </View>
     )
