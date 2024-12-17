@@ -33,7 +33,7 @@ export default function ProfilScreen({ navigation }) {
       </LinearGradient>
 
       <View style={styles.arrow}>
-        <FontAwesome name="arrow-left" size={30} onPress={GoBack}/>
+        <FontAwesome name="arrow-left" size={30} onPress={GoBack} />
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
@@ -45,12 +45,13 @@ export default function ProfilScreen({ navigation }) {
             source={require("../assets/avatars/avatar_12.png")}
           />
           <Text style={styles.nameContainer}>
-            {users.firstName}Thomas {users.lastName}Garcia
+            {users.firstName}
+            {users.lastName}
           </Text>
-          <Text style={styles.nicknameContainer}>@{users.nickName}Draal</Text>
+          <Text style={styles.nicknameContainer}>@{users.nickName}</Text>
         </View>
 
-        {/* tag d'intéressement */}
+        {/* tag d'intéressement fetch vers infos user*/}
         <View style={styles.tagsContainer}>
           <Text style={styles.tag}>Activité 1</Text>
           <Text style={styles.tag}>Activité 2</Text>
@@ -140,13 +141,13 @@ const styles = StyleSheet.create({
     height: 150,
   },
   nameContainer: {
-    fontFamily: 'ParkinsansMedium',
+    fontFamily: "ParkinsansMedium",
     fontSize: 24,
     marginTop: 10,
   },
   nicknameContainer: {
     fontSize: 14,
-    fontFamily: 'NotoSansDisplayRegular',
+    fontFamily: "NotoSansDisplayRegular",
     color: "gray",
     marginVertical: 5,
   },
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     margin: 5,
     fontSize: 16,
-    fontFamily: 'NotoSansDisplayRegular',
+    fontFamily: "NotoSansDisplayRegular",
   },
   descriptionContainer: {
     marginVertical: 25,
@@ -180,22 +181,21 @@ const styles = StyleSheet.create({
     color: "gray",
     padding: 10,
   },
-  
+
   followButton: {
     backgroundColor: "#F3773B",
     width: 100,
     height: 50,
     borderRadius: 19,
     marginVertical: 25,
-    flexDirection : 'row',
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-   
   },
   followButtonText: {
     color: "#fff",
     fontSize: 20,
-    fontFamily: 'ParkinsansMedium'
+    fontFamily: "ParkinsansMedium",
   },
   avatarContainer: {
     flexDirection: "row",
