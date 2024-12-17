@@ -24,15 +24,13 @@ import {
   activityOptions,
   groupOptions,
   genderOptions,
-  ageOptionsCreateEvent
+  ageOptionsCreateEvent,
 } from "../utils/userFormList";
 
 // Import for fetch
 import { BACK_IP } from "@env";
 
-
 export default function CreateEventScreen({ navigation }) {
-
   // Custom font --------------------------------------------------------------------------------
   // Android and iOS come with their own set of platform fonts
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -53,7 +51,9 @@ export default function CreateEventScreen({ navigation }) {
   const [interestTheme, setInterestTheme] = useState("");
   // Catégories (interestCategorie, setInterestCategorie to fetch to back)
   const [interestCategorie, setInterestCategorie] = useState("");
-  const [filteredInterestCategories, setFilteredInterestCategories] = useState([]);
+  const [filteredInterestCategories, setFilteredInterestCategories] = useState(
+    []
+  );
   const [referenceEvent, setReferenceEvent] = useState("");
   const [place, setPlace] = useState("");
   const [eventDate, setEventDate] = useState("");
@@ -75,8 +75,7 @@ export default function CreateEventScreen({ navigation }) {
   // const publishEvent = () => navigation.naviagte('HomePage'); ?? On navigue vers quelle page une fois le formulaire complété ?
   // ajouter TabNavigation
 
-
-// Application of style -----------------------------------------------------------------
+  // Application of style -----------------------------------------------------------------
   if (!fontsLoaded) {
     return (
       <AppLoading
@@ -87,7 +86,7 @@ export default function CreateEventScreen({ navigation }) {
     );
   }
 
-// Theme & category selection
+  // Theme & category selection
   const handleInterestThemeChange = (selectedInterestTheme) => {
     setInterestTheme(selectedInterestTheme);
     const selectedActivity = activityOptions.find(
@@ -99,101 +98,46 @@ export default function CreateEventScreen({ navigation }) {
     setInterestCategorie(null);
   };
 
-// Definir Image
-// const [imageUrl, setImageUrl] = useState("");
-const handleImage = () => {
+  // Definir Image
+  // const [imageUrl, setImageUrl] = useState("");
+  const handleImage = () => {};
 
-}
-
-
-
-// Create an event ---------------------------------------------------------------------------------
-// || 
-//       !interestTheme ||
-//       !interestCategorie ||
-//       !place ||
-//       !eventDate ||
-//       !groupPreference ||
-//       !genderPreference |
-//       !agePreference
-  const handleCreateEvent= () => {
-
-    // console.log("click ok"); // click fonctionne
-    
-
-    if (!eventTitle ) return;
-const dataFetch = {
-
-  //organizer:organizerId, // foreign key from profileInfos
-  title:"eventTitle",
-  theme:"interestTheme",
-  category:"interestCategorie",
-  reference:"TxCyNz",
-  image:"url",
-  eventDate:"2024-12-13",
-  location:"place",
-  sizeGroup:"groupPreference",
-  description:"description",
-  preferences: {age: "agePreference", gender:"genderPreference", other:"other"}, // sous-doc
-  participants:[], // foreign key from users
-  isFinished: false,
-  token: user.token,        
-  
-  // //organizer:organizerId, // foreign key from profileInfos
-  // title:eventTitle,
-  // theme:interestTheme,
-  // category:interestCategorie,
-  // reference:"TxCyNz",
-  // image:"url",
-  // eventDate: "2024-12-13",
-  // location:place,
-  // sizeGroup:groupPreference,
-  // description:description,
-  // preferences: {age: agePreference, gender:genderPreference, other:other}, // sous-doc
-  // participants:[], // foreign key from users
-  // isFinished: false,
-  // token: user.token,
-}
-
-console.log(dataFetch)
-
-  //   fetch(`${BACK_IP}/events/propositionEvent`, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log("fetch ok", data)
-  //       // if (data && data.event) {
-  //       // setorganizer(""), // foreign key from profileInfos
-  //       // settitle(""),
-  //       // settheme(""),
-  //       // setcategory(""),
-  //       // setreference(""),
-  //       // setimage(""),
-  //       // seteventDate(""),
-  //       // setlocation(""),
-  //       // setsizeGroup(""),
-  //       // setdescription(""),
-  //       // setpreferences(""),
-  //       // setparticipants(""),
-  //       // setisFinished(""),
-  //       // settoken(""),
-  //       // }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error.message);
-  //     });
-
-  //    // navigation.navigate("TabNavigator", { screen: "HomeScreen" });
+  const handleCreateEvent = () => {
+    // eventTitle, interestTheme, interestCategorie, place, groupPreference, genderPreference, agePreference, other, description
+    fetch(`${BACK_IP}/events/createEvent/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: user.token,
+      },
+      body: JSON.stringify({
+        title: eventTitle,
+        theme: interestTheme,
+        category: interestCategorie,
+        eventDate: "11-12-22",
+        location: place,
+        sizeGroup: groupPreference,
+        description: description,
+        ageRange: agePreference,
+        gender: genderPreference,
+        other: other,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
+    alert("Votre évènement a bien été créé");
+    navigation.navigate("TabNavigator");
   };
 
   // Go to previous screen -----------------------------------------------------------------------
   const goBack = () => {
     navigation.navigate("TabNavigator");
   };
-
 
   return (
     <View style={styles.container}>
@@ -323,7 +267,7 @@ console.log(dataFetch)
           selectedTextStyle={styles.selectedTextStyle}
           itemTextStyle={styles.itemTextStyle}
           style={styles.dropdown}
-          data={ ageOptionsCreateEvent}
+          data={ageOptionsCreateEvent}
           labelField="label"
           valueField="value"
           placeholder="Âge moyen des participants"
