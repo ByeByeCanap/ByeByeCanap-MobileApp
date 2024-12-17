@@ -55,6 +55,9 @@ export default function UserTypeScreen( { navigation } ) {
         <FontAwesome name="arrow-left" size={30} onPress={goBack} />
       </View>
 
+      <View style={styles.h1content}>
+        <Text style={styles.h1}>Faites votre choix !</Text>
+      </View>
       <View style={styles.btnContainer}>
         <TouchableOpacity style={styles.button} onPress={particularToSignUp}>
           <Text style={styles.text}>Particulier</Text>
@@ -126,5 +129,16 @@ const styles = StyleSheet.create({
     height: 274,
     gap: 50,
     bottom: 40,
+  },
+
+  h1content: {
+    paddingTop: 50,
+  },
+
+  h1:{
+    width: 350,
+    fontFamily: 'ParkinsansMedium',
+    fontSize: 22,
+    textAlign: 'center',
   },
 });

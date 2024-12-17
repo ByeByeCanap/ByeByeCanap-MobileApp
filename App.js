@@ -28,6 +28,8 @@ import SolutionScreen from "./screens/SolutionScreen";
 import RequestScreen from "./screens/RequestScreen";
 import EventDetailScreen from "./screens/EventDetailScreen";
 import MenuScreen from "./screens/MenuScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import ChatScreen from "./screens/ChatScreen";
 
 // Import pour icônes FONTAWESOME
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -92,6 +94,7 @@ function App() {
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
             <Stack.Screen name="SignScreen" component={SignScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
             <Stack.Screen name="UserFormsScreen" component={UserFormsScreen} />
@@ -108,6 +111,7 @@ function App() {
             <Stack.Screen name="SolutionScreen" component={SolutionScreen} />
             <Stack.Screen name="RequestScreen" component={RequestScreen} />
             <Stack.Screen name="EventDetailScreen" component={EventDetailScreen}/>
+            <Stack.Screen name="ChatScreen" component={ChatScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

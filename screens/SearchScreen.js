@@ -39,7 +39,7 @@ export default function SearchScreen({ navigation }) {
   };
   
 const goHome = () => {
-  navigation.navigate('HomeScreen')
+  navigation.navigate('TabNavigator')
 }
 
 

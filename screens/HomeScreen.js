@@ -108,6 +108,7 @@ export default function HomeScreen({ navigation }) {
 
   const goToSearch = () => {
     navigation.navigate("SearchScreen");
+    setCategoryModalVisible(!isCategoryModalVisible);
   };
   
   // Affiche l'animation au début
@@ -125,9 +126,11 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.searchContainer}>
           <TouchableOpacity style={styles.buttonFilter} onPress={toggleThemeModal}>
             <Text style={styles.textFilter}>Thèmes</Text>
+            <FontAwesome name="arrow-down" color="white"></FontAwesome>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonFilter} onPress={toggleCategoryModal}>
             <Text style={styles.textFilter}>Catégories</Text>
+            <FontAwesome name="arrow-down" color="white"></FontAwesome>
           </TouchableOpacity>
         </View>
 
@@ -158,7 +161,7 @@ export default function HomeScreen({ navigation }) {
                 <Image
                   style={styles.avatarIcon}
                   resizeMode="cover"
-                  source={require("../assets/avatar1.png")}
+                  source={require("../assets/avatars/avatar_1.png")}
                 />
               </View>
             )}
@@ -183,9 +186,6 @@ export default function HomeScreen({ navigation }) {
         onRequestClose={toggleThemeModal}
       >
         <View style={styles.modalOverlay}>
-          <TouchableOpacity style={styles.closeIcon} onPress={toggleThemeModal}>
-            <FontAwesome name="close" size={30} />
-          </TouchableOpacity>
           <ScrollView contentContainerStyle={styles.modalContent}>
             {activityOptions.map((item, index) => (
               <TouchableOpacity key={index} onPress={() => handleThemeSelect(item)}>
@@ -193,6 +193,9 @@ export default function HomeScreen({ navigation }) {
               </TouchableOpacity>
             ))}
           </ScrollView>
+          <TouchableOpacity style={styles.closeIcon} onPress={toggleThemeModal}>
+            <FontAwesome style={styles.icon} name="close" size={30} />
+          </TouchableOpacity>
         </View>
       </Modal>
 
@@ -204,16 +207,19 @@ export default function HomeScreen({ navigation }) {
         onRequestClose={toggleCategoryModal}
       >
         <View style={styles.modalOverlay}>
-          <TouchableOpacity style={styles.closeIcon} onPress={toggleCategoryModal}>
-            <FontAwesome name="close" size={30} />
-          </TouchableOpacity>
+         
           <ScrollView contentContainerStyle={styles.modalContent}>
             {filteredCategories.map((item, index) => (
               <Text key={index} style={styles.modalOptionText} onPress={goToSearch}>
                 {item}
               </Text>
+              
             ))}
+            
           </ScrollView>
+          <TouchableOpacity style={styles.closeIcon} onPress={toggleCategoryModal}>
+            <FontAwesome style={styles.icon} size={30} name="close"/>
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>
@@ -258,15 +264,19 @@ const styles = StyleSheet.create({
   
   buttonFilter: {
     backgroundColor: "#FDC731",
+    flexDirection: 'row',
     padding: 10,
     borderRadius: 19,
+    justifyContent: "center",
     alignItems: "center",
     width: 120,
+    gap: 20,
+    width: 150,
   },
   textFilter: {
     color: "white",
     fontFamily: 'NotoSansDisplayRegular',
-    fontSize: 16,
+    fontSize: 18,
   },
 
   text: {
@@ -320,22 +330,32 @@ const styles = StyleSheet.create({
 
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(253, 199, 49, 0.9)",
+    backgroundColor: "rgb(253, 199, 49)",
     justifyContent: "center",
   },
   modalContent: {
     alignItems: "center",
-    paddingVertical: 50,
+    paddingVertical: 100,
   },
   modalOptionText: {
-    fontSize: 18,
-    color: "#333",
+    fontFamily: 'ParkinsansMedium',
+    fontSize: 20,
+    color: "black",
     marginVertical: 15,
+
   },
   closeIcon: {
-    position: "absolute",
-    top: 20,
-    right: 20,
+    bottom : 50,
+    alignItems:"center",
     zIndex: 1,
-  },  
+    backgroundColor: "rgb(253, 199, 49)",
+    paddingTop: 20,
+  },
+
+  icon: {
+    borderWidth: 3,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    borderRadius: 50,
+  }
 });
