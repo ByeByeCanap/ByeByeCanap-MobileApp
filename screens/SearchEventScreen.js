@@ -91,12 +91,13 @@ export default function SearchEventScreen({ navigation }) {
         );
     }
 
-    function gohome(data) {
-        //console.log(data.id);
+    function gotTocategory(data) {
+        //console.log("Ou est la CATEGORYYYYY", data.categorie[0], "DATA:",data);
         goRequestScreen(user.token, data.id);
-        navigation.navigate("EventDetailScreen", {
+        navigation.navigate("SearchScreen", {
             token: user.token,
             id: data.id,
+            categoryName : data.categorie[0],
         });
     }
 
@@ -121,7 +122,7 @@ export default function SearchEventScreen({ navigation }) {
                         ];
                         return (
                             <View style={styles.justify} key={categoryIndex}>
-                                <Pressable onPress={() => gohome(data)}>
+                                <Pressable onPress={() => gotTocategory(data)}>
                                     <ImageBackground
                                         source={imageSource[index]}
                                         style={styles.categorie}
