@@ -10,10 +10,43 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useSelector } from "react-redux";
+import { BACK_IP } from "@env";
+import { useState, useEffect } from 'react';
+
 
 export default function ProfilScreen({ navigation }) {
-  const GoBack = () => navigation.navigate("TabNavigator");
   const users = useSelector((state) => state.users.value);
+
+  console.log(users.token);
+
+  const [description, setDescription] = useState('');
+  const [interestTheme, setInterestTheme] = useState([]);
+  const [interestCategorie, setInterestCategorie] = useState([]);
+  const [skillTheme, setSkillTheme] = useState([]);
+  const [skillCategorie, setSkillCategorie] = useState([]);
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [nickName, setNickName] = useState('')
+
+  useEffect(() => {
+    fetch(`${BACK_IP}/users/${users.token}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setDescription(data.descriptionProfile);
+        setInterestTheme(data.aspirations.themesInterest || []);
+        setInterestCategorie(data.aspirations.categoriesInterest || []);
+        setSkillTheme(data.aspirations.themesSkill || []);
+        setSkillCategorie(data.aspirations.categoriesSkill || []);
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+        setNickName(data.nickName);
+
+      })
+      .catch((error) => 
+      console.error("T'as encore fait une erreur pétasse:", error));
+  }, []);
+
 
   return (
     <View style={styles.container}>
@@ -32,10 +65,6 @@ export default function ProfilScreen({ navigation }) {
         <FontAwesome name="bell" size={30} color="#fff" />
       </LinearGradient>
 
-      <View style={styles.arrow}>
-        <FontAwesome name="arrow-left" size={30} onPress={GoBack} />
-      </View>
-
       <ScrollView contentContainerStyle={styles.content}>
         {/* User Info */}
         <View style={styles.userContainer}>
@@ -45,26 +74,28 @@ export default function ProfilScreen({ navigation }) {
             source={require("../assets/avatars/avatar_12.png")}
           />
           <Text style={styles.nameContainer}>
-            {users.firstName}
-            {users.lastName}
+            <Text>
+              {firstName} {lastName}
+            </Text>
+
           </Text>
-          <Text style={styles.nicknameContainer}>@{users.nickName}</Text>
+          <Text style={styles.nicknameContainer}>@{nickName}</Text>
         </View>
 
         {/* tag d'intéressement fetch vers infos user*/}
         <View style={styles.tagsContainer}>
-          <Text style={styles.tag}>Activité 1</Text>
-          <Text style={styles.tag}>Activité 2</Text>
-          <Text style={styles.tag}>Centre d'intérêt 1</Text>
-          <Text style={styles.tag}>Centre d'intérêt 2</Text>
-          <Text style={styles.tag}>Centre d'intérêt 3</Text>
+          <Text style={styles.tag}>{interestTheme}</Text>
+          <Text style={styles.tag}>{interestCategorie}</Text>
+          <Text style={styles.tag}>{skillTheme}</Text>
+          <Text style={styles.tag}>{skillCategorie}</Text>
         </View>
 
         {/* Profile Description */}
         <View style={styles.descriptionContainer}>
-          <Text style={styles.descriptionText}>{users.description}</Text>
+          <Text style={styles.descriptionText}>{description}</Text>
         </View>
 
+        <Text style={styles.h2}>Followers</Text>
         {/* Followers Section */}
         <View style={styles.avatarContainer}>
           <FlatList
@@ -88,6 +119,7 @@ export default function ProfilScreen({ navigation }) {
             )}
           />
         </View>
+
         {/* Follow Button */}
         <TouchableOpacity style={styles.followButton}>
           <Text style={styles.followButtonText}>Follow</Text>
@@ -116,7 +148,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   content: {
-    paddingBottom: 20,
+    top: 10,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -155,12 +187,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    marginVertical: 5,
   },
   tag: {
     backgroundColor: "#fdc731",
     color: "#fff",
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     paddingVertical: 5,
     borderRadius: 15,
     margin: 5,
@@ -199,11 +230,9 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     flexDirection: "row",
-    paddingVertical: 25,
+    paddingVertical: 10,
   },
-  avatarFake: {
-    marginHorizontal: 10,
-  },
+ 
   logoFake: {
     borderRadius: 120,
     borderWidth: 2,
@@ -211,4 +240,10 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
+
+  h2 : {
+    fontFamily: "ParkinsansMedium",
+    fontSize: 20,
+    marginHorizontal: 15,
+  }
 });
