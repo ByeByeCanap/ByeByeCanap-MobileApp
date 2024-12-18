@@ -164,9 +164,6 @@ export default function UserFormsPage({ navigation }) {
     };
 
     // When clicking on Submit button => fetch(POST) to Backend
-    // AJOUTER le reset set("") !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // AJOUTER le dispatch to store!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     const GoNext = async () => {
         const Userdata = {
             email: email,
@@ -206,6 +203,10 @@ export default function UserFormsPage({ navigation }) {
             );
 
             const data = await response.json();
+
+            if (data.token !== undefined) {
+                navigation.navigate("TabNavigator");
+              }
 
             dispatch(
                 CreateAccount({
