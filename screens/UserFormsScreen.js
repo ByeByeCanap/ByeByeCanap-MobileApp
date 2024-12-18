@@ -194,7 +194,7 @@ export default function UserFormsPage({ navigation }) {
 
         try {
             const response = await fetch(
-                `http://10.20.3.147:3000/users/signup/`,
+                `${BACK_IP}/users/signup/`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
