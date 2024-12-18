@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -7,6 +7,7 @@ import {
   ImageBackground,
   ScrollView,
   Image,
+  Pressable,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -14,29 +15,69 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { useState } from "react";
 import { Header } from "../components/header";
+// Import for fetch
+import { BACK_IP } from "@env";
 
-export default function SearchScreen({ navigation }) {
+export default function SearchScreen({ navigation , route}) {
 
+      const token = route.params.token;
+      const id = route.params.id;
+      const categoryName = route.params.categoryName;
+      //console.log("look user.token", token, "look data.id", id, "look at category:", categoryName);
+         
+     // Hook to update the list of themes and categories
+      const [eventByCategory, setEventByCategory] = useState([]);
 
-  const card = () => {
-    return (
-      <View style={styles.card}>
-        <View style={styles.imageContainer}>
-          <Image source={require('../assets/imagesEvent/event_main.jpg')} style={styles.image} />
-        </View>
-  
-        <View style={styles.globalContainer}>
-          <View>
-            <Text style={styles.h2}>31 MARS</Text>
+      useEffect(() => {
+        const fetchEventsByCategory = async () => {
+          try {
+            const response = await fetch(`${BACK_IP}/events/byCategory/${categoryName}`);
+            const data = await response.json();
+           // console.log("Data fetch events by category", data);
+            setEventByCategory(data);
+          } catch (error) {
+            console.error("Error fetching events by category:", error.message);
+          }
+        };
+      
+        fetchEventsByCategory();
+      }, [categoryName]);
+
+      function gotToDetails() {
+        //console.log("Ou est la CATEGORYYYYY", data.categorie[0], "DATA:",data);
+        navigation.navigate("EventDetailScreen", {
+            token,
+            id,
+        });
+    }
+      
+      //console.log("look at getter", eventByCategory);
+
+      const card = eventByCategory.map(event => {
+
+        return (
+          <View style={styles.card}>
+            <View style={styles.imageContainer}>
+              <Pressable onPress={() => gotToDetails()}>
+              <Image source={require('../assets/imagesEvent/event_main.jpg')} style={styles.image} />
+              </Pressable>
+            </View>
+      
+            <View style={styles.globalContainer}>
+              <View>
+                <Text style={styles.h2}>{event.eventDate.slice(0,10)}</Text>
+              </View>
+      
+              <Text style={styles.h1Event}>{event.title}</Text>
+              <Text style={styles.body}>{event.location}</Text>
+              <Text style={styles.body}>{event.participants.length}</Text>
+            </View>
           </View>
-  
-          <Text style={styles.h1Event}>Nom de l'event qui est super long</Text>
-          <Text style={styles.body}>Le Bulot</Text>
-          <Text style={styles.body}>10 participants</Text>
-        </View>
-      </View>
-    );
-  };
+        );
+
+      })
+
+
   
 const goHome = () => {
   navigation.navigate('TabNavigator')
@@ -65,14 +106,7 @@ const goHome = () => {
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-       {card()}
-       {card()}
-       {card()}
-       {card()}
-       {card()}
-       {card()}
-       {card()}
-       {card()}
+      {card} 
       </ScrollView>
     </View>
   );

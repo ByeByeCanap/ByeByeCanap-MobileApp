@@ -10,17 +10,23 @@ import {
 } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Header } from "../components/header";
+// Import for fetch
+import { BACK_IP } from "@env";
 
 export default function EventDetailScreen({ navigation, route }) {
-    const token = route.params.token;
-    const id = route.params.id;
-    //console.log("look user.token", token, "look data.id", id);
+    
 
-    const goRequestScreen = () => {
+
+    // useEffect(()=>{
+    //     fetch("http://localhost:3000/events/byCategory/:category")
+
+    // },[])
+
+    const goRequestScreen = () => {  
         navigation.navigate("RequestScreen");
     };
 
