@@ -487,6 +487,10 @@ export default function UserFormsPage({ navigation }) {
                     apprentissage, relationnel) ?
                 </Text>
                 <TextInput
+                    maxLength={500}
+                    multiline={true}
+                    editable={true}
+                    textAlignVertical="top"
                     style={styles.textInput}
                     onChangeText={(text) => onChangeText(text)}
                     value={value}
@@ -629,7 +633,7 @@ export default function UserFormsPage({ navigation }) {
                 </Text>
                 <TextInput
                     style={styles.textInput}
-                    maxLength={280}
+                    maxLength={500}
                     multiline={true}
                     editable={true}
                     textAlignVertical="top"
