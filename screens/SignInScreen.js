@@ -8,14 +8,13 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-  Image,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { BACK_IP } from "@env";
 import Header from "../components/header";
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
+
   const user = useSelector((state) => state.users.value);
   const goBack = () => {
     navigation.navigate("SignScreen");
@@ -38,12 +37,14 @@ export default function SignIn({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
+        if (data.token !== undefined) {
+          navigation.navigate("TabNavigator");
+        }
         console.log(data);
         if (data.result) {
-          dispatch(login({ email: signInEmail, token: data.result.token }));
+          dispatch(login({ email: signInEmail, token: data.token }));
           setSignInEmail("");
           setSignInPassword("");
-          navigation.navigate("HomeScreen");
           console.log(user); //ok
         }
       });
@@ -63,9 +64,9 @@ export default function SignIn({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header/>
+      <Header />
       <View style={styles.arrow}>
-          <FontAwesome name="arrow-left" size={30} onPress={goBack} />
+        <FontAwesome name="arrow-left" size={30} onPress={goBack} />
       </View>
 
       <View style={styles.h1content}>
@@ -73,7 +74,6 @@ export default function SignIn({ navigation }) {
       </View>
 
       <View style={styles.inputContainer}>
-
         <View style={styles.input}>
           <TextInput
             autoCapitalize="none" // https://reactnative.dev/docs/textinput#autocapitalize
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
 
   header: {
@@ -202,17 +202,17 @@ const styles = StyleSheet.create({
   textButton: {
     fontFamily: "ParkinsansMedium",
     fontSize: 20,
-    color: 'white'
+    color: "white",
   },
 
-  h1content : {
+  h1content: {
     marginVertical: 50,
   },
 
-  h1:{
+  h1: {
     width: 350,
-    fontFamily: 'ParkinsansMedium',
+    fontFamily: "ParkinsansMedium",
     fontSize: 22,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
