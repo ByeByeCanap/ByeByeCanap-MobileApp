@@ -83,7 +83,10 @@ export default function SearchScreen({ navigation, route }) {
                     </View>
 
                     <Text style={styles.h1Event}>{event.title}</Text>
-                    <Text style={styles.body}>{event.location}</Text>
+                    <Text style={styles.body}>{event.location.adress}</Text>
+                    <Text style={styles.body}>{event.location.zipcode}</Text>
+                    <Text style={styles.body}>{event.location.latitude}</Text>
+                    <Text style={styles.body}>{event.location.longitude}</Text>
                     <Text style={styles.body}>Nombre de partipants: {event.participants.length}</Text>
                 </View>
             </View>
