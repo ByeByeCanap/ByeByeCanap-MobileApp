@@ -68,6 +68,10 @@ export default function CreateEventScreen({ navigation }) {
   const [description, setDescription] = useState("");
   // isFinished
   const [isFinished, setIsFinished] = useState("");
+
+  //const [adress, zipcode] fetch dans le back
+  const [adress, setAdress] = useState("")
+  const [zipcode, setZipcode] = useState(null)
   // Token to be retreived from reducer
   const user = useSelector((state) => state.users.value);
 
@@ -138,6 +142,8 @@ export default function CreateEventScreen({ navigation }) {
         ageRange: agePreference,
         gender: genderPreference,
         other: other,
+        adress : adress,
+        zipcode : zipcode,
       }),
     })
       .then((response) => response.json())
@@ -234,10 +240,10 @@ export default function CreateEventScreen({ navigation }) {
 
         {/* ajouter date*/}
         <TouchableOpacity
-          style={styles.button}
+          style={styles.inputDate}
           onPress={() => setShowDatePicker(true)}
         >
-          <Text style={styles.text}>
+          <Text style={styles.itemTextStyle}>
     {`Date de l'événement : ${eventDate.toLocaleDateString()
     }`}
   </Text>
@@ -253,10 +259,10 @@ export default function CreateEventScreen({ navigation }) {
 
         {/* Sélecteur d'heure */}
         <TouchableOpacity
-          style={styles.button}
+          style={styles.inputDate}
           onPress={() => setShowTimePicker(true)}
         >
-          <Text style={styles.text}>
+          <Text style={styles.itemTextStyle}>
             {`Heure de l'événement : ${eventDate.toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
@@ -278,9 +284,21 @@ export default function CreateEventScreen({ navigation }) {
           selectedTextStyle={styles.selectedTextStyle}
           itemTextStyle={styles.itemTextStyle}
           style={styles.input}
-          value={place}
-          onChangeText={setPlace}
-          placeholder="Lieu"
+          value={adress}
+          onChangeText={setAdress}
+          placeholder="Adresse du lieu"
+          placeholderTextColor="#A9A9A9"
+        />
+
+        {/* Code postal*/}
+        <TextInput
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          itemTextStyle={styles.itemTextStyle}
+          style={styles.input}
+          value={zipcode}
+          onChangeText={setZipcode}
+          placeholder="Code postal"
           placeholderTextColor="#A9A9A9"
         />
 
@@ -448,6 +466,19 @@ const styles = StyleSheet.create({
     color: "#282828",
     fontFamily: "NotoSansDisplayLight",
     fontSize: 16,
+    marginBottom: 20,
+  },
+
+  inputDate: {
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    borderRadius: 19,
+    borderWidth: 1,
+    borderColor: "#F3773B",
+    backgroundColor: "#fff",
+    paddingHorizontal: 15,
+    color: "#282828",
     marginBottom: 20,
   },
 
