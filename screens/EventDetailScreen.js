@@ -11,6 +11,7 @@ import {
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Header } from "../components/header";
@@ -25,40 +26,61 @@ export default function EventDetailScreen({ navigation, route }) {
     const [eventById, setEventById] = useState([]);
     //console.log(eventById);
 
+    // Token to be retreived from reducer
+    const user = useSelector((state) => state.users.value);
+    console.log("current user TOKEN", user.token);
 
     useEffect(() => {
         const fetchEventData = async () => {
-          try {
-            const response = await fetch(`${BACK_IP}/events/byEventId/${eventsIds}`);
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-      
-            const data = await response.json();
-            
-            setEventById([data.result]);
-            console.log('Fetched event data:', data.result); // Log the fetched data
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-      
-        fetchEventData();
-      }, []);
-      
-      console.log(eventById[0]); // Log the eventById state
-      
-      const event = eventById[0];
-      //const title = event ? event.title : '';
-      // Conditional rendering to ensure event is accessed only after data is fetched
-  if (!event) {
-    return <Text>Loading...</Text>;
-  }
-      
-      console.log(eventById[0])
-      
+            try {
+                const response = await fetch(
+                    `${BACK_IP}/events/byEventId/${eventsIds}`
+                );
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
-    const goRequestScreen = () => {
+                const data = await response.json();
+
+                setEventById([data.result]);
+                //console.log("Fetched event data:", data.result); // Log the fetched data
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchEventData();
+    }, []);
+
+    console.log(eventById[0]); // Log the eventById state
+
+    const event = eventById[0];
+    //const title = event ? event.title : '';
+    // Conditional rendering to ensure event is accessed only after data is fetched
+    if (!event) {
+        return <Text>Loading...</Text>;
+    }
+
+    console.log(eventById[0]);
+
+    const goRequestScreen = (token, eventId) => {
+        fetch(`${BACK_IP}/events/participantEvent`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: token,
+            },
+            body: JSON.stringify({
+                eventId: eventId,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                //console.log("Click Participer:", data);
+            })
+            .catch((error) => {
+                console.error("Error:", error.message);
+            });
         navigation.navigate("RequestScreen");
     };
 
@@ -88,70 +110,71 @@ export default function EventDetailScreen({ navigation, route }) {
 
                 {/* reducer, nom de l'événement de la page précédente */}
             </View>
-{
-    eventById.length >0 && 
-    <ScrollView contentContainerStyle={styles.content}>
-        <ImageBackground
-            source={require("../assets/imagesEvent/event_main.jpg")}
-            style={styles.mainEvent}
-            imageStyle={{ borderRadius: 15 }}
-        />
+            {eventById.length > 0 && (
+                <ScrollView contentContainerStyle={styles.content}>
+                    <ImageBackground
+                        source={require("../assets/imagesEvent/event_main.jpg")}
+                        style={styles.mainEvent}
+                        imageStyle={{ borderRadius: 15 }}
+                    />
 
-        <TouchableOpacity
-            style={styles.button}
-            onPress={goRequestScreen}
-        >
-            <Text style={styles.text}>Je participe !</Text>
-        </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            goRequestScreen(user.token, eventById[0]._id);
+                        }}
+                    >
+                        <Text style={styles.text}>Je participe !</Text>
+                    </TouchableOpacity>
 
-        <View style={styles.informationContainer}>
-            <Image
-                style={{ width: 100, height: 100 }}
-                source={require("../assets/imagesEvent/profil_1.jpg")}
-                size={10}
-            ></Image>
-            <View style={styles.description}>
-                <Text style={styles.textDescription}>
-                {event.location}
-                </Text>
-                <Text style={styles.textDescription}>
-                {event.eventDate.slice(0,10)} à 20H30
-                </Text>
-            </View>
-        </View>
-
-        <View style={styles.descriptionContainer}>
-            <Text style={styles.textBody}>
-            {event.description}
-            </Text>
-        </View>
-
-        <Text style={styles.h1}>Déjà {event.participants.length} participants</Text>
-
-        <View style={styles.avatarContainer}>
-            <FlatList
-                data={[
-                    { id: "1" },
-                    { id: "2" },
-                    { id: "3" },
-                    { id: "4" },
-                    { id: "5" },
-                ]}
-                horizontal
-                keyExtractor={(item) => item.id}
-                renderItem={() => (
-                    <View style={styles.avatarFake}>
+                    <View style={styles.informationContainer}>
                         <Image
-                            style={styles.logoFake}
-                            resizeMode="cover"
-                            source={require("../assets/avatar1.png")}
+                            style={{ width: 100, height: 100 }}
+                            source={require("../assets/imagesEvent/profil_1.jpg")}
+                            size={10}
+                        ></Image>
+                        <View style={styles.description}>
+                            <Text style={styles.textDescription}>
+                                {event.location}
+                            </Text>
+                            <Text style={styles.textDescription}>
+                                {event.eventDate.slice(0, 10)} à 20H30
+                            </Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.descriptionContainer}>
+                        <Text style={styles.textBody}>{event.description}</Text>
+                    </View>
+
+                    <Text style={styles.h1}>
+                        Déjà {event.participants.length} participants
+                    </Text>
+
+                    <View style={styles.avatarContainer}>
+                        <FlatList
+                            data={[
+                                { id: "1" },
+                                { id: "2" },
+                                { id: "3" },
+                                { id: "4" },
+                                { id: "5" },
+                            ]}
+                            horizontal
+                            keyExtractor={(item) => item.id}
+                            renderItem={() => (
+                                <View style={styles.avatarFake}>
+                                    <Image
+                                        style={styles.logoFake}
+                                        resizeMode="cover"
+                                        source={require("../assets/avatar1.png")}
+                                    />
+                                </View>
+                            )}
                         />
                     </View>
-                )}
-            />
-        </View>
-    </ScrollView>
-}
+                </ScrollView>
+            )}
         </View>
     );
 }
