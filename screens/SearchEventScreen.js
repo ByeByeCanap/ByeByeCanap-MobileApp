@@ -72,6 +72,16 @@ export default function SearchEventScreen({ navigation }) {
                     []
                 );
 
+                // Sort categories alphabetically for each theme
+                groupThemesCategories.forEach((theme) => {
+                    theme.categorie.sort((a, b) => a.localeCompare(b));
+                });
+
+                // Sort themes alphabetically
+                groupThemesCategories.sort((a, b) =>
+                    a.theme.localeCompare(b.theme)
+                );
+
                 setactivityOptionsList(groupThemesCategories);
             } catch (error) {
                 console.error("Error fetching events:", error.message);
@@ -97,7 +107,7 @@ export default function SearchEventScreen({ navigation }) {
         navigation.navigate("SearchScreen", {
             token: user.token,
             id: data.id,
-            categoryName : data.categorie[0],
+            categoryName: data.categorie[0],
         });
     }
 
