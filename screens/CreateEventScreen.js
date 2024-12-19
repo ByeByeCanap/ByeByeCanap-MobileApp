@@ -14,7 +14,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { Dropdown } from "react-native-element-dropdown";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
 // Import for reducer use
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -54,7 +54,9 @@ export default function CreateEventScreen({ navigation }) {
   const [filteredInterestCategories, setFilteredInterestCategories] = useState([]);
   const [referenceEvent, setReferenceEvent] = useState("");
   const [place, setPlace] = useState("");
-  const [eventDate, setEventDate] = useState("");
+  const [eventDate, setEventDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
   // sizeGroup
   const [groupPreference, setGroupPreference] = useState("");
   // Preferences sous-doc: sizeGroup, Gender, âge selection et autre description
@@ -100,6 +102,23 @@ export default function CreateEventScreen({ navigation }) {
   // const [imageUrl, setImageUrl] = useState("");
   const handleImage = () => {};
 
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setEventDate(selectedDate);
+    }
+  };
+
+  const handleTimeChange = (event, selectedTime) => {
+    setShowTimePicker(false);
+    if (selectedTime) {
+      const updatedDate = new Date(eventDate);
+      updatedDate.setHours(selectedTime.getHours());
+      updatedDate.setMinutes(selectedTime.getMinutes());
+      setEventDate(updatedDate);
+    }
+  };
+
   const handleCreateEvent = () => {
     // eventTitle, interestTheme, interestCategorie, place, groupPreference, genderPreference, agePreference, other, description
     fetch(`${BACK_IP}/events/createEvent/`, {
@@ -112,7 +131,7 @@ export default function CreateEventScreen({ navigation }) {
         title: eventTitle,
         theme: interestTheme,
         category: interestCategorie,
-        eventDate: "11-12-22",
+        eventDate: eventDate.toISOString(),
         location: place,
         sizeGroup: groupPreference,
         description: description,
@@ -213,8 +232,46 @@ export default function CreateEventScreen({ navigation }) {
           onChange={(item) => setInterestCategorie(item.value)}
         />
 
-        {/* ajouter Heure et Date*/}
+        {/* ajouter date*/}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setShowDatePicker(true)}
+        >
+          <Text style={styles.text}>
+    {`Date de l'événement : ${eventDate.toLocaleDateString()
+    }`}
+  </Text>
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={eventDate}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
 
+        {/* Sélecteur d'heure */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setShowTimePicker(true)}
+        >
+          <Text style={styles.text}>
+            {`Heure de l'événement : ${eventDate.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}`}
+          </Text>
+        </TouchableOpacity>
+        {showTimePicker && (
+          <DateTimePicker
+            value={eventDate}
+            mode="time"
+            display="default"
+            onChange={handleTimeChange}
+          />
+        )}
+        
         {/* Lieu de l'événement*/}
         <TextInput
           placeholderStyle={styles.placeholderStyle}
@@ -347,9 +404,8 @@ const styles = StyleSheet.create({
 
   button: {
     backgroundColor: "#F3773B",
-    padding: 10,
+    justifyContent: "center",
     borderRadius: 19,
-    marginVertical: 10,
     alignItems: "center",
     width: "100%",
     height: 50,
@@ -358,7 +414,7 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontFamily: "ParkinsansMedium",
-    fontSize: 20,
+    fontSize: 16,
   },
 
   logoIcon: {
