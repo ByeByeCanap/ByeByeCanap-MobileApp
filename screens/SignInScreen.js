@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import { BACK_IP } from "@env";
+import { BACK_IP } from "../env";
 import Header from "../components/header";
 
 export default function SignIn({ navigation }) {

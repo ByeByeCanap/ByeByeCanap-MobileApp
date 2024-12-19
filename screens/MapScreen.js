@@ -1,24 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Image } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
 import Header from "../components/header";
 
-export default function HomeScreen() {
+import MapView from "react-native-maps";
+import * as Location from "expo-location";
+import { useEffect, useState } from "react";
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { BACK_IP } from "../env";
+export default function MapScreen() {
   const [currentPosition, setCurrentPosition] = useState(null);
+  const [LocationCoord, setLocationCoord] = useState(null);
 
   useEffect(() => {
     (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-        return;
-      }
-      const location = await Location.getCurrentPositionAsync({});
-      console.log(location);
+      const result = await Location.requestForegroundPermissionsAsync();
+      const status = result.status;
 
-      setCurrentPosition(location.coords);
+      if (status === "granted") {
+        Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+          setCurrentPosition(location.coords);
+        });
+      }
     })();
+
+    fetch(`${BACK_IP}/events/allEvents`)
+      .then((response) => response.json())
+      .then((data) => {
+        for (let i = 0; i < data.result.length; i++) {
+          console.log("data", data.result[i].location);
+        }
+        setLocationCoord(data.result);
+      });
   }, []);
 
   return (
@@ -28,8 +45,8 @@ export default function HomeScreen() {
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: currentPosition ? currentPosition.latitude : 37.78825,
-            longitude: currentPosition ? currentPosition.longitude : -122.4324,
+            latitude: currentPosition ? currentPosition.latitude : 40,
+            longitude: currentPosition ? currentPosition.longitude : 15,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
