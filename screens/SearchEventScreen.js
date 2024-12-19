@@ -24,52 +24,129 @@ import { BACK_IP } from "../env";
 import Header from "../components/header";
 
 export default function SearchEventScreen({ navigation }) {
-  // Custom font --------------------------------------------------------------------------------
-  // Android and iOS come with their own set of platform fonts
-  const [fontsLoaded, setFontsLoaded] = useState(false);
+    // Custom font --------------------------------------------------------------------------------
+    // Android and iOS come with their own set of platform fonts
+    const [fontsLoaded, setFontsLoaded] = useState(false);
 
-  const loadFonts = async () => {
-    await Font.loadAsync({
-      ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
-      NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
-      NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
-    });
-  };
+    const loadFonts = async () => {
+        await Font.loadAsync({
+            ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
+            NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
+            NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
+        });
+    };
 
-  // Hook to update the list of themes and categories
-  const [activityOptionsList, setactivityOptionsList] = useState([]);
+    // Hook to update the list of themes and categories
+    const [activityOptionsList, setactivityOptionsList] = useState([]);
 
-  // Info from reducer
-  const user = useSelector((state) => state.users.value);
+    // Info from reducer
+    const user = useSelector((state) => state.users.value);
 
-  // Fetch all events -------------------------------------------------------------------------------
-  useEffect(() => {
-    const fetchAllEvents = async () => {
-      try {
-        const response = await fetch(`${BACK_IP}/events/allEvents`);
-        const data = await response.json();
+    // Fetch all events -------------------------------------------------------------------------------
+    useEffect(() => {
+        const fetchAllEvents = async () => {
+            try {
+                const response = await fetch(`${BACK_IP}/events/allEvents`);
+                const data = await response.json();
 
-        // Use reduce to group categories by themes
-        const groupThemesCategories = data.result.reduce(
-          (activityOptions, event) => {
-            const allThemes = activityOptions.find(
-              (element) => element.theme === event.theme
-            );
+                // Use reduce to group categories by themes
+                const groupThemesCategories = data.result.reduce(
+                    (activityOptions, event) => {
+                        const allThemes = activityOptions.find(
+                            (element) => element.theme === event.theme
+                        );
 
-            if (allThemes) {
-              if (!allThemes.categorie.includes(event.category)) {
-                allThemes.categorie.push(event.category);
-              }
-            } else {
-              activityOptions.push({
-                theme: event.theme,
-                categorie: [event.category],
-                id: event._id,
-              });
+                        if (allThemes) {
+                            if (!allThemes.categorie.includes(event.category)) {
+                                allThemes.categorie.push(event.category);
+                            }
+                        } else {
+                            activityOptions.push({
+                                theme: event.theme,
+                                categorie: [event.category],
+                                id: event._id,
+                            });
+                        }
+                        return activityOptions;
+                    },
+                    []
+                );
+
+                // Sort categories alphabetically for each theme
+                groupThemesCategories.forEach((theme) => {
+                    theme.categorie.sort((a, b) => a.localeCompare(b));
+                });
+
+                // Sort themes alphabetically
+                groupThemesCategories.sort((a, b) =>
+                    a.theme.localeCompare(b.theme)
+                );
+
+                setactivityOptionsList(groupThemesCategories);
+            } catch (error) {
+                console.error("Error fetching events:", error.message);
             }
-            return activityOptions;
-          },
-          []
+        };
+
+        fetchAllEvents();
+    }, []);
+
+    if (!fontsLoaded) {
+        return (
+            <AppLoading
+                startAsync={loadFonts}
+                onFinish={() => setFontsLoaded(true)}
+                onError={(err) => console.error(err)}
+            />
+        );
+    }
+
+    function gotTocategory(data) {
+        //console.log("Ou est la CATEGORYYYYY", data.categorie[0], "DATA:",data);
+        goRequestScreen(user.token, data.id);
+        navigation.navigate("SearchScreen", {
+            token: user.token,
+            id: data.id,
+            categoryName: data.categorie[0],
+        });
+    }
+
+    const catalogue = activityOptionsList.map((data, index) => {
+        return (
+            <View key={index}>
+                <View style={styles.bannerTheme}>
+                    <Text style={styles.textTheme}>{data.theme}</Text>
+                </View>
+
+                <ScrollView horizontal={true} style={styles.themeContainer}>
+                    {data.categorie.map((category, categoryIndex) => {
+                        const imageSource = [
+                            require(`../assets/imagesEvent/theme_0.jpg`),
+                            require(`../assets/imagesEvent/theme_1.jpg`),
+                            require(`../assets/imagesEvent/theme_2.jpg`),
+                            require(`../assets/imagesEvent/theme_3.jpg`),
+                            require(`../assets/imagesEvent/theme_4.jpg`),
+                            require(`../assets/imagesEvent/theme_5.jpg`),
+                            require(`../assets/imagesEvent/theme_6.jpg`),
+                            require(`../assets/imagesEvent/theme_7.jpg`),
+                        ];
+                        return (
+                            <View style={styles.justify} key={categoryIndex}>
+                                <Pressable onPress={() => gotTocategory(data)}>
+                                    <ImageBackground
+                                        source={imageSource[index]}
+                                        style={styles.categorie}
+                                    ></ImageBackground>
+                                </Pressable>
+
+                                <Text style={styles.textDescription}>
+                                    {category}
+                                </Text>
+                            </View>
+                        );
+                    })}
+                </ScrollView>
+            </View>
         );
 
         setactivityOptionsList(groupThemesCategories);

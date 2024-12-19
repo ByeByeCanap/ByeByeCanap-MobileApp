@@ -114,44 +114,300 @@ export default function UserFormsPage({ navigation }) {
 
   if (!fontsLoaded) {
     return (
-      <AppLoading
-        startAsync={loadFonts}
-        onFinish={() => setFontsLoaded(true)}
-        onError={(err) => console.error(err)}
-      />
-    );
-  }
+        <View style={styles.container}>
+            <Header />
+            <ScrollView contentContainerStyle={styles.content}>
+                <Text style={styles.h1}>Identité et généralités</Text>
 
-  // TimePickerTest Modal: test lié à la sélection d'une heure (time picker) ???????????????????????????????????
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
+                <TextInput
+                    style={styles.input}
+                    value={firstName}
+                    onChangeText={setFirstName}
+                    placeholder="Prénom"
+                    placeholderTextColor="#A9A9A9"
+                />
+                <TextInput
+                    style={styles.input}
+                    value={lastName}
+                    onChangeText={setLastName}
+                    placeholder="Nom"
+                    placeholderTextColor="#A9A9A9"
+                />
+                <TextInput
+                    style={styles.input}
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder="Email"
+                    placeholderTextColor="#A9A9A9"
+                />
+                <TextInput
+                    style={styles.input}
+                    value={nickName}
+                    onChangeText={setNickName}
+                    placeholder="Nom d'utilisateur"
+                    placeholderTextColor="#A9A9A9"
+                />
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
+                <View style={styles.dateInputContainer}>
+                    <TouchableOpacity
+                        onPress={showDatePicker}
+                        style={styles.dateButton}
+                    >
+                        <Text style={styles.dateText}>
+                            {selectedDate || "Date de naissance"}
+                        </Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal
+                        isVisible={datePickerVisible}
+                        mode="date"
+                        onConfirm={handleConfirm}
+                        onCancel={hideDatePicker}
+                    />
+                </View>
 
-  const handleConfirm = (date) => {
-    const formattedDate = date.toLocaleDateString("fr-FR", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-    setSelectedDate(formattedDate);
-    hideDatePicker();
-  };
+                <Text style={styles.h3}>Quel est votre genre ?</Text>
+                <View style={styles.radioGroup}>
+                    <RadioButton.Group
+                        onValueChange={(newValue) => setGender(newValue)}
+                        value={gender}
+                    >
+                        {["Homme", "Femme", "Autre"].map((value) => (
+                            <View key={value} style={styles.radioItem}>
+                                <RadioButton
+                                    value={value}
+                                    backgroundColor="#F3773B"
+                                    color="white"
+                                    style={styles.radiobtn}
+                                />
+                                <Text style={styles.radioText}>{value}</Text>
+                            </View>
+                        ))}
+                    </RadioButton.Group>
+                </View>
 
-  // Handle, interests, Skills  and motivation ----------------------------------------------------------------
-  const handleInterestThemeChange = (selectedInterestTheme) => {
-    setInterestTheme(selectedInterestTheme);
-    const selectedActivity = activityOptions.find(
-      (activity) => activity.theme === selectedInterestTheme
-    );
-    setFilteredInterestCategories(
-      selectedActivity ? selectedActivity.categorie : []
-    );
-    setInterestCategorie(null);
-  };
+                <View style={styles.passwordInput}>
+                    <TextInput
+                        style={styles.inputFlex}
+                        value={password}
+                        onChangeText={setPassword}
+                        placeholder="Mot de passe"
+                        placeholderTextColor="#A9A9A9"
+                        fontFamily="NotoSansDisplayLight"
+                        secureTextEntry={!showPassword}
+                    />
+                    <TouchableOpacity
+                        onPress={() => setShowPassword(!showPassword)}
+                    >
+                        <FontAwesome
+                            name={showPassword ? "eye" : "eye-slash"}
+                            size={24}
+                            color="#000"
+                        />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.passwordInput}>
+                    <TextInput
+                        style={styles.inputFlex}
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
+                        placeholder="Confirmer mot de passe"
+                        placeholderTextColor="#A9A9A9"
+                        secureTextEntry={!showConfirmPassword}
+                        fontFamily="NotoSansDisplayLight"
+                    />
+                    <TouchableOpacity
+                        onPress={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                        }
+                    >
+                        <FontAwesome
+                            name={showConfirmPassword ? "eye" : "eye-slash"}
+                            size={24}
+                            color="#000"
+                        />
+                    </TouchableOpacity>
+                </View>
+
+                <Text style={styles.h1}>Centres d’intérêts</Text>
+
+                {/* Dropdown 1 */}
+                <Text style={styles.h3}>
+                    Qu’est-ce que vous aimez faire pendant votre temps libre ?
+                </Text>
+                <Dropdown
+                    style={styles.dropdown}
+                    data={activityOptions.map((activity) => ({
+                        label: activity.theme,
+                        value: activity.theme,
+                    }))}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Thèmes"
+                    value={interestTheme}
+                    onChange={(item) => handleInterestThemeChange(item.value)}
+                />
+
+                <Dropdown
+                    style={styles.dropdown}
+                    data={filteredInterestCategories.map((category) => ({
+                        label: category,
+                        value: category,
+                    }))}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Catégories"
+                    value={interestCategorie}
+                    onChange={(item) => setInterestCategorie(item.value)}
+                />
+
+                {/* Dropdown 2 */}
+                <Text style={styles.h3}>
+                    Qu’est-ce que vous savez bien faire et aimeriez partager ?
+                </Text>
+                <Dropdown
+                    style={styles.dropdown}
+                    data={activityOptions.map((activity) => ({
+                        label: activity.theme,
+                        value: activity.theme,
+                    }))}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Thèmes"
+                    value={skillTheme}
+                    onChange={(item) => handleSkillThemeChange(item.value)}
+                />
+
+                <Dropdown
+                    style={styles.dropdown}
+                    data={filteredSkillCategories.map((category) => ({
+                        label: category,
+                        value: category,
+                    }))}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Catégories"
+                    value={skillCategorie}
+                    onChange={(item) => setSkillCategorie(item.value)}
+                />
+
+                {/* Radiobutton Association Choice */}
+                <Text style={styles.h3}>
+                    Êtes-vous intéressé(e) par des activités d'engagement social
+                    ou de bénévolat ?
+                </Text>
+
+                <View style={styles.radioGroup}>
+                    <RadioButton.Group
+                        onValueChange={(newValue) => setHelper(newValue)}
+                        value={helper}
+                    >
+                        {["Oui", "Non"].map((value) => (
+                            <View key={value} style={styles.radioItem}>
+                                <RadioButton
+                                    value={value}
+                                    backgroundColor="#F3773B"
+                                    color="white"
+                                />
+                                <Text style={styles.radioText}>{value}</Text>
+                            </View>
+                        ))}
+                    </RadioButton.Group>
+                </View>
+
+                <Text style={styles.h1}>Objectifs & Motivations</Text>
+
+                {/* Dropdown 1 */}
+                <Text style={styles.h3}>
+                    Pourquoi voulez-vous participer à des activités ?
+                </Text>
+                <Dropdown
+                    style={styles.dropdown}
+                    data={motivationOptions}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Choisissez !"
+                    value={motivation}
+                    onChange={(item) => setMotivation(item.value)}
+                />
+
+                {/* Free text */}
+                <Text style={styles.h3}>
+                    Qu'espérez-vous retirer de ces expériences (plaisir,
+                    apprentissage, relationnel) ?
+                </Text>
+                <TextInput
+                    maxLength={500}
+                    multiline={true}
+                    editable={true}
+                    textAlignVertical="top"
+                    style={styles.textInput}
+                    onChangeText={(text) => onChangeText(text)}
+                    value={value}
+                    placeholder="Dites-nous en plus !"
+                />
+
+                <Text style={styles.h1}>Préférences sociales</Text>
+
+                {/* Dropdown 1 */}
+                <Text style={styles.h3}>
+                    Dans quel type de groupe vous sentez-vous à l’aise ?
+                </Text>
+                <Dropdown
+                    style={styles.dropdown}
+                    data={groupOptions}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Choisissez !"
+                    value={groupPreference}
+                    onFocus={() => console.log("Focus sur le dropdown")}
+                    onBlur={() => console.log("Perte de focus")}
+                    onChange={(item) => setGroupPreference(item.value)}
+                />
+
+                {/* Dropdown 2 */}
+                <Text style={styles.h3}>
+                    Préférez-vous des activités avec des personnes ayant des
+                    intérêts similaires ou divers ?
+                </Text>
+                <Dropdown
+                    style={styles.dropdown}
+                    data={interestOptions}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Choisissez !"
+                    value={activityPreference}
+                    onChange={(item) => setActivityPreference(item.value)}
+                />
+
+                {/* Dropdown 3 */}
+                <Text style={styles.h3}>
+                    Souhaitez-vous participer à des activités
+                    intergénérationnelles ou préférez-vous rester avec des
+                    personnes proches de votre âge ?
+                </Text>
+                <Dropdown
+                    style={styles.dropdown}
+                    data={ageOptions}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Choisissez !"
+                    value={generationPreference}
+                    onChange={(item) => setGenerationPreference(item.value)}
+                />
+
+                <Text style={styles.h1}>Disponibilités</Text>
+
+                <Text style={styles.h3}>Quand êtes-vous disponible ?</Text>
+                <Dropdown
+                    style={styles.dropdown}
+                    data={availabilityOptions}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Vos disponibilités"
+                    value={availability}
+                    onChange={(item) => setAvailability(item.value)}
+                />
 
   const handleSkillThemeChange = (selectedSkillTheme) => {
     setSkillTheme(selectedSkillTheme);
@@ -369,86 +625,20 @@ export default function UserFormsPage({ navigation }) {
             />
           </TouchableOpacity>
         </View>
-
-        <Text style={styles.h1}>Centres d’intérêts</Text>
-
-        {/* Dropdown 1 */}
-        <Text style={styles.h3}>
-          Qu’est-ce que vous aimez faire pendant votre temps libre ?
-        </Text>
-        <Dropdown
-          style={styles.dropdown}
-          data={activityOptions.map((activity) => ({
-            label: activity.theme,
-            value: activity.theme,
-          }))}
-          labelField="label"
-          valueField="value"
-          placeholder="Thèmes"
-          value={interestTheme}
-          onChange={(item) => handleInterestThemeChange(item.value)}
-        />
-
-        <Dropdown
-          style={styles.dropdown}
-          data={filteredInterestCategories.map((category) => ({
-            label: category,
-            value: category,
-          }))}
-          labelField="label"
-          valueField="value"
-          placeholder="Catégories"
-          value={interestCategorie}
-          onChange={(item) => setInterestCategorie(item.value)}
-        />
-
-        {/* Dropdown 2 */}
-        <Text style={styles.h3}>
-          Qu’est-ce que vous savez bien faire et aimeriez partager ?
-        </Text>
-        <Dropdown
-          style={styles.dropdown}
-          data={activityOptions.map((activity) => ({
-            label: activity.theme,
-            value: activity.theme,
-          }))}
-          labelField="label"
-          valueField="value"
-          placeholder="Thèmes"
-          value={skillTheme}
-          onChange={(item) => handleSkillThemeChange(item.value)}
-        />
-
-        <Dropdown
-          style={styles.dropdown}
-          data={filteredSkillCategories.map((category) => ({
-            label: category,
-            value: category,
-          }))}
-          labelField="label"
-          valueField="value"
-          placeholder="Catégories"
-          value={skillCategorie}
-          onChange={(item) => setSkillCategorie(item.value)}
-        />
-
-        {/* Radiobutton Association Choice */}
-        <Text style={styles.h3}>
-          Êtes-vous intéressé(e) par des activités d'engagement social ou de
-          bénévolat ?
-        </Text>
-
-        <View style={styles.radioGroup}>
-          <RadioButton.Group
-            onValueChange={(newValue) => setHelper(newValue)}
-            value={helper}
-          >
-            {["Oui", "Non"].map((value) => (
-              <View key={value} style={styles.radioItem}>
-                <RadioButton
-                  value={value}
-                  backgroundColor="#F3773B"
-                  color="white"
+                <Text style={styles.h3}>
+                    Pour finir, une petite description sur vous ?
+                </Text>
+                <TextInput
+                    style={styles.textInput}
+                    maxLength={500}
+                    multiline={true}
+                    editable={true}
+                    textAlignVertical="top"
+                    onChangeText={(descriptionProfil) =>
+                        setDescriptionProfil(descriptionProfil)
+                    }
+                    value={descriptionProfil}
+                    placeholder="Dites-nous en plus !"
                 />
                 <Text style={styles.radioText}>{value}</Text>
               </View>

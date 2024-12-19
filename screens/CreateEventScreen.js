@@ -14,7 +14,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { Dropdown } from "react-native-element-dropdown";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
 // Import for reducer use
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -51,12 +51,12 @@ export default function CreateEventScreen({ navigation }) {
   const [interestTheme, setInterestTheme] = useState("");
   // Catégories (interestCategorie, setInterestCategorie to fetch to back)
   const [interestCategorie, setInterestCategorie] = useState("");
-  const [filteredInterestCategories, setFilteredInterestCategories] = useState(
-    []
-  );
+  const [filteredInterestCategories, setFilteredInterestCategories] = useState([]);
   const [referenceEvent, setReferenceEvent] = useState("");
   const [place, setPlace] = useState("");
-  const [eventDate, setEventDate] = useState("");
+  const [eventDate, setEventDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
   // sizeGroup
   const [groupPreference, setGroupPreference] = useState("");
   // Preferences sous-doc: sizeGroup, Gender, âge selection et autre description
@@ -68,6 +68,9 @@ export default function CreateEventScreen({ navigation }) {
   const [description, setDescription] = useState("");
   // isFinished
   const [isFinished, setIsFinished] = useState("");
+  //const [adress, zipcode] fetch dans le back
+  const [adress, setAdress] = useState("")
+  const [zipcode, setZipcode] = useState(null)
   // Token to be retreived from reducer
   const user = useSelector((state) => state.users.value);
 
@@ -101,7 +104,22 @@ export default function CreateEventScreen({ navigation }) {
   // Definir Image
   // const [imageUrl, setImageUrl] = useState("");
   const handleImage = () => {};
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setEventDate(selectedDate);
+    }
+  };
 
+  const handleTimeChange = (event, selectedTime) => {
+    setShowTimePicker(false);
+    if (selectedTime) {
+      const updatedDate = new Date(eventDate);
+      updatedDate.setHours(selectedTime.getHours());
+      updatedDate.setMinutes(selectedTime.getMinutes());
+      setEventDate(updatedDate);
+    }
+  };
   const handleCreateEvent = () => {
     // eventTitle, interestTheme, interestCategorie, place, groupPreference, genderPreference, agePreference, other, description
     fetch(`${BACK_IP}/events/createEvent/`, {
@@ -114,13 +132,15 @@ export default function CreateEventScreen({ navigation }) {
         title: eventTitle,
         theme: interestTheme,
         category: interestCategorie,
-        eventDate: "11-12-22",
+        eventDate: eventDate.toISOString(),
         location: place,
         sizeGroup: groupPreference,
         description: description,
         ageRange: agePreference,
         gender: genderPreference,
         other: other,
+        adress : adress,
+        zipcode : zipcode,
       }),
     })
       .then((response) => response.json())
@@ -215,17 +235,66 @@ export default function CreateEventScreen({ navigation }) {
           onChange={(item) => setInterestCategorie(item.value)}
         />
 
-        {/* ajouter Heure et Date*/}
+        {/* ajouter date*/}
+        <TouchableOpacity
+          style={styles.inputDate}
+          onPress={() => setShowDatePicker(true)}
+        >
+          <Text style={styles.itemTextStyle}>
+    {`Date de l'événement : ${eventDate.toLocaleDateString()
+    }`}
+  </Text>
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={eventDate}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
 
+        {/* Sélecteur d'heure */}
+        <TouchableOpacity
+          style={styles.inputDate}
+          onPress={() => setShowTimePicker(true)}
+        >
+          <Text style={styles.itemTextStyle}>
+            {`Heure de l'événement : ${eventDate.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}`}
+          </Text>
+        </TouchableOpacity>
+        {showTimePicker && (
+          <DateTimePicker
+            value={eventDate}
+            mode="time"
+            display="default"
+            onChange={handleTimeChange}
+          />
+        )}
         {/* Lieu de l'événement*/}
         <TextInput
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           itemTextStyle={styles.itemTextStyle}
           style={styles.input}
-          value={place}
-          onChangeText={setPlace}
-          placeholder="Lieu"
+          value={adress}
+          onChangeText={setAdress}
+          placeholder="Adresse du lieu"
+          placeholderTextColor="#A9A9A9"
+        />
+
+        {/* Code postal*/}
+        <TextInput
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          itemTextStyle={styles.itemTextStyle}
+          style={styles.input}
+          value={zipcode}
+          onChangeText={setZipcode}
+          placeholder="Code postal"
           placeholderTextColor="#A9A9A9"
         />
 
@@ -286,6 +355,10 @@ export default function CreateEventScreen({ navigation }) {
 
         {/* Description de l'événement */}
         <TextInput
+          maxLength={500}
+          multiline={true}
+          editable={true}
+          textAlignVertical="top"
           height={250}
           borderRadius={19}
           borderColor="#F3773B"
@@ -308,11 +381,13 @@ export default function CreateEventScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "white",
   },
 
+  content: {
+    alignItems: "center",
+    padding: 30,
+  },
   arrow: {
     paddingRight: 10,
     paddingLeft: 22,
@@ -339,32 +414,19 @@ const styles = StyleSheet.create({
     fontFamily: "ParkinsansMedium",
     color: "#000",
   },
-
-  content: {
-    alignItems: "center",
-    paddingHorizontal: 40,
-    paddingVertical: 30,
-  },
-
   button: {
     backgroundColor: "#F3773B",
-    padding: 10,
+    justifyContent: "center",
     borderRadius: 19,
-    marginVertical: 10,
     alignItems: "center",
-    width: "80%",
+    width: "100%",
     height: 50,
     marginVertical: 20,
   },
   text: {
     color: "white",
     fontFamily: "ParkinsansMedium",
-    fontSize: 20,
-  },
-
-  footer: {
-    height: 100,
-    alignSelf: "stretch",
+    fontSize: 16,
   },
 
   logoIcon: {
@@ -400,7 +462,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
   },
-
+  inputDate: {
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    borderRadius: 19,
+    borderWidth: 1,
+    borderColor: "#F3773B",
+    backgroundColor: "#fff",
+    paddingHorizontal: 15,
+    color: "#282828",
+    marginBottom: 20,
+  },
   image: {
     width: 200,
     height: 200,
@@ -441,5 +514,18 @@ const styles = StyleSheet.create({
 
   section: {
     marginVertical: 20,
+  },
+  descriptionText: {
+    borderWidth: 1,
+    width: "100%",
+    height: 300,
+    borderColor: "#F3773B",
+    borderRadius: 15,
+    backgroundColor: "#fff",
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    color: "#282828",
+    fontFamily: "NotoSansDisplayLight",
+    fontSize: 16,
   },
 });

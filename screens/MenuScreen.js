@@ -1,14 +1,22 @@
 import { StyleSheet, View, Text } from "react-native";
 import Header from "../components/header";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useDispatch } from "react-redux";
+import { logout } from "../reducers/users";
 
 export default function AccountScreen({ navigation }) {
+
+  const dispatch = useDispatch();
 
 
 
   const goToSettings = () => navigation.navigate('SettingScreen');
   const goToChatScreen = () => navigation.navigate('ChatScreen');
-  const goToSignScreen = () => navigation.navigate('SignScreen');
+  const handleLogout = () => {
+    dispatch(logout())
+    console.log('Message pour la pétasse',dispatch(logout()))
+    navigation.navigate('SignScreen');
+  };
   const goToFavoriteScreen = () => navigation.navigate('FavoriteScreen');
 
 
@@ -35,7 +43,7 @@ export default function AccountScreen({ navigation }) {
 
             <View style={styles.function}>
             <Text style={styles.text}>Se Déconnecter</Text>
-            <FontAwesome name="sign-out" size={30} onPress={goToSignScreen}/>
+            <FontAwesome name="sign-out" size={30} onPress={handleLogout}/>
             </View>
           </View>
     </View>
