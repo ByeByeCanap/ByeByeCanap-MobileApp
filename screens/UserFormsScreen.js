@@ -46,11 +46,13 @@ export default function UserFormsPage({ navigation }) {
   const [lastName, setLastName] = useState("");
   const [nickName, setNickName] = useState("");
   const [email, setEmail] = useState("");
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [gender, setGender] = useState("");
 
   // Password
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -166,6 +168,22 @@ export default function UserFormsPage({ navigation }) {
 
   // When clicking on Submit button => fetch(POST) to Backend
   const GoNext = async () => {
+    if (!emailRegex.test(email)) {
+        alert("L'adresse email n'est pas valide.");
+        return; // Arrête l'exécution si l'email est invalide
+      }
+    
+      if (!passwordRegex.test(password)) {
+        alert(
+          "Le mot de passe doit contenir au moins 8 caractères, une lettre et un chiffre."
+        );
+        return; // Arrête l'exécution si le mot de passe est invalide
+      }
+    
+      if (password !== confirmPassword) {
+        alert("Les mots de passe ne correspondent pas.");
+        return; // Arrête l'exécution si les mots de passe ne correspondent pas
+      };
     const Userdata = {
       email: email,
       password: password,
@@ -282,7 +300,7 @@ export default function UserFormsPage({ navigation }) {
           placeholderTextColor="#A9A9A9"
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, !emailRegex.test(email) && email !== "" ? { borderColor: "red" } : {}]}
           value={email}
           onChangeText={setEmail}
           placeholder="Email"
@@ -331,8 +349,8 @@ export default function UserFormsPage({ navigation }) {
         </View>
 
         <View style={styles.passwordInput}>
-          <TextInput
-            style={styles.inputFlex}
+        <TextInput
+            style={[styles.inputFlex, !passwordRegex.test(password) && password !== "" ? { borderColor: "red" } : {}]}
             value={password}
             onChangeText={setPassword}
             placeholder="Mot de passe"
