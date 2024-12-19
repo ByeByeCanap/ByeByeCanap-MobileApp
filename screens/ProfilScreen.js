@@ -10,23 +10,22 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useSelector } from "react-redux";
-import { BACK_IP } from "@env";
-import { useState, useEffect } from 'react';
-
+import { BACK_IP } from "../env";
+import { useState, useEffect } from "react";
 
 export default function ProfilScreen({ navigation }) {
   const users = useSelector((state) => state.users.value);
 
   console.log(users.token);
 
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [interestTheme, setInterestTheme] = useState([]);
   const [interestCategorie, setInterestCategorie] = useState([]);
   const [skillTheme, setSkillTheme] = useState([]);
   const [skillCategorie, setSkillCategorie] = useState([]);
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [nickName, setNickName] = useState('')
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [nickName, setNickName] = useState("");
 
   useEffect(() => {
     fetch(`${BACK_IP}/users/${users.token}`)
@@ -41,12 +40,11 @@ export default function ProfilScreen({ navigation }) {
         setFirstName(data.firstName);
         setLastName(data.lastName);
         setNickName(data.nickName);
-
       })
-      .catch((error) => 
-      console.error("T'as encore fait une erreur pétasse:", error));
+      .catch((error) =>
+        console.error("T'as encore fait une erreur pétasse:", error)
+      );
   }, []);
-
 
   return (
     <View style={styles.container}>
@@ -77,7 +75,6 @@ export default function ProfilScreen({ navigation }) {
             <Text>
               {firstName} {lastName}
             </Text>
-
           </Text>
           <Text style={styles.nicknameContainer}>@{nickName}</Text>
         </View>
@@ -232,7 +229,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 10,
   },
- 
+
   logoFake: {
     borderRadius: 120,
     borderWidth: 2,
@@ -241,9 +238,9 @@ const styles = StyleSheet.create({
     height: 100,
   },
 
-  h2 : {
+  h2: {
     fontFamily: "ParkinsansMedium",
     fontSize: 20,
     marginHorizontal: 15,
-  }
+  },
 });

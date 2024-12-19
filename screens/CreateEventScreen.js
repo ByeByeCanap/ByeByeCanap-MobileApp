@@ -28,7 +28,7 @@ import {
 } from "../utils/userFormList";
 
 // Import for fetch
-import { BACK_IP } from "@env";
+import { BACK_IP } from "../env";
 
 export default function CreateEventScreen({ navigation }) {
   // Custom font --------------------------------------------------------------------------------
@@ -68,7 +68,6 @@ export default function CreateEventScreen({ navigation }) {
   const [description, setDescription] = useState("");
   // isFinished
   const [isFinished, setIsFinished] = useState("");
-
   //const [adress, zipcode] fetch dans le back
   const [adress, setAdress] = useState("")
   const [zipcode, setZipcode] = useState(null)
@@ -105,7 +104,6 @@ export default function CreateEventScreen({ navigation }) {
   // Definir Image
   // const [imageUrl, setImageUrl] = useState("");
   const handleImage = () => {};
-
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -122,7 +120,6 @@ export default function CreateEventScreen({ navigation }) {
       setEventDate(updatedDate);
     }
   };
-
   const handleCreateEvent = () => {
     // eventTitle, interestTheme, interestCategorie, place, groupPreference, genderPreference, agePreference, other, description
     fetch(`${BACK_IP}/events/createEvent/`, {
@@ -277,7 +274,6 @@ export default function CreateEventScreen({ navigation }) {
             onChange={handleTimeChange}
           />
         )}
-        
         {/* Lieu de l'événement*/}
         <TextInput
           placeholderStyle={styles.placeholderStyle}
@@ -392,7 +388,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 30,
   },
-
   arrow: {
     paddingRight: 10,
     paddingLeft: 22,
@@ -419,7 +414,6 @@ const styles = StyleSheet.create({
     fontFamily: "ParkinsansMedium",
     color: "#000",
   },
-
   button: {
     backgroundColor: "#F3773B",
     justifyContent: "center",
@@ -468,7 +462,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
   },
-
   inputDate: {
     width: "100%",
     height: 50,
@@ -481,7 +474,6 @@ const styles = StyleSheet.create({
     color: "#282828",
     marginBottom: 20,
   },
-
   image: {
     width: 200,
     height: 200,
@@ -523,7 +515,6 @@ const styles = StyleSheet.create({
   section: {
     marginVertical: 20,
   },
-
   descriptionText: {
     borderWidth: 1,
     width: "100%",
