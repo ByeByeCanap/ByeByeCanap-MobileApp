@@ -54,15 +54,15 @@ export default function SearchScreen({ navigation, route }) {
     console.log("Data fetch events by category", eventsIds);
 
     function gotToDetails(eventsIds) {
-        console.log("DATA:", eventsIds);
+        //console.log("DATA:", eventsIds);
         navigation.navigate("EventDetailScreen", {
             token,
             eventsIds,
         });
     }
 
-    //console.log("look at getter", eventByCategory);
-
+    // console.log("look at getter", eventByCategory);
+ 
     const card = eventByCategory.map((event, index) => {
         return (
             <View key={index} style={styles.card}>
@@ -84,7 +84,7 @@ export default function SearchScreen({ navigation, route }) {
 
                     <Text style={styles.h1Event}>{event.title}</Text>
                     <Text style={styles.body}>{event.location}</Text>
-                    <Text style={styles.body}>{event.participants.length}</Text>
+                    <Text style={styles.body}>Nombre de partipants: {event.participants.length}</Text>
                 </View>
             </View>
         );
