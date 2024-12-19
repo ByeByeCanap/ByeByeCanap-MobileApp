@@ -92,7 +92,7 @@ export default function SearchEventScreen({ navigation }) {
     }
 
     function gotTocategory(data) {
-        console.log("Ou est la CATEGORYYYYY", data.categorie[0], "DATA:",data);
+        //console.log("Ou est la CATEGORYYYYY", data.categorie[0], "DATA:",data);
         goRequestScreen(user.token, data.id);
         navigation.navigate("SearchScreen", {
             token: user.token,
