@@ -8,6 +8,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
 import { BACK_IP } from "../env";
 import Header from "../components/header";
@@ -26,6 +27,9 @@ export default function SignIn({ navigation }) {
   let iconEyeName = "";
 
   const handleSignIn = () => {
+    if (signInEmail === '' || signInPassword === '') {
+      Alert.alert("Erreur", "Email ou mot de passe incorrect.");
+    } else {
     //console.log('Click is working'); //ok
     fetch(`${BACK_IP}/users/signin`, {
       method: "POST",
@@ -46,8 +50,11 @@ export default function SignIn({ navigation }) {
           setSignInEmail("");
           setSignInPassword("");
           console.log(user); //ok
+        } else {
+          Alert.alert("Erreur", "Email ou mot de passe incorrect.");
         }
       });
+    };
   };
 
   // icon Eye vs Eye slash
@@ -85,7 +92,6 @@ export default function SignIn({ navigation }) {
             onChangeText={(value) => setSignInEmail(value)}
             value={signInEmail}
           />
-          {/* {emailError && <Text style={styles.error}>Invalid email address</Text>} */}
         </View>
 
         <View style={styles.input}>

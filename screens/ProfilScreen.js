@@ -7,11 +7,10 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useSelector } from "react-redux";
 import { BACK_IP } from "../env";
 import { useState, useEffect } from "react";
+import Header from "../components/header";
 
 export default function ProfilScreen({ navigation }) {
   const users = useSelector((state) => state.users.value);
@@ -48,20 +47,7 @@ export default function ProfilScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-        <FontAwesome name="bell" size={30} color="#fff" />
-      </LinearGradient>
+      <Header navigation={navigation} />
 
       <ScrollView contentContainerStyle={styles.content}>
         {/* User Info */}
@@ -130,19 +116,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-  },
-  header: {
-    width: "100%",
-    height: 120,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingTop: 30,
-  },
-  logoIcon: {
-    width: 50,
-    height: 50,
   },
   content: {
     top: 10,

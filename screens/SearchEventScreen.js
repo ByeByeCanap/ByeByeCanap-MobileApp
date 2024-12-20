@@ -10,7 +10,6 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
@@ -136,6 +135,7 @@ export default function SearchEventScreen({ navigation }) {
                   <ImageBackground
                     source={imageSource}
                     style={styles.categorie}
+                    imageStyle={{ borderRadius: 10 }}
                   ></ImageBackground>
                 </Pressable>
 
@@ -180,19 +180,12 @@ export default function SearchEventScreen({ navigation }) {
           <ImageBackground
             source={require("../assets/imagesEvent/default.jpg")}
             style={styles.mainEvent}
-            imageStyle={{ borderRadius: 15 }}
+            imageStyle={{ borderRadius: 10 }}
           ></ImageBackground>
         </Pressable>
 
-        <Text style={styles.h1}>Concert Blues</Text>
+        <Text style={styles.mainEventTitle}>Concert Blues</Text>
         <Text style={styles.textDescription}>31 Décembre à 20H30</Text>
-
-        <TouchableOpacity
-          style={styles.buttonParticiper}
-          onPress={goDetailScreen}
-        >
-          <Text style={styles.text}>Participer</Text>
-        </TouchableOpacity>
 
         <ScrollView>{catalogue}</ScrollView>
 
@@ -227,18 +220,15 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
 
-  header: {
-    width: "100%",
-    height: 120,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 22,
-    backgroundColor: "transparent",
-  },
-
   h1: {
     fontSize: 20,
+    fontFamily: "ParkinsansMedium",
+    color: "#000",
+  },
+
+  mainEventTitle: {
+    top: 10,
+    fontSize: 30,
     fontFamily: "ParkinsansMedium",
     color: "#000",
   },
@@ -252,17 +242,6 @@ const styles = StyleSheet.create({
     width: 250,
     height: 50,
     marginVertical: 50,
-  },
-
-  buttonParticiper: {
-    backgroundColor: "#F3773B",
-    padding: 10,
-    borderRadius: 19,
-    marginVertical: 10,
-    alignItems: "center",
-    width: 250,
-    height: 50,
-    marginVertical: 20,
   },
 
   text: {
