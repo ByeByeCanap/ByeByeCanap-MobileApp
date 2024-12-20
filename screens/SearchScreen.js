@@ -65,7 +65,7 @@ export default function SearchScreen({ navigation, route }) {
         <View style={styles.imageContainer}>
           <Pressable onPress={() => gotToDetails(event._id)}>
             <Image
-              source={require("../assets/imagesEvent/event_main.jpg")}
+              source={require("../assets/imagesEvent/default.jpg")}
               style={styles.image}
             />
           </Pressable>
