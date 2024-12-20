@@ -127,7 +127,7 @@ export default function EventDetailScreen({ navigation, route }) {
                 {event.location.zipcode}
               </Text>
               <Text style={styles.textDescription}>
-                {event.eventDate.slice(0, 10)} à 20H30
+              {event.eventDate.slice(0,10)} à {event.eventDate.slice(11,16)}
               </Text>
             </View>
           </View>

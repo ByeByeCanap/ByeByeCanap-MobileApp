@@ -14,6 +14,7 @@ export default function Header() {
     "Map",
     "SearchEventScreen",
     "MenuScreen",
+    "SearchEventScreen",
   ].includes(route.name);
   const navigation = useNavigation();
   const menuNavigation = () => navigation.navigate("MenuScreen");
