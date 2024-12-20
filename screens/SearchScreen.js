@@ -3,15 +3,11 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity,
-  ImageBackground,
   ScrollView,
   Image,
   Pressable,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import * as Font from "expo-font";
-import AppLoading from "expo-app-loading";
 import { useState } from "react";
 import Header from "../components/header";
 // Import for fetch
@@ -72,7 +68,7 @@ export default function SearchScreen({ navigation, route }) {
 
         <View style={styles.globalContainer}>
           <View>
-            <Text style={styles.h2}>{event.eventDate.slice(0, 10)}</Text>
+            <Text style={styles.h2}>{event.eventDate.slice(0,10)} à {event.eventDate.slice(11,16)}</Text>
           </View>
 
           <Text style={styles.h1Event}>{event.title}</Text>
@@ -86,8 +82,8 @@ export default function SearchScreen({ navigation, route }) {
     );
   });
 
-  const goHome = () => {
-    navigation.navigate("TabNavigator");
+  const goBack = () => {
+    navigation.navigate("SearchEventScreen");
   };
 
   return (
@@ -95,7 +91,7 @@ export default function SearchScreen({ navigation, route }) {
       <Header navigation={navigation} />
 
       <View style={styles.arrow}>
-        <FontAwesome name="arrow-left" size={30} onPress={goHome} />
+        <FontAwesome name="arrow-left" size={30} onPress={goBack} />
         <Text style={styles.h1}>Liste des événements</Text>
       </View>
 
