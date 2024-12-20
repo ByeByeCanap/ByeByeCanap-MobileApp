@@ -8,9 +8,15 @@ const Material = MaterialCommunityIcons;
 
 export default function Header() {
   const route = useRoute();
-  const showIcons = ["Home", "Profile", "Map"].includes(route.name);
+  const showIcons = [
+    "Home",
+    "Profile",
+    "Map",
+    "SearchEventScreen",
+    "MenuScreen",
+  ].includes(route.name);
   const navigation = useNavigation();
-  const menuNavigation = () => navigation.navigate('MenuScreen');
+  const menuNavigation = () => navigation.navigate("MenuScreen");
 
   return (
     <LinearGradient
@@ -29,7 +35,9 @@ export default function Header() {
       </View>
       <View style={styles.RightSide}>
         {showIcons && <FontAwesome name="search" size={30} />}
-        {showIcons && <Material name="menu" size={40} onPress={menuNavigation}/>}
+        {showIcons && (
+          <Material name="menu" size={40} onPress={menuNavigation} />
+        )}
       </View>
     </LinearGradient>
   );
@@ -62,6 +70,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end",
     paddingRight: 15,
-    gap : 15,
+    gap: 15,
   },
 });

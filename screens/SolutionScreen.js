@@ -1,13 +1,12 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
 import { useState } from "react";
+import Header from "../components/header";
 
-export default function SolutionScreen( { navigation } ) {
-
+export default function SolutionScreen({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   // const goBack = () => navigation.navigate('SearchEventScreen');
@@ -16,9 +15,9 @@ export default function SolutionScreen( { navigation } ) {
 
   const loadFonts = async () => {
     await Font.loadAsync({
-      ParkinsansMedium: require('../assets/fonts/ParkinsansMedium.ttf'),
-      NotoSansDisplayLight: require('../assets/fonts/NotoSansDisplayLight.ttf'),
-      NotoSansDisplayRegular: require('../assets/fonts/NotoSansDisplayRegular.ttf'),
+      ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
+      NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
+      NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
     });
   };
 
@@ -32,37 +31,29 @@ export default function SolutionScreen( { navigation } ) {
     );
   }
 
-  const goCreateEventScreen =() => {
-    navigation.navigate('CreateEventScreen')
+  const goCreateEventScreen = () => {
+    navigation.navigate("CreateEventScreen");
+  };
+
+  const goBack = () => {
+    navigation.navigate("SearchEventScreen");
   };
 
   const goHome = () => {
-    navigation.navigate('HomeScreen')
+    navigation.navigate("TabNavigator");
   };
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
+      <Header />
 
       <View style={styles.arrow}>
-        <FontAwesome name="arrow-left" size={30}/>
+        <FontAwesome name="arrow-left" size={30} onPress={goBack} />
       </View>
-      
+
       <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.button} onPress={goCreateEventScreen} >
-          <Text style={styles.text}>Proposer un événement</Text> 
+        <TouchableOpacity style={styles.button} onPress={goCreateEventScreen}>
+          <Text style={styles.text}>Proposer un événement</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
@@ -73,7 +64,6 @@ export default function SolutionScreen( { navigation } ) {
           <Text style={styles.text}>Revenir plus tard</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
 }
@@ -83,7 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
 
   header: {
@@ -97,7 +87,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: '100%',
+    width: "100%",
     backgroundColor: "#F3773B",
     paddingTop: 10,
     borderRadius: 19,
@@ -107,8 +97,8 @@ const styles = StyleSheet.create({
     height: 50,
   },
   text: {
-    color: 'white',
-    fontFamily: 'ParkinsansMedium',
+    color: "white",
+    fontFamily: "ParkinsansMedium",
     fontSize: 20,
   },
   arrow: {

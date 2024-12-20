@@ -1,21 +1,20 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
 import Header from "../components/header";
 import { useState } from "react";
 
-export default function RequestScreen( { navigation } ) {
+export default function RequestScreen({ navigation }) {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
-const [fontsLoaded, setFontsLoaded] = useState(false);
-
-  const GoHome = () => navigation.navigate('HomeScreen');
+  const GoHome = () => navigation.navigate("TabNavigator");
 
   const loadFonts = async () => {
     await Font.loadAsync({
-      ParkinsansMedium: require('../assets/fonts/ParkinsansMedium.ttf'),
-      NotoSansDisplayLight: require('../assets/fonts/NotoSansDisplayLight.ttf'),
-      NotoSansDisplayRegular: require('../assets/fonts/NotoSansDisplayRegular.ttf'),
+      ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
+      NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
+      NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
     });
   };
 
@@ -31,17 +30,16 @@ const [fontsLoaded, setFontsLoaded] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Header/>
-
+      <Header />
 
       <View style={styles.Container}>
-
-        <Text style={styles.h1}>Votre demande de participation à été envoyée à l’organisateur !</Text>
+        <Text style={styles.h1}>
+          Votre demande de participation à été envoyée à l’organisateur !
+        </Text>
 
         <TouchableOpacity style={styles.button} onPress={GoHome}>
           <Text style={styles.text}>Revenir au Home</Text>
         </TouchableOpacity>
-
       </View>
     </View>
   );
@@ -52,7 +50,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
 
   header: {
@@ -103,11 +101,11 @@ const styles = StyleSheet.create({
     bottom: 40,
   },
 
-  h1:{
+  h1: {
     paddingHorizontal: 20,
     fontSize: 22,
     fontFamily: "ParkinsansMedium",
-    textAlign: 'center',
+    textAlign: "center",
     color: "#000",
   },
 });
