@@ -1,13 +1,12 @@
 import { StyleSheet, View, Text } from "react-native";
-import Header from "../components/header";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch } from "react-redux";
 import { logout } from "../reducers/users";
+import Header from "../components/header";
 
 export default function AccountScreen({ navigation }) {
   const dispatch = useDispatch();
 
-  const goBack = () => navigation.navigate("TabNavigator");
   const goToSettings = () => navigation.navigate("SettingScreen");
   const goToChatScreen = () => navigation.navigate("ChatScreen");
   const handleLogout = () => {
@@ -17,15 +16,18 @@ export default function AccountScreen({ navigation }) {
   };
   const goToFavoriteScreen = () => navigation.navigate("FavoriteScreen");
 
+  const goBack = () => {
+    navigation.navigate("TabNavigator");
+  };
+
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} />
+      <Header />
+      <View style={styles.arrow}>
+        <FontAwesome name="arrow-left" size={30} onPress={goBack} />
+      </View>
 
       <View style={styles.textContainer}>
-        <View style={styles.function}>
-          <FontAwesome name="arrow-left" size={30} onPress={goBack} />
-        </View>
-
         <View style={styles.function}>
           <Text style={styles.text}>Mes paramètres</Text>
           <FontAwesome name="gear" size={30} onPress={goToSettings} />
@@ -55,24 +57,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
-  header: {
-    width: "100%",
-    height: 120,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingTop: 30,
-    backgroundColor: "transparent",
-  },
-  logoIcon: {
-    width: 50,
-    height: 50,
-  },
-  headerIcons: {
-    flexDirection: "row",
-    gap: 20,
-  },
   text: {
     fontFamily: "NotoSansDisplayRegular",
     fontSize: 18,
@@ -87,5 +71,13 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  arrow: {
+    paddingTop: 20,
+    paddingRight: 10,
+    paddingLeft: 22,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
   },
 });
