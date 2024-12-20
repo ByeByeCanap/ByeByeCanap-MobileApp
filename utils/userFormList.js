@@ -1,15 +1,16 @@
 const activityOptions = [
   {
     theme: "Activités créatrices",
-    categorie: ["Artistique", "Manuel", "Musique"],
+    categorie: ["Artistique", "Manuelle", "Musique"],
   },
   {
     theme: "Sport",
     categorie: [
-      "Pratiquer en extérieur (terre)",
-      "Pratiquer en extérieur (mer)",
-      "Pratiquer en intérieur",
-      "Supporter",
+      "Plein air",
+      "Aquatiques",
+      "Intérieur",
+      "Juste Supporter",
+      "Extrême"
     ],
   },
   {
@@ -19,7 +20,7 @@ const activityOptions = [
       "Concert",
       "Musées",
       "Lecture",
-      "Musique (pratiquer)",
+      "Musique (jouer)",
     ],
   },
   {
@@ -132,6 +133,7 @@ const ageOptionsCreateEvent = [
   { label: "40-49 ans", value: "40-49" },
   { label: "50-59 ans", value: "50-59" },
   { label: "60 ans +", value: "60+" },
+  { label: "Peu importe", value: "Peu importe" },
 ];
 
 module.exports = {
