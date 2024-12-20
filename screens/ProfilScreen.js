@@ -10,7 +10,9 @@ import {
 import { useSelector } from "react-redux";
 import { BACK_IP } from "../env";
 import { useState, useEffect } from "react";
+import { avatarsMap } from "../utils/avatars";
 import Header from "../components/header";
+
 
 export default function ProfilScreen({ navigation }) {
   const users = useSelector((state) => state.users.value);
@@ -25,6 +27,7 @@ export default function ProfilScreen({ navigation }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nickName, setNickName] = useState("");
+  const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
     fetch(`${BACK_IP}/users/${users.token}`)
@@ -39,11 +42,14 @@ export default function ProfilScreen({ navigation }) {
         setFirstName(data.firstName);
         setLastName(data.lastName);
         setNickName(data.nickName);
+        setAvatar(data.avatar);
       })
       .catch((error) =>
         console.error("T'as encore fait une erreur pétasse:", error)
       );
   }, []);
+
+  const imageSource = avatarsMap[avatar];;
 
   return (
     <View style={styles.container}>
@@ -52,10 +58,11 @@ export default function ProfilScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.content}>
         {/* User Info */}
         <View style={styles.userContainer}>
+          
           <Image
             style={styles.avatar}
             resizeMode="cover"
-            source={require("../assets/avatars/avatar_12.png")}
+            source={imageSource}
           />
           <Text style={styles.nameContainer}>
             <Text>

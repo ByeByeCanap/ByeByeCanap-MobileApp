@@ -12,7 +12,7 @@ const imagesMap = {
     "Musées": require("../assets/imagesEvent/Musees.jpg"),
     "Lecture": require("../assets/imagesEvent/Lecture.jpg"),
     "Musique (jouer)": require("../assets/imagesEvent/Musique_jouer.jpg"),
-    "Bars": require("../assets/imagesEvent/Bars.jpg"),
+    "Bars": require("../assets/imagesEvent/Restaurant.jpg"), // Changer Name et photo
     "Restaurant": require("../assets/imagesEvent/Restaurant.jpg"),
     "Cuisiner": require("../assets/imagesEvent/Cuisiner.jpg"),
     "Petsitter": require("../assets/imagesEvent/Petsitter.jpg"),
@@ -29,7 +29,6 @@ const imagesMap = {
     "Rire": require("../assets/imagesEvent/Rire.jpg")
 };
 
-  
 
   module.exports = {
     imagesMap
