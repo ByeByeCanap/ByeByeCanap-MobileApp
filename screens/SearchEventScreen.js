@@ -22,6 +22,7 @@ import { useSelector } from "react-redux";
 // Import for fetch
 import { BACK_IP } from "../env";
 import Header from "../components/header";
+import { imagesMap } from "../utils/images";
 
 export default function SearchEventScreen({ navigation }) {
   // Custom font --------------------------------------------------------------------------------
@@ -118,21 +119,22 @@ export default function SearchEventScreen({ navigation }) {
 
         <ScrollView horizontal={true} style={styles.themeContainer}>
           {data.categorie.map((category, categoryIndex) => {
-            const imageSource = [
-              require(`../assets/imagesEvent/theme_0.jpg`),
-              require(`../assets/imagesEvent/theme_1.jpg`),
-              require(`../assets/imagesEvent/theme_2.jpg`),
-              require(`../assets/imagesEvent/theme_3.jpg`),
-              require(`../assets/imagesEvent/theme_4.jpg`),
-              require(`../assets/imagesEvent/theme_5.jpg`),
-              require(`../assets/imagesEvent/theme_6.jpg`),
-              require(`../assets/imagesEvent/theme_7.jpg`),
-            ];
+            const imageSource = imagesMap[category] || require("../assets/imagesEvent/default.jpg");
+            // const imageSource = [
+            //   require(`../assets/imagesEvent/theme_0.jpg`),
+            //   require(`../assets/imagesEvent/theme_1.jpg`),
+            //   require(`../assets/imagesEvent/theme_2.jpg`),
+            //   require(`../assets/imagesEvent/theme_3.jpg`),
+            //   require(`../assets/imagesEvent/theme_4.jpg`),
+            //   require(`../assets/imagesEvent/theme_5.jpg`),
+            //   require(`../assets/imagesEvent/theme_6.jpg`),
+            //   require(`../assets/imagesEvent/theme_7.jpg`),
+            // ];
             return (
               <View style={styles.justify} key={categoryIndex}>
                 <Pressable onPress={() => gotTocategory(data)}>
                   <ImageBackground
-                    source={imageSource[index]}
+                    source={imageSource}
                     style={styles.categorie}
                   ></ImageBackground>
                 </Pressable>
@@ -176,14 +178,14 @@ export default function SearchEventScreen({ navigation }) {
           onPress={goDetailScreen}
         >
           <ImageBackground
-            source={require("../assets/imagesEvent/event_main.jpg")}
+            source={require("../assets/imagesEvent/default.jpg")}
             style={styles.mainEvent}
             imageStyle={{ borderRadius: 15 }}
           ></ImageBackground>
         </Pressable>
 
         <Text style={styles.h1}>Concert Blues</Text>
-        <Text style={styles.textDescription}>06 Juin à 20H30</Text>
+        <Text style={styles.textDescription}>31 Décembre à 20H30</Text>
 
         <TouchableOpacity
           style={styles.buttonParticiper}
