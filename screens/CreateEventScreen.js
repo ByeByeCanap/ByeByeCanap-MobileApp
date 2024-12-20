@@ -9,7 +9,6 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
@@ -29,6 +28,7 @@ import {
 
 // Import for fetch
 import { BACK_IP } from "../env";
+import Header from "../components/header";
 
 export default function CreateEventScreen({ navigation }) {
   // Custom font --------------------------------------------------------------------------------
@@ -51,7 +51,9 @@ export default function CreateEventScreen({ navigation }) {
   const [interestTheme, setInterestTheme] = useState("");
   // Catégories (interestCategorie, setInterestCategorie to fetch to back)
   const [interestCategorie, setInterestCategorie] = useState("");
-  const [filteredInterestCategories, setFilteredInterestCategories] = useState([]);
+  const [filteredInterestCategories, setFilteredInterestCategories] = useState(
+    []
+  );
   const [referenceEvent, setReferenceEvent] = useState("");
   const [place, setPlace] = useState("");
   const [eventDate, setEventDate] = useState(new Date());
@@ -69,8 +71,8 @@ export default function CreateEventScreen({ navigation }) {
   // isFinished
   const [isFinished, setIsFinished] = useState("");
   //const [adress, zipcode] fetch dans le back
-  const [adress, setAdress] = useState("")
-  const [zipcode, setZipcode] = useState(null)
+  const [adress, setAdress] = useState("");
+  const [zipcode, setZipcode] = useState(null);
   // Token to be retreived from reducer
   const user = useSelector((state) => state.users.value);
 
@@ -139,8 +141,8 @@ export default function CreateEventScreen({ navigation }) {
         ageRange: agePreference,
         gender: genderPreference,
         other: other,
-        adress : adress,
-        zipcode : zipcode,
+        adress: adress,
+        zipcode: zipcode,
       }),
     })
       .then((response) => response.json())
@@ -161,20 +163,7 @@ export default function CreateEventScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
-
+      <Header navigation={navigation} />
       <View style={styles.arrow}>
         <FontAwesome name="arrow-left" size={30} onPress={goBack} />
         <Text style={styles.h1}>Proposer un événement</Text>
@@ -241,9 +230,8 @@ export default function CreateEventScreen({ navigation }) {
           onPress={() => setShowDatePicker(true)}
         >
           <Text style={styles.itemTextStyle}>
-    {`Date de l'événement : ${eventDate.toLocaleDateString()
-    }`}
-  </Text>
+            {`Date de l'événement : ${eventDate.toLocaleDateString()}`}
+          </Text>
         </TouchableOpacity>
         {showDatePicker && (
           <DateTimePicker
@@ -399,16 +387,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
 
-  header: {
-    width: "100%",
-    height: 120,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 22,
-    backgroundColor: "transparent",
-  },
-
   h1: {
     fontSize: 20,
     fontFamily: "ParkinsansMedium",
@@ -427,12 +405,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "ParkinsansMedium",
     fontSize: 16,
-  },
-
-  logoIcon: {
-    top: 20,
-    width: 50,
-    height: 50,
   },
 
   inputTitre: {

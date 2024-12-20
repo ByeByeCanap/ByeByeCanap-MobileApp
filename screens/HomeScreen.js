@@ -111,7 +111,7 @@ export default function HomeScreen({ navigation }) {
           }}
         />
 
-        <Text style={styles.sectionTitle}>Proposition de profils</Text>
+        <Text style={styles.sectionTitle}>Propositions de profils</Text>
         <View style={styles.avatarContainer}>
           <FlatList
             data={[
@@ -128,7 +128,7 @@ export default function HomeScreen({ navigation }) {
                 <Image
                   style={styles.avatarIcon}
                   resizeMode="cover"
-                  source={require("../assets/avatars/avatar_1.png")}
+                  source={require(`../assets/avatars/avatar_1.png`)}
                 />
               </View>
             )}
@@ -213,6 +213,8 @@ const styles = StyleSheet.create({
   avatarIcon: {
     width: 100,
     height: 100,
+    borderWidth: 2,
+    borderRadius: 50,
   },
 
   headerIcons: {
