@@ -52,7 +52,7 @@ export default function EventDetailScreen({ navigation, route }) {
     fetchEventData();
   }, []);
 
-  console.log(eventById[0]); // Log the eventById state
+  console.log("eventById",eventById[0]); 
 
   const event = eventById[0];
   //const title = event ? event.title : '';
@@ -113,7 +113,7 @@ export default function EventDetailScreen({ navigation, route }) {
       {eventById.length > 0 && (
         <ScrollView contentContainerStyle={styles.content}>
           <ImageBackground
-            source={require("../assets/imagesEvent/event_main.jpg")}
+            source={require("../assets/imagesEvent/default.jpg")}
             style={styles.mainEvent}
             imageStyle={{ borderRadius: 15 }}
           />
