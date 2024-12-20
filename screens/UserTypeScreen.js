@@ -2,16 +2,15 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { userType } from "../reducers/users";
 import { useSelector } from "react-redux";
 import Header from "../components/header";
 
-export default function UserTypeScreen( { navigation } ) {
-
+export default function UserTypeScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -21,20 +20,19 @@ export default function UserTypeScreen( { navigation } ) {
   const user = useSelector((state) => state.users.value);
   //console.log("Store BEFORE dispatching", user);
 
-  const particularToSignUp = () =>  {
-    dispatch(userType('User'));
-   // console.log("Store AFTER dispatching", user);
-    navigation.navigate('SignUpScreen')};
+  const particularToSignUp = () => {
+    dispatch(userType("User"));
+    // console.log("Store AFTER dispatching", user);
+    navigation.navigate("SignUpScreen");
+  };
 
-    
-
-  const goBack = () => navigation.navigate('SignScreen');
+  const goBack = () => navigation.navigate("SignScreen");
 
   const loadFonts = async () => {
     await Font.loadAsync({
-      ParkinsansMedium: require('../assets/fonts/ParkinsansMedium.ttf'),
-      NotoSansDisplayLight: require('../assets/fonts/NotoSansDisplayLight.ttf'),
-      NotoSansDisplayRegular: require('../assets/fonts/NotoSansDisplayRegular.ttf'),
+      ParkinsansMedium: require("../assets/fonts/ParkinsansMedium.ttf"),
+      NotoSansDisplayLight: require("../assets/fonts/NotoSansDisplayLight.ttf"),
+      NotoSansDisplayRegular: require("../assets/fonts/NotoSansDisplayRegular.ttf"),
     });
   };
 
@@ -80,17 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: 'white'
-  },
-
-  header: {
-    width: "100%",
-    height: 120,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 22,
-    backgroundColor: "transparent",
+    backgroundColor: "white",
   },
 
   button: {
@@ -116,12 +104,6 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
 
-  logoIcon: {
-    top: 20,
-    width: 50,
-    height: 50,
-  },
-
   btnContainer: {
     flex: 1,
     justifyContent: "center",
@@ -135,10 +117,10 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
 
-  h1:{
+  h1: {
     width: 350,
-    fontFamily: 'ParkinsansMedium',
+    fontFamily: "ParkinsansMedium",
     fontSize: 22,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });

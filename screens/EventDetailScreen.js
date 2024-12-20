@@ -12,9 +12,8 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { Header } from "../components/header";
+import  Header  from "../components/header";
 // Import for fetch
 import { BACK_IP } from "../env";
 
@@ -90,20 +89,7 @@ export default function EventDetailScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.header}
-        colors={["#fdc731", "#f3773b"]}
-        useAngle={true}
-        angle={135}
-        start={{ x: 0, y: 1 }}
-      >
-        <Image
-          style={styles.logoIcon}
-          resizeMode="cover"
-          source={require("../assets/logoIcon.png")}
-        />
-      </LinearGradient>
-
+<Header navigation={navigation} />
       <View style={styles.arrow}>
         <FontAwesome name="arrow-left" size={30} onPress={goBack} />
         <Text style={styles.h1}>{event.title}</Text>
@@ -205,16 +191,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
 
-  header: {
-    width: "100%",
-    height: 120,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 22,
-    backgroundColor: "transparent",
-  },
-
   h1: {
     fontSize: 20,
     fontFamily: "ParkinsansMedium",
@@ -236,12 +212,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "ParkinsansMedium",
     fontSize: 20,
-  },
-
-  logoIcon: {
-    top: 20,
-    width: 50,
-    height: 50,
   },
 
   informationContainer: {
