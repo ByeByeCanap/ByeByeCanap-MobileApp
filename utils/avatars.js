@@ -1,5 +1,5 @@
 const avatarsMap = {
-  avatar_1: require("../assets/avatars/Avatar_1.png"),
+  avatar_1: require("../assets/avatars/avatar_1.png"),
   avatar_2: require("../assets/avatars/avatar_2.png"),
   avatar_3: require("../assets/avatars/avatar_3.png"),
   avatar_4: require("../assets/avatars/avatar_4.png"),
