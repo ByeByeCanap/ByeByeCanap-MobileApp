@@ -354,7 +354,7 @@ export default function CreateEventScreen({ navigation }) {
           style={styles.descriptionText}
           onChangeText={(description) => setDescription(description)}
           value={description}
-          placeholder="Décrivres-nous l’événments que vous voulez créer !"
+          placeholder="Décrivez-nous l’événment que vous voulez créer !"
         />
 
         {/* Publier l'événement */}
