@@ -128,7 +128,7 @@ export default function HomeScreen({ navigation }) {
                 <Image
                   style={styles.avatarIcon}
                   resizeMode="cover"
-                  source={require(`../assets/avatars/avatar_1.png`)}
+                  source={require(`../assets/avatars/Avatar_1.png`)}
                 />
               </View>
             )}
